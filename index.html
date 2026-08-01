@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Iida Keisuke — AI 活用と HP・LP 制作</title>
+<meta name="description" content="飯田啓介のポートフォリオ。AI 活用の相談・実装と、HP・LP の制作から運用までを一貫してご提案します。">
+<meta name="theme-color" content="#D9D9D3">
+<link rel="icon" href="uploads/ik-mark.png" type="image/png">
+<link rel="apple-touch-icon" href="uploads/ik-mark.png">
+
+<!-- ============================================================
+     公開準備中（まだ検索結果に出したくない間の設定）
+     本公開するときは、次の noindex の1行を削除し、
+     robots.txt も差し替えてください。詳しくは DEPLOY.md を参照。
+     ============================================================ -->
+<meta name="robots" content="noindex, nofollow">
+
+<!-- 公開URLが決まったら、下の 4 か所の https://iida-keisuke.pages.dev を
+     実際のURLに置換してください（DEPLOY.md の「1. URL を差し替える」） -->
+<link rel="canonical" href="https://iida-keisuke.pages.dev/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:site_name" content="Iida Keisuke">
+<meta property="og:title" content="Iida Keisuke — AI 活用と HP・LP 制作">
+<meta property="og:description" content="AI 活用の相談・実装と、HP・LP の制作から運用まで。つくって終わらせず、運用まで一緒に走ります。">
+<meta property="og:url" content="https://iida-keisuke.pages.dev/">
+<meta property="og:image" content="https://iida-keisuke.pages.dev/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Iida Keisuke — AI consulting / Web・LP production">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=Bitter:wght@400;500&family=Inter:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500&family=Noto+Serif+JP:wght@400&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main">本文へスキップ</a>
+
+<nav class="nav" aria-label="メインナビゲーション">
+  <a class="nav__mark" href="#/" aria-label="ホーム">
+    <img src="uploads/ik-mark.png" alt="Iida Keisuke ロゴ" width="34" height="34">
+  </a>
+  <div class="nav__links">
+    <a href="#/" data-nav="top">Home</a>
+    <a href="#/works" data-nav="works">Works</a>
+    <a href="#/about" data-nav="about">About</a>
+    <a href="#/contact" data-nav="contact">Contact</a>
+  </div>
+</nav>
+
+<main id="main" class="pages">
+
+  <!-- ============================= TOP ============================= -->
+  <div class="page" data-page="top" hidden>
+
+    <header class="hero shell">
+      <div class="hero__intro">
+        <h1 class="hero__name">Iida Keisuke</h1>
+        <p class="hero__lead">AI の活用と、ホームページ・LP の制作。<br>つくって終わらせず、運用まで一緒に走ります。</p>
+        <div class="hero__meta">
+          <span class="hero__avatar" role="img" aria-label="飯田啓介のプロフィール写真"></span>
+          <span class="mono-sm">AI consulting<br>Web / LP production</span>
+        </div>
+      </div>
+      <canvas class="hero__canvas" data-ik="hero" role="img" aria-label="IK モノグラムを象る光の粒子アニメーション"></canvas>
+    </header>
+
+    <div class="shell quicklinks">
+      <span class="label">Where you can start</span>
+      <div class="quicklinks__set">
+        <a href="#/works">実績を見る →</a>
+        <a href="#/about">自己紹介 →</a>
+        <a href="#/contact">お問い合わせ →</a>
+      </div>
+    </div>
+
+    <!-- Services -->
+    <section class="shell section" aria-labelledby="svc-heading">
+      <div class="rule" data-rv>
+        <span class="label" id="svc-heading">Services</span>
+        <span class="rule__line"></span>
+        <span class="label">できること</span>
+      </div>
+      <div class="grid-2 gap-32 mt-48" data-rv>
+        <article class="card">
+          <span class="label label--sm">(01) AI Consulting</span>
+          <h2 class="card__title">AI 活用の相談・実装</h2>
+          <p class="card__body">現職で実際に AI を業務に組み込んでいます。その経験をもとに、アプリの作成から日々の業務の効率化まで、「どこに置けば効くのか」を一緒に整理します。ツール選定だけで終わらせず、手を動かして形にするところまで。</p>
+          <ul class="chips">
+            <li class="chip">業務効率化</li>
+            <li class="chip">アプリ開発</li>
+            <li class="chip">社内活用の設計</li>
+          </ul>
+        </article>
+        <article class="card">
+          <span class="label label--sm">(02) Web / LP</span>
+          <h2 class="card__title">HP・LP の制作と運用</h2>
+          <p class="card__body">ディレクションと広告運用の経験があるため、制作して納品して終わり、ではなく「公開したあとどう回すか」から逆算して設計できます。サイト設計・制作・改善までを一貫してご提案します。</p>
+          <ul class="chips">
+            <li class="chip">ディレクション</li>
+            <li class="chip">HP / LP 制作</li>
+            <li class="chip">広告運用</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- Works preview -->
+    <section class="shell section" aria-labelledby="works-heading">
+      <div class="rule" data-rv>
+        <span class="label" id="works-heading">Works</span>
+        <span class="rule__line"></span>
+        <a class="label" href="#/works">View all →</a>
+      </div>
+
+      <a class="feature" href="#/work/mifune" data-rv>
+        <div class="feature__text">
+          <h2 class="feature__title">活魚の美舟<br>公式サイト</h2>
+          <div>
+            <div class="label label--onDark">Website / HP — 2025</div>
+            <p class="feature__body">知多半島の旅館の公式サイト。宿の空気感を保ちながら、予約導線をまっすぐに整理しました。</p>
+            <span class="btn btn--light">Read case study <span aria-hidden="true">→</span></span>
+          </div>
+        </div>
+        <div class="feature__media">
+          <div class="shot">
+            <span class="shot__glow" aria-hidden="true"></span>
+            <img src="uploads/671AD1C5-753F-4FC5-A6EE-3EC464F6CB3C_4_5005_c.jpeg" alt="活魚の美舟 客室からの眺め" loading="lazy">
+          </div>
+        </div>
+      </a>
+
+      <div class="grid-2 gap-32 mt-32" data-rv>
+        <a class="work" href="#/work/segrate">
+          <div class="work__thumb work__thumb--icon">
+            <img src="uploads/2406078C-16B1-494F-B034-DE8AE7C1CAE9_1_105_c.jpeg" alt="segrate アプリのアイコン" loading="lazy">
+          </div>
+          <div>
+            <div class="work__head">
+              <h3 class="work__title">segrate</h3>
+              <span class="mono-xs">App / アプリ — 2026</span>
+            </div>
+            <p class="work__body">日々の記録を整理するために、企画から開発まで一人で作ったアプリ。</p>
+          </div>
+        </a>
+        <a class="work" href="#/contact">
+          <div class="work__thumb work__thumb--empty">
+            <span class="label label--sm">LP — 制作依頼受付中</span>
+          </div>
+          <div>
+            <div class="work__head">
+              <h3 class="work__title">LP 制作</h3>
+              <span class="mono-xs">Landing page — 準備中</span>
+            </div>
+            <p class="work__body">広告運用の経験をもとに、獲得までを見据えた LP をご提案します。実績は随時追加予定です。</p>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <!-- About preview -->
+    <section class="shell section" aria-labelledby="about-heading">
+      <div class="rule" data-rv>
+        <span class="label" id="about-heading">About</span>
+        <span class="rule__line"></span>
+        <a class="label" href="#/about">More about me →</a>
+      </div>
+      <div class="about" data-rv>
+        <div class="portrait" role="img" aria-label="飯田啓介のポートレート">
+          <span class="label label--sm">portrait</span>
+        </div>
+        <div>
+          <h2 class="display-2">つくるところから、<br>運用するところまで。</h2>
+          <p class="prose">現職で AI を実際の業務に組み込みながら、その手応えをもとに「どこに AI を置けば仕事が軽くなるか」をお話しできます。アプリの作成も、日々の業務の効率化も、机上の話ではなく自分で動かしてみた経験から。</p>
+          <p class="prose">あわせて、ディレクションと広告運用の経験があります。HP・LP は制作だけでなく、公開後の集客と改善まで一貫してご提案できるのが強みです。</p>
+          <a class="btn btn--outline mt-40" href="#/about">About me <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="shell section" aria-labelledby="cta-heading">
+      <div class="cta" data-rv>
+        <div>
+          <h2 class="cta__title" id="cta-heading">まずは、<br>話すところから。</h2>
+          <p class="cta__body">AI をどう使えばいいか分からない段階でも、サイトを作り直したいという相談でも大丈夫です。</p>
+        </div>
+        <div class="cta__actions">
+          <button type="button" class="btn btn--light btn--block" data-copy-mail>
+            <span data-mail-label>hello@iidakeisuke.dev</span> <span aria-hidden="true">↗</span>
+          </button>
+          <a class="btn btn--ghost btn--block" href="#/contact">お問い合わせフォーム <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ============================= WORKS ============================= -->
+  <div class="page" data-page="works" hidden>
+    <section class="shell page-body">
+      <div class="label">Works — HP / LP / App</div>
+      <h1 class="display-1">All work</h1>
+      <p class="page-lead">HP・LP・アプリの3つに分けて掲載しています。現在公開できるのは2件で、これから随時追加していきます。</p>
+
+      <div class="rule mt-72">
+        <span class="label">01 — Website / HP・LP</span>
+        <span class="rule__line"></span>
+        <span class="mono-xs">1件 ＋ 準備中</span>
+      </div>
+      <div class="grid-2 gap-40 mt-32">
+        <a class="work work--lg" href="#/work/mifune">
+          <div class="work__thumb work__thumb--cover">
+            <img src="uploads/671AD1C5-753F-4FC5-A6EE-3EC464F6CB3C_4_5005_c.jpeg" alt="活魚の美舟 客室からの眺め" loading="lazy">
+          </div>
+          <div>
+            <div class="work__head">
+              <h2 class="work__title">活魚の美舟 公式サイト</h2>
+              <span class="mono-xs">2025</span>
+            </div>
+            <p class="work__body">旅館の公式サイト。ディレクションから制作、公開後の運用まで担当。</p>
+            <ul class="chips chips--light mt-18">
+              <li class="chip">ディレクション</li>
+              <li class="chip">HP 制作</li>
+              <li class="chip">運用</li>
+            </ul>
+          </div>
+        </a>
+        <a class="work work--lg" href="#/contact">
+          <div class="work__thumb work__thumb--empty work__thumb--43">
+            <span class="label label--sm">LP — 制作依頼受付中</span>
+          </div>
+          <div>
+            <div class="work__head">
+              <h2 class="work__title">LP 制作</h2>
+              <span class="mono-xs" aria-hidden="true">→</span>
+            </div>
+            <p class="work__body">広告運用の経験をもとに、獲得までを見据えた LP をご提案します。実績はこれから掲載予定です。</p>
+          </div>
+        </a>
+      </div>
+
+      <div class="rule mt-88">
+        <span class="label">02 — App / アプリ</span>
+        <span class="rule__line"></span>
+        <span class="mono-xs">1件</span>
+      </div>
+      <div class="grid-2 gap-40 mt-32">
+        <a class="work work--lg" href="#/work/segrate">
+          <div class="work__thumb work__thumb--icon work__thumb--43">
+            <img class="work__icon" src="uploads/2406078C-16B1-494F-B034-DE8AE7C1CAE9_1_105_c.jpeg" alt="segrate アプリのアイコン" loading="lazy">
+          </div>
+          <div>
+            <div class="work__head">
+              <h2 class="work__title">segrate</h2>
+              <span class="mono-xs">2026</span>
+            </div>
+            <p class="work__body">企画から開発まで一人で作ったアプリ。AI を実装に取り入れながら制作。</p>
+            <ul class="chips chips--light mt-18">
+              <li class="chip">アプリ開発</li>
+              <li class="chip">個人開発</li>
+              <li class="chip">AI 活用</li>
+            </ul>
+          </div>
+        </a>
+      </div>
+
+      <div class="callout">
+        <div>
+          <h2 class="callout__title">実績はこれから増やしていきます</h2>
+          <p class="callout__body">HP・LP の制作、AI 活用のご相談を受け付けています。</p>
+        </div>
+        <a class="btn btn--outline" href="#/contact">Contact <span aria-hidden="true">→</span></a>
+      </div>
+    </section>
+  </div>
+
+  <!-- ============================= CASE ============================= -->
+  <div class="page" data-page="case" hidden>
+    <article class="shell page-body" data-case-root></article>
+  </div>
+
+  <!-- ============================= ABOUT ============================= -->
+  <div class="page" data-page="about" hidden>
+    <section class="shell page-body">
+      <div class="label">About — Iida Keisuke</div>
+      <h1 class="display-1">はじめまして。</h1>
+
+      <div class="about about--page mt-72">
+        <div>
+          <div class="portrait" role="img" aria-label="飯田啓介のポートレート">
+            <span class="label label--sm">portrait</span>
+          </div>
+          <p class="mono-sm mt-24">Iida Keisuke<br>AI consulting / Web production<br>Japan</p>
+        </div>
+        <div>
+          <p class="prose prose--first">現職で AI を実際の業務に取り入れています。生成 AI をどこに置けば仕事が軽くなるのか、逆にどこに置くと事故るのか。自分で試して分かったことを、そのままお話しできるのが自分の強みだと思っています。</p>
+          <p class="prose">これから力を入れていきたいのは、AI 活用のコンサルティングです。業務の棚卸しから、必要ならアプリを作るところまで。個人開発したアプリ「segrate」も、その延長線上で形にしたものです。</p>
+          <p class="prose">もうひとつの軸が HP・LP の制作です。ディレクションの経験と広告運用の経験があるので、「作る」だけでなく「公開したあとどう集客して、どう直していくか」まで含めてご提案できます。旅館「活魚の美舟」の公式サイトでは、制作から運用まで担当しました。</p>
+
+          <div class="grid-2 gap-48 mt-72">
+            <div>
+              <h2 class="colhead">できること</h2>
+              <ul class="stack-list">
+                <li>AI 活用の相談・業務効率化の設計</li>
+                <li>アプリの企画・開発</li>
+                <li>HP / LP のディレクション・制作</li>
+                <li>広告運用・公開後の改善</li>
+                <li>制作から運用までの一貫した伴走</li>
+              </ul>
+            </div>
+            <div>
+              <h2 class="colhead">これまで</h2>
+              <ol class="timeline">
+                <li><span class="mono-xs">現在</span><span>業務での AI 活用・アプリ開発</span></li>
+                <li><span class="mono-xs">2026</span><span>アプリ「segrate」を個人開発</span></li>
+                <li><span class="mono-xs">2025</span><span>活魚の美舟 公式サイト 制作・運用</span></li>
+                <li><span class="mono-xs">これまで</span><span>Web ディレクション / 広告運用</span></li>
+              </ol>
+            </div>
+          </div>
+
+          <div class="actions mt-72">
+            <a class="btn btn--outline" href="#/works">実績を見る <span aria-hidden="true">→</span></a>
+            <a class="label" href="#/contact">お問い合わせ →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ============================= CONTACT ============================= -->
+  <div class="page" data-page="contact" hidden>
+    <section class="shell page-body">
+      <div class="label">Contact — お気軽にどうぞ</div>
+      <h1 class="display-1">お問い合わせ</h1>
+
+      <div class="contact mt-72">
+        <div>
+          <p class="prose prose--first">AI をどう使えばいいか分からない段階のご相談も、HP・LP の制作や作り直しのご相談も歓迎です。まずは状況をお聞かせください。</p>
+          <dl class="deflist">
+            <div><dt class="label label--sm">Email</dt><dd><button type="button" class="linkish" data-copy-mail><span data-mail-label>hello@iidakeisuke.dev</span></button></dd></div>
+            <div><dt class="label label--sm">ご相談内容</dt><dd>AI 活用 / HP・LP 制作</dd></div>
+            <div><dt class="label label--sm">返信</dt><dd>2営業日以内</dd></div>
+          </dl>
+        </div>
+
+        <div class="formcard">
+          <form class="form" novalidate data-contact-form>
+            <label class="field">
+              <span class="label label--sm">お名前</span>
+              <input type="text" name="name" autocomplete="name" placeholder="山田 太郎">
+            </label>
+            <label class="field">
+              <span class="label label--sm">メールアドレス</span>
+              <input type="email" name="email" autocomplete="email" placeholder="you@company.co.jp">
+            </label>
+            <label class="field">
+              <span class="label label--sm">ご相談内容</span>
+              <textarea name="body" rows="6" placeholder="現在の状況とご相談したいことをお書きください。"></textarea>
+            </label>
+            <p class="form__error" data-form-error role="alert" hidden></p>
+            <button type="submit" class="btn btn--dark">送信する <span aria-hidden="true">→</span></button>
+          </form>
+
+          <div class="form__done" data-form-done hidden>
+            <h2 class="display-3">送信しました。</h2>
+            <p class="prose prose--first">お問い合わせありがとうございます。2営業日以内にご返信します。</p>
+            <button type="button" class="btn btn--outline mt-12" data-form-reset>もう一度送る</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+</main>
+
+<footer class="shell site-footer">
+  <div class="site-footer__mark">
+    <img src="uploads/ik-mark.png" alt="Iida Keisuke ロゴ" width="28" height="28">
+    <span class="mono-sm">AI consulting<br>Web / LP production</span>
+  </div>
+  <nav class="site-footer__nav" aria-label="フッターナビゲーション">
+    <a href="#/">Home</a><a href="#/works">Works</a><a href="#/about">About</a><a href="#/contact">Contact</a>
+  </nav>
+  <small class="mono-xs">© 2026 Iida Keisuke</small>
+</footer>
+
+<div class="toast" data-toast role="status" aria-live="polite"></div>
+
+<script src="app.js"></script>
+</body>
+</html>

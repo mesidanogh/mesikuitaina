@@ -1,0 +1,479 @@
+/* =========================================================
+   Iida Keisuke — portfolio
+   ========================================================= */
+(function () {
+  'use strict';
+
+  var MAIL = 'hello@iidakeisuke.dev';
+
+  var PROJECTS = [
+    {
+      id: 'mifune',
+      kind: 'site',
+      name: '活魚の美舟 公式サイト',
+      year: '2025',
+      client: '旅館 活魚の美舟（愛知県南知多町）',
+      role: 'ディレクション / 制作 / 運用',
+      type: 'コーポレート・宿泊サイト',
+      summary: '知多半島の旅館の公式サイト。宿の空気感を保ちながら、予約までの導線をまっすぐに整理しました。',
+      image: { src: 'uploads/671AD1C5-753F-4FC5-A6EE-3EC464F6CB3C_4_5005_c.jpeg', alt: '活魚の美舟 客室からの眺め' },
+      link: { href: 'https://ikeuo-mifune.co.jp', label: 'ikeuo-mifune.co.jp' },
+      stats: [
+        { k: '担当', v: 'ディレクション〜運用' },
+        { k: '公開', v: '2025年10月' },
+        { k: '主な導線', v: '公式予約・ふるさと納税' }
+      ],
+      sections: [
+        { h: '背景', p: '料理・お風呂・客室と見せたいものが多く、情報が横並びになっていました。初めて訪れる人が「どんな宿か」を掴む前に、予約ページを探して迷ってしまう状態でした。' },
+        { h: 'やったこと', p: 'まず宿の強み（生け簀の魚と伊勢湾の眺め）を軸にトップの構成を組み直し、写真を主役にしたファーストビューへ。新着情報・宿泊・お食事・予約という順番に整理し、公式予約が常に手の届く位置にあるようにしました。ふるさと納税クーポンの案内など、運用しながら増える情報も更新しやすい形にしています。' },
+        { h: '運用まで', p: '公開して終わりではなく、キャンペーンや新着情報の追加、導線の見直しを継続。広告運用の経験があるため、どこを見て改善すればいいかを含めてご提案しています。' }
+      ]
+    },
+    {
+      id: 'segrate',
+      kind: 'app',
+      name: 'segrate',
+      year: '2026',
+      client: '個人開発',
+      role: '企画 / デザイン / 開発',
+      type: 'モバイルアプリ',
+      summary: '「分ける」ことを軸にした個人開発アプリ。企画から実装まで一人で作り、開発過程にも AI を取り入れました。',
+      image: { src: 'uploads/2406078C-16B1-494F-B034-DE8AE7C1CAE9_1_105_c.jpeg', alt: 'segrate アプリのアイコン' },
+      stats: [
+        { k: '担当', v: '企画〜開発' },
+        { k: '体制', v: '個人開発' },
+        { k: 'AI 活用', v: '設計・実装の両方' }
+      ],
+      sections: [
+        { h: 'つくった理由', p: '普段の業務で感じていた「情報を分けて整理するだけで判断が早くなる」という手応えを、そのまま形にしたくて作り始めました。' },
+        { h: 'つくり方', p: '要件の整理から実装まで一人で進め、AI を壁打ち相手・実装の相棒として使いました。どこまで任せると速く、どこからは自分で決めるべきかの線引きが、そのままコンサルの引き出しになっています。' },
+        { h: 'これから', p: '実際に使いながら改善中です。同じ発想で、業務に合わせた小さなアプリを作るご相談も受け付けています。' }
+      ]
+    }
+  ];
+
+  var $ = function (sel, root) { return (root || document).querySelector(sel); };
+  var $$ = function (sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); };
+
+  var esc = function (s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  };
+
+  var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------------------------------------------------------
+     Toast
+     --------------------------------------------------------- */
+  var toastEl = $('[data-toast]');
+  var toastTimer;
+  function flash(msg) {
+    if (!toastEl) return;
+    clearTimeout(toastTimer);
+    toastEl.textContent = msg;
+    toastEl.classList.add('is-visible');
+    toastTimer = setTimeout(function () { toastEl.classList.remove('is-visible'); }, 2200);
+  }
+
+  /* ---------------------------------------------------------
+     Reveal on scroll
+     --------------------------------------------------------- */
+  var revealObserver = null;
+  function observeReveals() {
+    if (prefersReduced) {
+      $$('[data-rv]').forEach(function (el) { el.classList.add('is-in'); });
+      return;
+    }
+    if (!('IntersectionObserver' in window)) {
+      $$('[data-rv]').forEach(function (el) { el.classList.add('is-in'); });
+      return;
+    }
+    if (!revealObserver) {
+      revealObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add('is-in');
+          revealObserver.unobserve(entry.target);
+        });
+      }, { rootMargin: '0px 0px -12% 0px' });
+    }
+    $$('[data-rv]:not(.is-in)').forEach(function (el) { revealObserver.observe(el); });
+  }
+
+  /* ---------------------------------------------------------
+     Particle logo field
+     --------------------------------------------------------- */
+  var logoImage = null;
+  var logoReady = new Promise(function (resolve) {
+    var inDom = $('.nav__mark img');
+    var img = new Image();
+    img.decoding = 'async';
+    img.onload = function () { resolve(img); };
+    img.onerror = function () { resolve(null); };
+    img.src = (inDom && (inDom.currentSrc || inDom.src)) || 'uploads/ik-mark.png';
+    logoImage = img;
+  }).then(function (img) { logoImage = img; return img; });
+
+  function makeSprite(color, size) {
+    var s = document.createElement('canvas');
+    s.width = s.height = size;
+    var g = s.getContext('2d');
+    var rg = g.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2);
+    rg.addColorStop(0, color.replace('ALPHA', '1'));
+    rg.addColorStop(0.35, color.replace('ALPHA', '0.5'));
+    rg.addColorStop(1, color.replace('ALPHA', '0'));
+    g.fillStyle = rg;
+    g.fillRect(0, 0, size, size);
+    return s;
+  }
+
+  var SPRITE = null, SPRITE_HOT = null;
+
+  function startField(canvas, logo) {
+    if (!logo || !logo.naturalWidth) return function () {};
+
+    var ctx = canvas.getContext('2d');
+    var dpr = Math.min(2, window.devicePixelRatio || 1);
+    var scale = parseFloat(canvas.dataset.scale || '0.72');
+    var w = 0, h = 0, pts = [], ps = [], raf = 0, retry = 0;
+    var t0 = performance.now();
+
+    if (!SPRITE) {
+      SPRITE = makeSprite('rgba(59,64,56,ALPHA)', 24);
+      SPRITE_HOT = makeSprite('rgba(120,124,112,ALPHA)', 34);
+    }
+
+    function sample() {
+      w = canvas.clientWidth;
+      h = canvas.clientHeight;
+      if (!w || !h) return false;
+
+      canvas.width = w * dpr;
+      canvas.height = h * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      var off = document.createElement('canvas');
+      off.width = w;
+      off.height = h;
+      var o = off.getContext('2d', { willReadFrequently: true });
+      var s = Math.min(w, h) * scale * 1.5;
+      o.drawImage(logo, w / 2 - s / 2, h / 2 - s / 2, s, s);
+
+      var data = o.getImageData(0, 0, w, h).data;
+      var step = Math.max(2, Math.round(Math.min(w, h) / 240));
+      pts = [];
+      for (var y = 0; y < h; y += step) {
+        for (var x = 0; x < w; x += step) {
+          if (data[(y * w + x) * 4 + 3] > 110) {
+            pts.push([x + (Math.random() - 0.5) * step, y + (Math.random() - 0.5) * step]);
+          }
+        }
+      }
+      for (var i = pts.length - 1; i > 0; i--) {
+        var j = (Math.random() * (i + 1)) | 0;
+        var tmp = pts[i]; pts[i] = pts[j]; pts[j] = tmp;
+      }
+      pts = pts.slice(0, 2200);
+      return true;
+    }
+
+    function build() {
+      ps = pts.map(function (pt, i) {
+        return {
+          tx: pt[0], ty: pt[1],
+          x: w / 2 + (Math.random() - 0.5) * w * 1.4,
+          y: h / 2 + (Math.random() - 0.5) * h * 1.4,
+          vx: 0, vy: 0,
+          ph: Math.random() * Math.PI * 2,
+          sp: 0.6 + Math.random() * 0.9,
+          sz: i % 17 === 0 ? 1.9 : 0.75 + Math.random() * 0.75,
+          hot: i % 17 === 0
+        };
+      });
+    }
+
+    function draw(now) {
+      var t = (now - t0) / 1000;
+      var cyc = t % 9;
+      var burst = cyc < 1.6 ? Math.sin((cyc / 1.6) * Math.PI) : 0;
+
+      ctx.clearRect(0, 0, w, h);
+      for (var i = 0; i < ps.length; i++) {
+        var p = ps[i];
+        var wob = 3 + burst * 44;
+        var gx = p.tx + Math.cos(t * 0.55 * p.sp + p.ph) * wob;
+        var gy = p.ty + Math.sin(t * 0.45 * p.sp + p.ph * 1.7) * wob;
+        var fx = (gx - p.x) * 0.045;
+        var fy = (gy - p.y) * 0.045;
+        p.vx = (p.vx + fx) * 0.86;
+        p.vy = (p.vy + fy) * 0.86;
+        if (prefersReduced) { p.x = gx; p.y = gy; } else { p.x += p.vx; p.y += p.vy; }
+
+        var r = p.sz * (p.hot ? 6 : 4.6) * (1 + burst * 0.25);
+        ctx.globalAlpha = 0.42 * (p.hot ? 1 : 0.6) * (1 - burst * 0.3);
+        ctx.drawImage(p.hot ? SPRITE_HOT : SPRITE, p.x - r, p.y - r, r * 2, r * 2);
+      }
+      ctx.globalAlpha = 1;
+      if (!prefersReduced) raf = requestAnimationFrame(draw);
+    }
+
+    if (!sample()) {
+      retry = setTimeout(function () {
+        if (sample()) { build(); raf = requestAnimationFrame(draw); }
+      }, 400);
+      return function () { clearTimeout(retry); };
+    }
+
+    build();
+    raf = requestAnimationFrame(draw);
+
+    var ro = null;
+    if ('ResizeObserver' in window) {
+      ro = new ResizeObserver(function () { if (sample()) build(); });
+      ro.observe(canvas);
+    }
+
+    return function () {
+      cancelAnimationFrame(raf);
+      clearTimeout(retry);
+      if (ro) ro.disconnect();
+    };
+  }
+
+  var stopField = null;
+  function bootField() {
+    var canvas = $('canvas[data-ik]');
+    if (!canvas || stopField) return;
+    logoReady.then(function (logo) {
+      if (stopField) return;
+      var page = canvas.closest('.page');
+      if (page && page.hidden) return;
+      stopField = startField(canvas, logo);
+    });
+  }
+  function teardownField() {
+    if (!stopField) return;
+    stopField();
+    stopField = null;
+  }
+
+  /* ---------------------------------------------------------
+     Case study rendering
+     --------------------------------------------------------- */
+  function projectById(id) {
+    for (var i = 0; i < PROJECTS.length; i++) if (PROJECTS[i].id === id) return PROJECTS[i];
+    return null;
+  }
+
+  function renderCase(project) {
+    var root = $('[data-case-root]');
+    if (!root) return;
+
+    var next = PROJECTS[(PROJECTS.indexOf(project) + 1) % PROJECTS.length];
+
+    var stage = project.kind === 'app'
+      ? '<div class="case__shot case__shot--app">' +
+          '<img src="' + esc(project.image.src) + '" alt="' + esc(project.image.alt) + '">' +
+          '<div class="case__phone"><span class="label label--sm">app screen</span></div>' +
+        '</div>'
+      : '<div class="case__shot">' +
+          '<img src="' + esc(project.image.src) + '" alt="' + esc(project.image.alt) + '">' +
+        '</div>';
+
+    var meta = [
+      ['Year', project.year],
+      ['Client', project.client],
+      ['Role', project.role],
+      ['Type', project.type]
+    ].map(function (row) {
+      return '<div><dt class="label label--sm">' + esc(row[0]) + '</dt><dd>' + esc(row[1]) + '</dd></div>';
+    }).join('');
+
+    var stats = project.stats.map(function (s) {
+      return '<div class="stat"><div class="label label--sm">' + esc(s.k) + '</div>' +
+             '<div class="stat__v">' + esc(s.v) + '</div></div>';
+    }).join('');
+
+    var sections = project.sections.map(function (sec) {
+      return '<div class="case__section"><h2>' + esc(sec.h) + '</h2><p>' + esc(sec.p) + '</p></div>';
+    }).join('');
+
+    var visit = project.link
+      ? '<a class="btn btn--outline" href="' + esc(project.link.href) + '" target="_blank" rel="noopener">' +
+        esc(project.link.label) + ' <span aria-hidden="true">↗</span></a>'
+      : '';
+
+    root.innerHTML =
+      '<a class="case__back" href="#/works">← Back to works</a>' +
+      '<h1 class="case__title">' + esc(project.name) + '</h1>' +
+      '<p class="case__summary">' + esc(project.summary) + '</p>' +
+      '<dl class="meta">' + meta + '</dl>' +
+      '<div class="case__stage"><div class="case__frame">' +
+        '<span class="shot__glow" aria-hidden="true"></span>' + stage +
+      '</div></div>' +
+      '<div class="stats">' + stats + '</div>' +
+      '<div class="case__body">' +
+        '<div class="case__aside"><span class="label">Case study</span></div>' +
+        '<div>' + sections + visit + '</div>' +
+      '</div>' +
+      '<div class="case__foot">' +
+        '<a class="label" href="#/works">← All works</a>' +
+        '<a class="case__next" href="#/work/' + esc(next.id) + '">' +
+          '<span class="label">Next project</span>' +
+          '<strong>' + esc(next.name) + ' →</strong>' +
+        '</a>' +
+      '</div>';
+  }
+
+  /* ---------------------------------------------------------
+     Router
+     --------------------------------------------------------- */
+  var pagesEl = $('.pages');
+  var fadeTimer;
+  var current = null;
+
+  function parseHash() {
+    var hash = (window.location.hash || '').replace(/^#\/?/, '');
+    var parts = hash.split('/').filter(Boolean);
+
+    if (!parts.length) return { page: 'top' };
+    if (parts[0] === 'works') return { page: 'works' };
+    if (parts[0] === 'about') return { page: 'about' };
+    if (parts[0] === 'contact') return { page: 'contact' };
+    if (parts[0] === 'work' && projectById(parts[1])) return { page: 'case', id: parts[1] };
+    return { page: 'top' };
+  }
+
+  var TITLES = {
+    top: 'Iida Keisuke — AI 活用と HP・LP 制作',
+    works: 'Works — Iida Keisuke',
+    about: 'About — Iida Keisuke',
+    contact: 'お問い合わせ — Iida Keisuke'
+  };
+
+  function scrollTop() {
+    try { window.scrollTo({ top: 0, left: 0, behavior: 'instant' }); }
+    catch (e) { window.scrollTo(0, 0); }
+  }
+
+  function show(route) {
+    if (route.page === 'case') renderCase(projectById(route.id));
+
+    $$('.page').forEach(function (el) {
+      el.hidden = el.dataset.page !== route.page;
+    });
+
+    if (route.page === 'top') bootField(); else teardownField();
+
+    var navKey = route.page === 'case' ? 'works' : route.page;
+    $$('[data-nav]').forEach(function (a) {
+      if (a.dataset.nav === navKey) a.setAttribute('aria-current', 'page');
+      else a.removeAttribute('aria-current');
+    });
+
+    document.title = route.page === 'case'
+      ? projectById(route.id).name + ' — Iida Keisuke'
+      : TITLES[route.page];
+
+    scrollTop();
+    requestAnimationFrame(scrollTop);
+    observeReveals();
+  }
+
+  function route(initial) {
+    var next = parseHash();
+    var key = next.page + (next.id || '');
+    if (key === current) return;
+
+    if (initial) {
+      current = key;
+      show(next);
+      return;
+    }
+
+    clearTimeout(fadeTimer);
+    pagesEl.classList.add('is-fading');
+    fadeTimer = setTimeout(function () {
+      current = key;
+      show(next);
+      pagesEl.classList.remove('is-fading');
+    }, prefersReduced ? 0 : 200);
+  }
+
+  window.addEventListener('hashchange', function () { route(false); });
+
+  /* ---------------------------------------------------------
+     Copy e-mail
+     --------------------------------------------------------- */
+  var copyTimer;
+  document.addEventListener('click', function (e) {
+    var trigger = e.target.closest ? e.target.closest('[data-copy-mail]') : null;
+    if (!trigger) return;
+    e.preventDefault();
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(MAIL).catch(function () {});
+    }
+    $$('[data-mail-label]').forEach(function (el) { el.textContent = 'コピーしました'; });
+    flash('メールアドレスをコピーしました');
+
+    clearTimeout(copyTimer);
+    copyTimer = setTimeout(function () {
+      $$('[data-mail-label]').forEach(function (el) { el.textContent = MAIL; });
+    }, 2200);
+  });
+
+  /* ---------------------------------------------------------
+     Contact form (prototype — no backend wired up)
+     --------------------------------------------------------- */
+  var form = $('[data-contact-form]');
+  var formError = $('[data-form-error]');
+  var formDone = $('[data-form-done]');
+
+  function setError(msg) {
+    if (!formError) return;
+    formError.textContent = msg;
+    formError.hidden = !msg;
+  }
+
+  if (form) {
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var name = form.elements.name.value.trim();
+      var mail = form.elements.email.value.trim();
+      var body = form.elements.body.value.trim();
+
+      if (!name || !mail || !body) return setError('※ すべての項目をご入力ください');
+      if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(mail)) return setError('※ メールアドレスの形式をご確認ください');
+
+      setError('');
+      form.hidden = true;
+      formDone.hidden = false;
+      flash('送信しました（プロトタイプ）');
+    });
+
+    form.addEventListener('input', function () { setError(''); });
+  }
+
+  var resetBtn = $('[data-form-reset]');
+  if (resetBtn) {
+    resetBtn.addEventListener('click', function () {
+      form.reset();
+      setError('');
+      formDone.hidden = true;
+      form.hidden = false;
+      form.elements.name.focus();
+    });
+  }
+
+  /* ---------------------------------------------------------
+     Boot
+     --------------------------------------------------------- */
+  route(true);
+  observeReveals();
+
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(function () { bootField(); });
+  }
+})();

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ページが見つかりません — Iida Keisuke</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#D9D9D3">
+<link rel="icon" href="/uploads/ik-mark.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400&family=Bitter:wght@400&family=IBM+Plex+Mono:wght@400&family=Noto+Serif+JP:wght@400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/styles.css">
+<style>
+  .notfound {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    min-height: 100vh;
+    padding-block: 96px;
+  }
+  .notfound__code {
+    margin: 24px 0 0;
+    font: 400 clamp(4rem, 12vw, 9rem)/1 var(--display);
+    letter-spacing: -.02em;
+  }
+</style>
+</head>
+<body>
+
+<main class="shell notfound">
+  <span class="label">Error — 404</span>
+  <h1 class="notfound__code">Not found</h1>
+  <p class="page-lead">お探しのページは見つかりませんでした。<br>アドレスが変わったか、削除された可能性があります。</p>
+  <a class="btn btn--outline mt-40" href="/">トップへ戻る <span aria-hidden="true">→</span></a>
+</main>
+
+</body>
+</html>

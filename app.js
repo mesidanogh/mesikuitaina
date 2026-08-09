@@ -6,6 +6,13 @@
 
   var MAIL = 'keahi0427@icloud.com';
 
+  // お問い合わせフォームの送信先。
+  // 空のままだと、入力内容を件名・本文に入れてメールアプリを開く方式で動きます
+  // （サーバー不要。ただし送信者ご本人の操作が 1 回必要）。
+  // Formspree や Web3Forms などのエンドポイントを入れると、その場で送信されます。
+  // 例: 'https://formspree.io/f/xxxxxxxx'
+  var FORM_ENDPOINT = '';
+
   var PROJECTS = [
     {
       id: 'mifune',
@@ -442,6 +449,46 @@
     formError.hidden = !msg;
   }
 
+  function showDone(title, message) {
+    $('[data-done-title]').textContent = title;
+    $('[data-done-body]').textContent = message;
+    form.hidden = true;
+    formDone.hidden = false;
+  }
+
+  // 送信先が未設定のときは、入力内容を持ったままメールアプリを開く。
+  // 「送信しました」と出しておいて実際には誰にも届かない、という状態を作らないため。
+  function handoffToMailApp(name, mail, body) {
+    var subject = 'お問い合わせ（' + name + ' 様）';
+    var lines = ['お名前: ' + name, 'メールアドレス: ' + mail, '', body];
+    window.location.href = 'mailto:' + MAIL +
+      '?subject=' + encodeURIComponent(subject) +
+      '&body=' + encodeURIComponent(lines.join('\n'));
+    showDone('メールアプリを開きました。',
+      '内容が入力された状態で開きます。そのまま送信してください。開かない場合は ' + MAIL + ' 宛にお送りいただければ確実に届きます。');
+  }
+
+  function postToEndpoint(name, mail, body, submitBtn) {
+    var label = submitBtn.innerHTML;
+    submitBtn.disabled = true;
+    submitBtn.textContent = '送信中…';
+
+    fetch(FORM_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({ name: name, email: mail, message: body })
+    }).then(function (res) {
+      if (!res.ok) throw new Error('status ' + res.status);
+      showDone('送信しました。', 'お問い合わせありがとうございます。2営業日以内にご返信します。');
+      flash('送信しました');
+    }).catch(function () {
+      setError('※ 送信に失敗しました。お手数ですが ' + MAIL + ' 宛にお送りください');
+    }).then(function () {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = label;
+    });
+  }
+
   if (form) {
     form.addEventListener('submit', function (e) {
       e.preventDefault();
@@ -453,9 +500,8 @@
       if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(mail)) return setError('※ メールアドレスの形式をご確認ください');
 
       setError('');
-      form.hidden = true;
-      formDone.hidden = false;
-      flash('送信しました（プロトタイプ）');
+      if (FORM_ENDPOINT) postToEndpoint(name, mail, body, form.querySelector('[type=submit]'));
+      else handoffToMailApp(name, mail, body);
     });
 
     form.addEventListener('input', function () { setError(''); });

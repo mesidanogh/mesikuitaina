@@ -16,8 +16,9 @@
      ============================================================ -->
 <meta name="robots" content="noindex, nofollow">
 
-<!-- 公開URLが決まったら、下の 4 か所の https://iida-keisuke.pages.dev を
-     実際のURLに置換してください（DEPLOY.md の「1. URL を差し替える」） -->
+<!-- 下のドメインは仮の値です。手で直さず publish.py で設定してください:
+       python3 publish.py あなたのドメイン
+     canonical / og:url / og:image と robots.txt がまとめて書き換わります。 -->
 <link rel="canonical" href="https://iida-keisuke.pages.dev/">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ja_JP">
@@ -144,7 +145,7 @@
               <h3 class="work__title">segrate</h3>
               <span class="mono-xs">App / アプリ — 開発中</span>
             </div>
-            <p class="work__body">自分だけが知っている地元のお店を、地図で共有するアプリ。企画から開発まで一人で制作しています。</p>
+            <p class="work__body">自分だけが知っている地元のお店を、地図で共有するアプリ。</p>
           </div>
         </a>
         <a class="work" href="#/contact">
@@ -376,8 +377,8 @@
           </form>
 
           <div class="form__done" data-form-done hidden>
-            <h2 class="display-3">送信しました。</h2>
-            <p class="prose prose--first">お問い合わせありがとうございます。2営業日以内にご返信します。</p>
+            <h2 class="display-3" data-done-title>送信しました。</h2>
+            <p class="prose prose--first" data-done-body>お問い合わせありがとうございます。2営業日以内にご返信します。</p>
             <button type="button" class="btn btn--outline mt-12" data-form-reset>もう一度送る</button>
           </div>
         </div>

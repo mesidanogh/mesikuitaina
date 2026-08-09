@@ -1,58 +1,66 @@
-# 公開手順（Cloudflare Pages）
+# 公開手順（独自ドメイン + Cloudflare Pages）
 
-このサイトはビルド不要の静的サイトです。フォルダをそのまま置けば動きます。
+サーバー不要の静的サイトです。HTML / CSS / JS と画像を置くだけで動きます。
+Cloudflare Pages に置けばサーバーの管理も費用も発生しません（無料枠で十分収まります）。
 
-**いまの状態：公開しても検索エンジンには載りません。**
-`index.html` の `noindex` と `robots.txt` で全クローラーをブロックしてあるので、
-URL を知っている人だけが見られる「限定公開」として先に出しておけます。
-本当に公開する準備ができたら [4. 本公開に切り替える](#4-本公開に切り替える) の 3 手順を実行してください。
+いまの状態は `python3 publish.py --status` で確認できます。
 
 ---
 
-## 0. 準備できているもの
+## 全体の流れ
 
-| ファイル | 役割 |
-|---|---|
-| `index.html` / `styles.css` / `app.js` | サイト本体 |
-| `uploads/` | 画像 3 点 |
-| `og-image.png` | SNS でシェアしたときに出るカード画像（1200×630） |
-| `404.html` | 存在しない URL のときに出るページ。Cloudflare Pages が自動で使います |
-| `robots.txt` | クローラー設定（いまは全ブロック） |
-| `_headers` | セキュリティヘッダーとキャッシュ設定。Cloudflare Pages が自動で読みます |
-| `.gitignore` | 13MB のバンドル ` Top.html` などを除外 |
+| | やること | 誰が |
+|---|---|---|
+| 1 | ドメインを取得する | **ご自身で**（購入操作が必要なため） |
+| 2 | `publish.py` でドメインを設定する | コマンド1行 |
+| 3 | GitHub に push する | コマンド3行 |
+| 4 | Cloudflare Pages に接続する | 画面操作 |
+| 5 | 独自ドメインを割り当てる（DNS） | 画面操作 + CNAME 1本 |
+| 6 | 検索エンジンに公開する | コマンド1行 |
 
-Git リポジトリは初期化＋初回コミット済みです。
+1〜5 を終えた時点で「URL を知っている人は見られる」状態、6 で「検索に載る」状態になります。
 
 ---
 
-## 1. URL を差し替える
+## 1. ドメインを取得する
 
-Cloudflare Pages のプロジェクト名を決めると、URL は
-`https://<プロジェクト名>.pages.dev` になります。
+**ここだけは代行できません**（支払いが発生する操作のため）。ご自身で取得をお願いします。
 
-例：プロジェクト名を `iida-keisuke` にすると → `https://iida-keisuke.pages.dev`
+サブドメインで運用する前提なので、取るのは大元のドメイン1つで大丈夫です。
 
-決まったら、仮で入れてある `https://iida-keisuke.pages.dev` を実際の URL に置換します。
-出てくるのは `index.html` の 4 か所と `robots.txt` の 1 か所だけです。
+例：`iidakeisuke.com` を取って、`portfolio.iidakeisuke.com` や `www.iidakeisuke.com` を使う
+
+取得先の候補：
+
+- **Cloudflare Registrar** — Pages と同じ管理画面で完結し、DNS 設定が自動。更新料に上乗せがないので長期的には一番安いことが多いです。ただし `.jp` は非対応。
+- **お名前.com / ムームードメイン / Xserverドメイン** — 日本語で完結。`.jp` も取れます。DNS に CNAME を1本足す作業が必要（手順は下に書いてあります）。
+
+`.com` なら年 2,000 円前後が目安です。
+
+---
+
+## 2. ドメインを設定する
+
+取得したドメイン（実際に使うサブドメイン）を渡して実行します。
 
 ```bash
-grep -rn "iida-keisuke.pages.dev" index.html robots.txt
+python3 publish.py portfolio.iidakeisuke.com
 ```
 
-一括で置換する場合（`あなたのプロジェクト名` の部分を書き換えて実行）：
+`canonical` / `og:url` / `og:image` / `robots.txt` がまとめて書き換わります。
+何度でも実行できるので、あとから変えるときも同じコマンドでかまいません。
 
-```bash
-sed -i '' 's|iida-keisuke\.pages\.dev|あなたのプロジェクト名.pages.dev|g' index.html robots.txt
-```
-
-> プロジェクト名がすでに他の人に使われていると取れないことがあります。
-> Cloudflare の画面でプロジェクトを作ってから、確定した名前で置換するのが確実です。
+> この時点ではまだ検索エンジンをブロックしたままです。手順6で解除します。
 
 ---
 
-## 2. GitHub にリポジトリを作って push する
+## 3. GitHub に push する
 
 GitHub で空のリポジトリを作ってから（README などは追加しない）：
+
+```bash
+git add -A && git commit -m "Set production domain"
+```
 
 ```bash
 git remote add origin https://github.com/<ユーザー名>/<リポジトリ名>.git
@@ -60,95 +68,133 @@ git branch -M main
 git push -u origin main
 ```
 
-> 公開したくない情報は入っていませんが、リポジトリは **Private** で作って構いません。
-> Cloudflare Pages は Private リポジトリでも接続できます。
+リポジトリは **Private** で問題ありません。Cloudflare Pages は Private でも接続できます。
 
 ---
 
-## 3. Cloudflare Pages に繋ぐ
+## 4. Cloudflare Pages に接続する
 
-1. https://dash.cloudflare.com にログイン（アカウントがなければ無料で作成）
-2. 左メニューの **Workers & Pages** → **Create** → **Pages** タブ → **Connect to Git**
+1. https://dash.cloudflare.com にログイン（無料アカウント）
+2. **Workers & Pages** → **Create** → **Pages** → **Connect to Git**
 3. GitHub を連携し、さきほどのリポジトリを選ぶ
-4. ビルド設定を次のようにする：
+4. ビルド設定：
 
    | 項目 | 値 |
    |---|---|
    | Framework preset | **None** |
-   | Build command | **空欄のまま** |
-   | Build output directory | **`/`**（ルート） |
+   | Build command | **空欄** |
+   | Build output directory | **`/`** |
 
 5. **Save and Deploy**
 
-1〜2 分で `https://<プロジェクト名>.pages.dev` が見られるようになります。
+1〜2分で `https://<プロジェクト名>.pages.dev` が見られるようになります。
 以降は `git push` するたびに自動で再デプロイされます。
 
-### Git を使わずに試したい場合
+---
 
-同じ画面の **Upload assets** を選び、このフォルダの中身をドラッグ＆ドロップしても公開できます。
-その場合は ` Top.html`（13MB のバンドル）を **一緒にアップロードしない** よう気をつけてください。
+## 5. 独自ドメインを割り当てる
+
+Pages のプロジェクト → **Custom domains** → **Set up a domain** → 使うサブドメインを入力。
+
+そのあとは、ドメインをどこで管理しているかで分かれます。
+
+### ドメインを Cloudflare で管理している場合
+
+DNS レコードが自動で作られます。数分待てば繋がります。作業はこれだけです。
+
+### 他社（お名前.com など）で管理している場合
+
+Cloudflare の画面に「このレコードを追加してください」と表示されるので、
+取得先の DNS 設定画面で CNAME を1本足します。
+
+| 種別 | ホスト名 | 値 |
+|---|---|---|
+| CNAME | `portfolio`（使うサブドメイン部分） | `<プロジェクト名>.pages.dev` |
+
+反映は数分〜最大で数時間かかることがあります。SSL 証明書は Cloudflare が自動で発行するので、
+`https://` は何もしなくても有効になります。
+
+> **apex（`iidakeisuke.com` のように www なし）を使いたい場合**は CNAME が使えないため、
+> ネームサーバーごと Cloudflare に向ける必要があります。サブドメイン運用ならこの作業は不要です。
 
 ---
 
-## 4. 本公開に切り替える
+## 6. 検索エンジンに公開する
 
-検索結果に出してよくなったタイミングで、次の 3 つをやります。
+サイトの表示が問題ないことを確認したら、最後にブロックを外します。
 
-### (1) `index.html` から noindex を消す
-
-`<meta name="robots" content="noindex, nofollow">` の行を削除します
-（すぐ上のコメントブロックも一緒に消して構いません）。
-
-### (2) `robots.txt` を本公開用にする
-
-いまの `Disallow: /` の 2 行を消して、下にコメントアウトしてある「本公開用」のブロックを有効にします。
-
-### (3) `sitemap.xml` を置く
-
-`robots.txt` から参照しているので、公開時に作っておくと検索エンジンに拾われやすくなります。
-ハッシュルーティング（`#/works` など）は 1 ページ扱いなので、中身はトップ 1 件で十分です。
-
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://あなたのプロジェクト名.pages.dev/</loc>
-    <lastmod>2026-08-01</lastmod>
-  </url>
-</urlset>
+```bash
+python3 publish.py portfolio.iidakeisuke.com --public
 ```
 
-そのあと push すれば反映されます。Google Search Console への登録もこのタイミングで。
+- `index.html` から `noindex` が外れます
+- `robots.txt` がクロール許可に切り替わります
+- `sitemap.xml` が生成されます
+
+```bash
+git add -A && git commit -m "Go live" && git push
+```
+
+push した数分後から検索エンジンが拾い始めます。
+あわせて [Google Search Console](https://search.google.com/search-console) にドメインを登録し、
+`sitemap.xml` を送信しておくと反映が早くなります。
+
+戻したくなったら `python3 publish.py <ドメイン>`（`--public` なし）で限定公開に戻せます。
 
 ---
 
-## 補足
+## お問い合わせフォームについて
 
-### URL を知っている人にも見せたくない場合
+**いまは「メールアプリを開く」方式で動いています。** 送信ボタンを押すと、入力内容が件名・本文に
+入った状態でメールアプリが立ち上がります。サーバーが要らない代わりに、送信者ご本人が最後に
+送信ボタンを押す必要があります。
 
-`noindex` は「検索結果に出さない」だけで、URL を直接開けば誰でも見られます。
-完全に鍵をかけたいときは Cloudflare の **Zero Trust → Access** でメールアドレス認証をかけられます
-（無料枠あり）。Pages のプロジェクト設定から追加できます。
+サイト上で完結させたい場合は、外部のフォームサービスを使うと**サーバーレスのまま**実現できます。
 
-### あとで独自ドメインにしたくなったら
+1. [Formspree](https://formspree.io/) または [Web3Forms](https://web3forms.com/) で無料登録し、エンドポイントURLを取得
+2. `app.js` の先頭にある `FORM_ENDPOINT` に貼る
 
-Cloudflare Pages のプロジェクト → **Custom domains** → ドメインを追加。
-ドメインを Cloudflare で管理していれば DNS は自動設定、他社管理なら CNAME を 1 本足すだけです。
-`.pages.dev` の URL もそのまま残るので、切り替えても壊れません。
-そのときは [1. URL を差し替える](#1-url-を差し替える) の置換をもう一度、新しいドメインで実行してください。
+```js
+var FORM_ENDPOINT = 'https://formspree.io/f/xxxxxxxx';
+```
+
+これだけで、その場で送信 → 完了メッセージ表示に切り替わります（失敗時はメールアドレスを案内する
+エラーが出ます）。無料枠は月50件程度なので、個人のお問い合わせ用途なら十分です。
+
+---
+
+## そのほか
 
 ### ローカルで確認する
 
 ```bash
-python3 .claude/serve.py 4321
+python3 .claude/serve.py
 ```
 
-http://localhost:4321 で開きます。
+http://localhost:4321 で開きます。キャッシュを返さない設定なので、編集してリロードすれば必ず最新が出ます。
 
 ### メールアドレスを変えるとき
 
-`keahi0427@icloud.com` が 3 か所（`app.js` の `MAIL`、`index.html` の表示テキスト 2 か所）に入っています。
+`keahi0427@icloud.com` が `app.js` と `index.html` に入っています。
 
 ```bash
 grep -rn "keahi0427@icloud.com" index.html app.js
 ```
+
+### 差し替えると効くもの
+
+- **segrate の画面キャプチャ** — 実績詳細ページがまだ `APP SCREEN` のプレースホルダーです。
+  地図アプリだと一目で分かる画面があると説得力が上がります
+- **OG画像** — `og-image.png`。文言を変えたら作り直しが必要です
+
+### ファイル構成
+
+| ファイル | 役割 |
+|---|---|
+| `index.html` / `styles.css` / `app.js` | サイト本体 |
+| `uploads/` | 画像 |
+| `og-image.png` | SNS シェア時のカード画像（1200×630） |
+| `404.html` | 存在しない URL 用。Cloudflare Pages が自動で使う |
+| `robots.txt` / `sitemap.xml` | クローラー向け。`publish.py` が管理 |
+| `_headers` | セキュリティヘッダーとキャッシュ設定。Cloudflare Pages が自動で読む |
+| `publish.py` | ドメイン設定と公開切り替え |

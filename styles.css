@@ -569,7 +569,7 @@ ul, ol, dl, dd, figure { margin: 0; padding: 0; list-style: none; }
 
 .meta {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   margin-top: 64px;
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
@@ -779,10 +779,6 @@ ul, ol, dl, dd, figure { margin: 0; padding: 0; list-style: none; }
   .feature { grid-template-columns: 1fr; }
   .feature__text { padding: 56px 40px; }
   .feature__media { padding: 0 40px 40px; }
-  .meta { grid-template-columns: repeat(2, 1fr); }
-  .meta > div:nth-child(2) { padding-right: 0; border-right: none; }
-  .meta > div:nth-child(3) { padding-left: 0; border-top: 1px solid var(--line); }
-  .meta > div:nth-child(4) { border-top: 1px solid var(--line); }
 }
 
 @media (max-width: 900px) {
@@ -805,6 +801,10 @@ ul, ol, dl, dd, figure { margin: 0; padding: 0; list-style: none; }
   .nav__links { gap: 18px; font-size: 12px; letter-spacing: .08em; }
   .quicklinks { flex-direction: column; align-items: flex-start; gap: 16px; }
   .work__thumb--icon img, .work__thumb--icon .work__icon { width: 40%; }
+  /* 2 列だと 1 列あたりが狭すぎるので縦積みにする */
+  .meta { grid-template-columns: 1fr; }
+  .meta > div { padding-inline: 0; border-right: none; }
+  .meta > div + div { border-top: 1px solid var(--line); }
   .case__shot { height: auto; }
   .case__shot--app { flex-direction: column; gap: 32px; }
   .case__shot--app img { width: 120px; }

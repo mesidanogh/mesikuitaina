@@ -303,9 +303,7 @@
         '</div>';
 
     var meta = [
-      ['Year', project.year],
       ['Client', project.client],
-      ['Role', project.role],
       ['Type', project.type]
     ].map(function (row) {
       return '<div><dt class="label label--sm">' + esc(row[0]) + '</dt><dd>' + esc(row[1]) + '</dd></div>';

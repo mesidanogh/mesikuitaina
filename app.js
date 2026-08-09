@@ -17,17 +17,7 @@
       type: 'コーポレート・宿泊サイト',
       summary: '知多半島の旅館の公式サイト。宿の空気感を保ちながら、予約までの導線をまっすぐに整理しました。',
       image: { src: 'uploads/671AD1C5-753F-4FC5-A6EE-3EC464F6CB3C_4_5005_c.jpeg', alt: '活魚の美舟 客室からの眺め' },
-      link: { href: 'https://ikeuo-mifune.co.jp', label: 'ikeuo-mifune.co.jp' },
-      stats: [
-        { k: '担当', v: 'ディレクション〜運用' },
-        { k: '公開', v: '2025年10月' },
-        { k: '主な導線', v: '公式予約・ふるさと納税' }
-      ],
-      sections: [
-        { h: '背景', p: '料理・お風呂・客室と見せたいものが多く、情報が横並びになっていました。初めて訪れる人が「どんな宿か」を掴む前に、予約ページを探して迷ってしまう状態でした。' },
-        { h: 'やったこと', p: 'まず宿の強み（生け簀の魚と伊勢湾の眺め）を軸にトップの構成を組み直し、写真を主役にしたファーストビューへ。新着情報・宿泊・お食事・予約という順番に整理し、公式予約が常に手の届く位置にあるようにしました。ふるさと納税クーポンの案内など、運用しながら増える情報も更新しやすい形にしています。' },
-        { h: '運用まで', p: '公開して終わりではなく、キャンペーンや新着情報の追加、導線の見直しを継続。広告運用の経験があるため、どこを見て改善すればいいかを含めてご提案しています。' }
-      ]
+      link: { href: 'https://ikeuo-mifune.co.jp', label: 'ikeuo-mifune.co.jp' }
     },
     {
       id: 'segrate',
@@ -38,17 +28,7 @@
       role: '企画 / デザイン / 開発',
       type: 'モバイルアプリ',
       summary: '「分ける」ことを軸にした個人開発アプリ。企画から実装まで一人で作り、開発過程にも AI を取り入れました。',
-      image: { src: 'uploads/2406078C-16B1-494F-B034-DE8AE7C1CAE9_1_105_c.jpeg', alt: 'segrate アプリのアイコン' },
-      stats: [
-        { k: '担当', v: '企画〜開発' },
-        { k: '体制', v: '個人開発' },
-        { k: 'AI 活用', v: '設計・実装の両方' }
-      ],
-      sections: [
-        { h: 'つくった理由', p: '普段の業務で感じていた「情報を分けて整理するだけで判断が早くなる」という手応えを、そのまま形にしたくて作り始めました。' },
-        { h: 'つくり方', p: '要件の整理から実装まで一人で進め、AI を壁打ち相手・実装の相棒として使いました。どこまで任せると速く、どこからは自分で決めるべきかの線引きが、そのままコンサルの引き出しになっています。' },
-        { h: 'これから', p: '実際に使いながら改善中です。同じ発想で、業務に合わせた小さなアプリを作るご相談も受け付けています。' }
-      ]
+      image: { src: 'uploads/2406078C-16B1-494F-B034-DE8AE7C1CAE9_1_105_c.jpeg', alt: 'segrate アプリのアイコン' }
     }
   ];
 
@@ -331,15 +311,6 @@
       return '<div><dt class="label label--sm">' + esc(row[0]) + '</dt><dd>' + esc(row[1]) + '</dd></div>';
     }).join('');
 
-    var stats = project.stats.map(function (s) {
-      return '<div class="stat"><div class="label label--sm">' + esc(s.k) + '</div>' +
-             '<div class="stat__v">' + esc(s.v) + '</div></div>';
-    }).join('');
-
-    var sections = project.sections.map(function (sec) {
-      return '<div class="case__section"><h2>' + esc(sec.h) + '</h2><p>' + esc(sec.p) + '</p></div>';
-    }).join('');
-
     var visit = project.link
       ? '<a class="btn btn--outline" href="' + esc(project.link.href) + '" target="_blank" rel="noopener">' +
         esc(project.link.label) + ' <span aria-hidden="true">↗</span></a>'
@@ -353,11 +324,7 @@
       '<div class="case__stage"><div class="case__frame">' +
         '<span class="shot__glow" aria-hidden="true"></span>' + stage +
       '</div></div>' +
-      '<div class="stats">' + stats + '</div>' +
-      '<div class="case__body">' +
-        '<div class="case__aside"><span class="label">Case study</span></div>' +
-        '<div>' + sections + visit + '</div>' +
-      '</div>' +
+      (visit ? '<div class="case__visit">' + visit + '</div>' : '') +
       '<div class="case__foot">' +
         '<a class="label" href="#/works">← All works</a>' +
         '<a class="case__next" href="#/work/' + esc(next.id) + '">' +

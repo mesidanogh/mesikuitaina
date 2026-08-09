@@ -128,6 +128,15 @@
     return s;
   }
 
+  // 粒子の濃さ。alpha を上げると IK マークがはっきり出る（0〜1）。
+  // dim は「光る粒」以外の粒子の減衰率で、下げるとコントラストが強くなる。
+  var INK = {
+    base: 'rgba(51,52,46,ALPHA)',   // --ink #33342E
+    hot:  'rgba(92,92,85,ALPHA)',   // --muted #5C5C55
+    alpha: 0.58,
+    dim: 0.68
+  };
+
   var SPRITE = null, SPRITE_HOT = null;
 
   function startField(canvas, logo) {
@@ -141,8 +150,8 @@
     var tainted = false;
 
     if (!SPRITE) {
-      SPRITE = makeSprite('rgba(59,64,56,ALPHA)', 24);
-      SPRITE_HOT = makeSprite('rgba(120,124,112,ALPHA)', 34);
+      SPRITE = makeSprite(INK.base, 24);
+      SPRITE_HOT = makeSprite(INK.hot, 34);
     }
 
     function sample() {
@@ -221,7 +230,7 @@
         if (prefersReduced) { p.x = gx; p.y = gy; } else { p.x += p.vx; p.y += p.vy; }
 
         var r = p.sz * (p.hot ? 6 : 4.6) * (1 + burst * 0.25);
-        ctx.globalAlpha = 0.42 * (p.hot ? 1 : 0.6) * (1 - burst * 0.3);
+        ctx.globalAlpha = INK.alpha * (p.hot ? 1 : INK.dim) * (1 - burst * 0.3);
         ctx.drawImage(p.hot ? SPRITE_HOT : SPRITE, p.x - r, p.y - r, r * 2, r * 2);
       }
       ctx.globalAlpha = 1;

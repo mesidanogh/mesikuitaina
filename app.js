@@ -4,7 +4,7 @@
 (function () {
   'use strict';
 
-  var MAIL = 'hello@iidakeisuke.dev';
+  var MAIL = 'keahi0427@icloud.com';
 
   var PROJECTS = [
     {
@@ -138,6 +138,7 @@
     var scale = parseFloat(canvas.dataset.scale || '0.72');
     var w = 0, h = 0, pts = [], ps = [], raf = 0, retry = 0;
     var t0 = performance.now();
+    var tainted = false;
 
     if (!SPRITE) {
       SPRITE = makeSprite('rgba(59,64,56,ALPHA)', 24);
@@ -160,7 +161,16 @@
       var s = Math.min(w, h) * scale * 1.5;
       o.drawImage(logo, w / 2 - s / 2, h / 2 - s / 2, s, s);
 
-      var data = o.getImageData(0, 0, w, h).data;
+      var data;
+      try {
+        data = o.getImageData(0, 0, w, h).data;
+      } catch (err) {
+        // file:// で直接開いたときなど、ロゴ画像で canvas が汚染されて画素を読めない。
+        // 粒子は諦めて、同じ位置にロゴをそのまま描く（右側が空白になるのを防ぐ）。
+        tainted = true;
+        return true;
+      }
+
       var step = Math.max(2, Math.round(Math.min(w, h) / 240));
       pts = [];
       for (var y = 0; y < h; y += step) {
@@ -218,19 +228,41 @@
       if (!prefersReduced) raf = requestAnimationFrame(draw);
     }
 
-    if (!sample()) {
-      retry = setTimeout(function () {
-        if (sample()) { build(); raf = requestAnimationFrame(draw); }
-      }, 400);
-      return function () { clearTimeout(retry); };
+    // 粒子が読めない環境向けのフォールバック。粒子が象るのと同じ位置・同じ大きさで
+    // ロゴを直接描くので、見た目の破綻がない。
+    function paintLogo() {
+      var s = Math.min(w, h) * scale * 1.5;
+      ctx.clearRect(0, 0, w, h);
+      ctx.globalAlpha = 0.9;
+      ctx.drawImage(logo, w / 2 - s / 2, h / 2 - s / 2, s, s);
+      ctx.globalAlpha = 1;
     }
 
-    build();
-    raf = requestAnimationFrame(draw);
+    function refresh() {
+      if (!sample()) return false;
+      if (tainted) paintLogo(); else build();
+      return true;
+    }
+
+    // sample() は canvas.width を再設定する＝描画内容が消えるので、
+    // 採り直したら必ず描き直しまでセットで行う。
+    // prefers-reduced-motion のときは draw() がループを回さないため、
+    // これを怠るとリサイズ後に canvas が空のままになる。
+    function schedule() {
+      if (tainted) return;
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(draw);
+    }
+
+    if (!refresh()) {
+      retry = setTimeout(function () { if (refresh()) schedule(); }, 400);
+      return function () { clearTimeout(retry); };
+    }
+    schedule();
 
     var ro = null;
     if ('ResizeObserver' in window) {
-      ro = new ResizeObserver(function () { if (sample()) build(); });
+      ro = new ResizeObserver(function () { if (refresh()) schedule(); });
       ro.observe(canvas);
     }
 
@@ -415,13 +447,12 @@
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(MAIL).catch(function () {});
     }
-    $$('[data-mail-label]').forEach(function (el) { el.textContent = 'コピーしました'; });
+    var label = trigger.textContent;
+    trigger.textContent = 'コピーしました';
     flash('メールアドレスをコピーしました');
 
     clearTimeout(copyTimer);
-    copyTimer = setTimeout(function () {
-      $$('[data-mail-label]').forEach(function (el) { el.textContent = MAIL; });
-    }, 2200);
+    copyTimer = setTimeout(function () { trigger.textContent = label; }, 2200);
   });
 
   /* ---------------------------------------------------------

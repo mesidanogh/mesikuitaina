@@ -61,7 +61,7 @@
         <h1 class="hero__name">Iida Keisuke</h1>
         <p class="hero__lead">AI の活用と、ホームページ・LP の制作。<br>つくって終わらせず、運用まで一緒に走ります。</p>
         <div class="hero__meta">
-          <span class="hero__avatar" role="img" aria-label="飯田啓介のプロフィール写真"></span>
+          <img class="hero__avatar" src="uploads/D0B9870A-17F1-480D-83F3-41072167A818_1_102_a.jpeg" alt="飯田啓介のプロフィール写真" width="44" height="44">
           <span class="mono-sm">AI consulting<br>Web / LP production</span>
         </div>
       </div>
@@ -88,11 +88,12 @@
         <article class="card">
           <span class="label label--sm">(01) AI Consulting</span>
           <h2 class="card__title">AI 活用の相談・実装</h2>
-          <p class="card__body">現職で実際に AI を業務に組み込んでいます。その経験をもとに、アプリの作成から日々の業務の効率化まで、「どこに置けば効くのか」を一緒に整理します。ツール選定だけで終わらせず、手を動かして形にするところまで。</p>
+          <p class="card__body">現職で実際に AIを業務に組み込んでいます。AIが業務を支えてくれるからこそ、そこに自分が入ることで日々の業務をもっと便利に、効率的にできると考えています。ツール選定だけで終わらせず、伴走しながら一緒に形にしていきます。</p>
           <ul class="chips">
             <li class="chip">業務効率化</li>
             <li class="chip">アプリ開発</li>
             <li class="chip">社内活用の設計</li>
+            <li class="chip">生成AI検索(AIO)対策</li>
           </ul>
         </article>
         <article class="card">
@@ -169,13 +170,14 @@
         <a class="label" href="#/about">More about me →</a>
       </div>
       <div class="about" data-rv>
-        <div class="portrait" role="img" aria-label="飯田啓介のポートレート">
-          <span class="label label--sm">portrait</span>
+        <div class="portrait">
+          <img src="uploads/AD8A0684-EFC5-4C89-AA49-F36AAA071E09_1_102_o.jpeg" alt="飯田啓介のポートレート" loading="lazy">
         </div>
         <div>
-          <h2 class="display-2">つくるところから、<br>運用するところまで。</h2>
-          <p class="prose">現職で AI を実際の業務に組み込みながら、その手応えをもとに「どこに AI を置けば仕事が軽くなるか」をお話しできます。アプリの作成も、日々の業務の効率化も、机上の話ではなく自分で動かしてみた経験から。</p>
-          <p class="prose">あわせて、ディレクションと広告運用の経験があります。HP・LP は制作だけでなく、公開後の集客と改善まで一貫してご提案できるのが強みです。</p>
+          <h2 class="display-2 display-2--jp">AIで、仕事を<br class="br-lg">もっとシンプルに。</h2>
+          <p class="prose">現職では、AIを実際の業務に組み込みながら、業務効率化や仕組みづくりに取り組んでいます。これまで毎月何時間もかけて人の手で行っていた業務をAIに任せ、人が作業する時間をほぼゼロにできたこともあります。</p>
+          <p class="prose">だからこそ、AIの可能性を説明するだけではなく、「この仕事なら、AIをどう使えばもっとラクになるか」を実際の業務に合わせて一緒に考えられます。</p>
+          <p class="prose">また、Webディレクションや広告運用の経験も活かし、Web制作や、その後の運用まで一貫してご提案できます。</p>
           <a class="btn btn--outline mt-40" href="#/about">About me <span aria-hidden="true">→</span></a>
         </div>
       </div>
@@ -185,13 +187,13 @@
     <section class="shell section" aria-labelledby="cta-heading">
       <div class="cta" data-rv>
         <div>
-          <h2 class="cta__title" id="cta-heading">まずは、<br>話すところから。</h2>
-          <p class="cta__body">AI をどう使えばいいか分からない段階でも、サイトを作り直したいという相談でも大丈夫です。</p>
+          <h2 class="cta__title cta__title--jp" id="cta-heading">少しでも興味を持って<br class="br-lg">いただけましたら。</h2>
+          <p class="cta__body">AIをどう使えばいいか分からない段階でも、サイトを作り直したいというご相談でも大丈夫です。まずは一度ご相談ください。</p>
         </div>
         <div class="cta__actions">
-          <button type="button" class="btn btn--light btn--block" data-copy-mail>
-            <span data-mail-label>hello@iidakeisuke.dev</span> <span aria-hidden="true">↗</span>
-          </button>
+          <a class="btn btn--light btn--block" href="mailto:keahi0427@icloud.com?subject=%E3%81%8A%E5%95%8F%E3%81%84%E5%90%88%E3%82%8F%E3%81%9B%EF%BC%88%E3%83%9D%E3%83%BC%E3%83%88%E3%83%95%E3%82%A9%E3%83%AA%E3%82%AA%E3%82%B5%E3%82%A4%E3%83%88%E3%82%88%E3%82%8A%EF%BC%89">
+            keahi0427@icloud.com <span aria-hidden="true">↗</span>
+          </a>
           <a class="btn btn--ghost btn--block" href="#/contact">お問い合わせフォーム <span aria-hidden="true">→</span></a>
         </div>
       </div>
@@ -286,25 +288,31 @@
   <div class="page" data-page="about" hidden>
     <section class="shell page-body">
       <div class="label">About — Iida Keisuke</div>
-      <h1 class="display-1">はじめまして。</h1>
+      <h1 class="display-1 display-1--jp">AIで、仕事を<br class="br-lg">もっとシンプルに。</h1>
 
       <div class="about about--page mt-72">
         <div>
-          <div class="portrait" role="img" aria-label="飯田啓介のポートレート">
-            <span class="label label--sm">portrait</span>
+          <div class="portrait">
+            <img src="uploads/AD8A0684-EFC5-4C89-AA49-F36AAA071E09_1_102_o.jpeg" alt="飯田啓介のポートレート" loading="lazy">
           </div>
           <p class="mono-sm mt-24">Iida Keisuke<br>AI consulting / Web production<br>Japan</p>
         </div>
         <div>
-          <p class="prose prose--first">現職で AI を実際の業務に取り入れています。生成 AI をどこに置けば仕事が軽くなるのか、逆にどこに置くと事故るのか。自分で試して分かったことを、そのままお話しできるのが自分の強みだと思っています。</p>
-          <p class="prose">これから力を入れていきたいのは、AI 活用のコンサルティングです。業務の棚卸しから、必要ならアプリを作るところまで。個人開発したアプリ「segrate」も、その延長線上で形にしたものです。</p>
-          <p class="prose">もうひとつの軸が HP・LP の制作です。ディレクションの経験と広告運用の経験があるので、「作る」だけでなく「公開したあとどう集客して、どう直していくか」まで含めてご提案できます。旅館「活魚の美舟」の公式サイトでは、制作から運用まで担当しました。</p>
+          <p class="prose prose--first">現職では、AIを実際の業務に組み込みながら、業務効率化や仕組みづくりに取り組んでいます。</p>
+          <p class="prose">自分自身、AIを使い始めてから仕事の進め方が大きく変わりました。</p>
+          <p class="prose">これまで毎月何時間もかけて人の手で行っていた業務をAIに任せ、人が作業する時間をほぼゼロにできたこともあります。</p>
+          <p class="prose">また、これまでは知識や技術がなく諦めていたこともAIを活用することで、自分で調べ、考え、実際に形にできるようになりました。</p>
+          <p class="prose">だからこそ、AIの可能性を説明するだけではなく、「この仕事なら、AIをどう使えばもっとラクになるか」を実際の業務に合わせて一緒に考えられます。</p>
+          <p class="prose">新しいAIツールや活用事例も日々キャッチアップし、気になったものはまず自分で試す。その中から本当に使えるものを選び、業務に合った形へ落とし込んでいます。</p>
+          <p class="prose">今後はこの実体験と実務経験を活かして、AIを活用した業務効率化や自動化、AIツール・アプリの作成、導入・活用支援などを通じて、「無駄を減らす」仕組みづくりを提供していきます。</p>
+          <p class="prose">また、Webディレクションや広告運用の経験も活かし、Web制作や、その後の運用まで一貫してご提案できます！</p>
 
           <div class="grid-2 gap-48 mt-72">
             <div>
               <h2 class="colhead">できること</h2>
               <ul class="stack-list">
                 <li>AI 活用の相談・業務効率化の設計</li>
+                <li>生成 AI 検索(AIO)を意識した情報発信の相談</li>
                 <li>アプリの企画・開発</li>
                 <li>HP / LP のディレクション・制作</li>
                 <li>広告運用・公開後の改善</li>
@@ -341,7 +349,7 @@
         <div>
           <p class="prose prose--first">AI をどう使えばいいか分からない段階のご相談も、HP・LP の制作や作り直しのご相談も歓迎です。まずは状況をお聞かせください。</p>
           <dl class="deflist">
-            <div><dt class="label label--sm">Email</dt><dd><button type="button" class="linkish" data-copy-mail><span data-mail-label>hello@iidakeisuke.dev</span></button></dd></div>
+            <div><dt class="label label--sm">Email</dt><dd class="maildd"><a href="mailto:keahi0427@icloud.com?subject=%E3%81%8A%E5%95%8F%E3%81%84%E5%90%88%E3%82%8F%E3%81%9B%EF%BC%88%E3%83%9D%E3%83%BC%E3%83%88%E3%83%95%E3%82%A9%E3%83%AA%E3%82%AA%E3%82%B5%E3%82%A4%E3%83%88%E3%82%88%E3%82%8A%EF%BC%89">keahi0427@icloud.com <span aria-hidden="true">↗</span></a><button type="button" class="copybtn" data-copy-mail>コピー</button></dd></div>
             <div><dt class="label label--sm">ご相談内容</dt><dd>AI 活用 / HP・LP 制作</dd></div>
             <div><dt class="label label--sm">返信</dt><dd>2営業日以内</dd></div>
           </dl>

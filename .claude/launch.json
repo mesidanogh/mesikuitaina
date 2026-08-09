@@ -4,8 +4,16 @@
     {
       "name": "portfolio",
       "runtimeExecutable": "python3",
-      "runtimeArgs": ["/Users/mesida/Desktop/Tas/Pro/.claude/serve.py", "4321"],
-      "port": 4321
+      "runtimeArgs": ["/Users/mesida/Desktop/Tas/Pro/.claude/serve.py"],
+      "port": 4321,
+      "autoPort": true
+    },
+    {
+      "name": "ichi",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["/Users/mesida/Desktop/Tas/Pro/.claude/serve.py", "/Users/mesida/Desktop/Tas/ichi"],
+      "port": 4322,
+      "autoPort": true
     }
   ]
 }

@@ -145,11 +145,10 @@ python3 .claude/serve.py 4321
 
 http://localhost:4321 で開きます。
 
-### 差し替え待ちのもの
+### メールアドレスを変えるとき
 
-デザイン上プレースホルダーのままの箇所が 2 つあります。公開前に差し替えると見栄えが上がります。
+`keahi0427@icloud.com` が 3 か所（`app.js` の `MAIL`、`index.html` の表示テキスト 2 か所）に入っています。
 
-- **ポートレート写真** — About セクションとトップの About 抜粋。いまはストライプのプレースホルダー
-  （`index.html` の `class="portrait"`）
-- **メールアドレス** — `app.js` の先頭の `MAIL` が `hello@iidakeisuke.dev` のままです。
-  実際のアドレスに変えてください（`index.html` の 2 か所の表示テキストも同時に変更）
+```bash
+grep -rn "keahi0427@icloud.com" index.html app.js
+```

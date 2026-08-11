@@ -7,19 +7,23 @@
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: geolocation=(), microphone=(), camera=(), interest-cohort=()
 
-# 画像はファイル名が変わらない限り中身も変わらないので、長めにキャッシュ
+# 制作中は同じファイル名のまま中身を何度も差し替えるので、
+# 「一度見たら聞き直さない」immutable/長時間キャッシュは今は使わない。
+# no-cache は「保存はするが毎回サーバーに確認する」設定（ETag で確認できれば
+# 再ダウンロードなしの 304 で返る）。公開が固まって画像を差し替えなくなったら、
+# uploads/* だけ長めのキャッシュ（例: max-age=31536000, immutable）に戻すとよい。
 /uploads/*
-  Cache-Control: public, max-age=31536000, immutable
+  Cache-Control: public, no-cache
 
 /og-image.png
-  Cache-Control: public, max-age=604800
+  Cache-Control: public, no-cache
 
-# HTML / CSS / JS は更新をすぐ反映したいので短め
+# HTML / CSS / JS は更新をすぐ反映したいので毎回確認させる
 /
   Cache-Control: public, max-age=0, must-revalidate
 /index.html
   Cache-Control: public, max-age=0, must-revalidate
 /styles.css
-  Cache-Control: public, max-age=3600
+  Cache-Control: public, no-cache
 /app.js
-  Cache-Control: public, max-age=3600
+  Cache-Control: public, no-cache

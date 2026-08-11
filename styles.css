@@ -36,7 +36,11 @@
 /* class-level `display` must never beat the hidden attribute */
 [hidden] { display: none !important; }
 
-html { scroll-behavior: auto; }
+html {
+  scroll-behavior: auto;
+  /* 個々の要素の横あふれを直しても取りこぼしが怖いので、保険として最後に閉じる */
+  overflow-x: hidden;
+}
 
 body {
   margin: 0;
@@ -405,6 +409,9 @@ ul, ol, dl, dd, figure { margin: 0; padding: 0; list-style: none; }
   display: flex;
   flex-direction: column;
   gap: 20px;
+  /* グリッドの子は既定で min-width:auto（中身の最小幅）になり、
+     タイトルやラベルが長いとその分だけ列がはみ出す。0 にして正しく縮められるようにする */
+  min-width: 0;
   transition: transform .3s var(--ease), box-shadow .3s var(--ease);
 }
 .work:hover { transform: translateY(-2px); opacity: 1; }
@@ -456,10 +463,12 @@ ul, ol, dl, dd, figure { margin: 0; padding: 0; list-style: none; }
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  gap: 16px;
+  flex-wrap: wrap;
+  gap: 4px 16px;
 }
 .work__title {
   margin: 0;
+  min-width: 0;
   font: 700 1.5rem/1.25 var(--ui);
   letter-spacing: -.01em;
 }
@@ -569,6 +578,7 @@ ul, ol, dl, dd, figure { margin: 0; padding: 0; list-style: none; }
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
   gap: 32px;
   margin-top: 64px;
   padding: 48px;
@@ -697,7 +707,8 @@ ul, ol, dl, dd, figure { margin: 0; padding: 0; list-style: none; }
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  gap: 24px;
+  flex-wrap: wrap;
+  gap: 6px 24px;
   padding-block: 20px;
   border-bottom: 1px solid var(--line);
 }

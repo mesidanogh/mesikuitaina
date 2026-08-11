@@ -405,10 +405,18 @@ ul, ol, dl, dd, figure { margin: 0; padding: 0; list-style: none; }
   display: flex;
   flex-direction: column;
   gap: 20px;
-  transition: transform .3s var(--ease);
+  transition: transform .3s var(--ease), box-shadow .3s var(--ease);
 }
 .work:hover { transform: translateY(-2px); opacity: 1; }
-.work--lg { gap: 24px; }
+
+/* Works ページの大きいカード。中身を1枚のカードにまとめて縦2つ・横並びで増やしていける形にする */
+.work--lg {
+  gap: 24px;
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 36px;
+}
+.work--lg:hover { box-shadow: 0 12px 32px rgba(30, 36, 28, .08); }
 
 .work__thumb {
   display: flex;
@@ -427,11 +435,22 @@ ul, ol, dl, dd, figure { margin: 0; padding: 0; list-style: none; }
   border-radius: 22%;
   box-shadow: 0 8px 26px rgba(30, 36, 28, .14);
 }
-.work__thumb--icon .work__icon { width: 34%; }
 .work__thumb--empty {
   background: none;
   border: 1px dashed var(--line);
 }
+
+/* Works ページのアプリカード用の小さいアイコン。バッジやリリース日は実データが揃うまで出さない */
+.work__icon-box {
+  width: 72px;
+  height: 72px;
+  flex: none;
+  border-radius: 20px;
+  overflow: hidden;
+  background: var(--light);
+  box-shadow: 0 6px 18px rgba(30, 36, 28, .1);
+}
+.work__icon-box img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
 .work__head {
   display: flex;
@@ -813,7 +832,8 @@ ul, ol, dl, dd, figure { margin: 0; padding: 0; list-style: none; }
   .nav { top: 16px; height: 64px; width: calc(100% - 32px); margin-top: 16px; }
   .nav__links { gap: 18px; font-size: 12px; letter-spacing: .08em; }
   .quicklinks { flex-direction: column; align-items: flex-start; gap: 16px; }
-  .work__thumb--icon img, .work__thumb--icon .work__icon { width: 40%; }
+  .work__thumb--icon img { width: 40%; }
+  .work--lg { padding: 28px; }
   /* 2 列だと 1 列あたりが狭すぎるので縦積みにする */
   .meta { grid-template-columns: 1fr; }
   .meta > div { padding-inline: 0; border-right: none; }

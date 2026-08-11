@@ -319,11 +319,11 @@
 
     var stage = project.kind === 'app'
       ? '<div class="case__shot case__shot--app">' +
-          '<img src="' + esc(project.image.src) + '" alt="' + esc(project.image.alt) + '">' +
+          '<img class="case__app-icon" src="' + esc(project.image.src) + '" alt="' + esc(project.image.alt) + '">' +
           screen +
         '</div>'
       : '<div class="case__shot">' +
-          '<img src="' + esc(project.image.src) + '" alt="' + esc(project.image.alt) + '">' +
+          '<img class="case__site-shot" src="' + esc(project.image.src) + '" alt="' + esc(project.image.alt) + '">' +
         '</div>';
 
     var meta = [

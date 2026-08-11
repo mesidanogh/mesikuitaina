@@ -630,7 +630,7 @@ ul, ol, dl, dd, figure { margin: 0; padding: 0; list-style: none; }
   display: flex;
   justify-content: center;
 }
-.case__shot img {
+.case__site-shot {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -638,7 +638,7 @@ ul, ol, dl, dd, figure { margin: 0; padding: 0; list-style: none; }
   box-shadow: 0 10px 30px rgba(30, 36, 28, .16);
 }
 .case__shot--app { align-items: center; gap: 48px; }
-.case__shot--app img {
+.case__app-icon {
   width: 180px;
   height: auto;
   border-radius: 22%;
@@ -853,7 +853,7 @@ ul, ol, dl, dd, figure { margin: 0; padding: 0; list-style: none; }
   .meta > div + div { border-top: 1px solid var(--line); }
   .case__shot { height: auto; }
   .case__shot--app { flex-direction: column; gap: 32px; }
-  .case__shot--app img { width: 120px; }
+  .case__app-icon { width: 120px; }
   .case__phone { width: 180px; }
   .case__phone-shot { height: auto; max-height: 340px; }
   .case__stage { padding: 24px; }

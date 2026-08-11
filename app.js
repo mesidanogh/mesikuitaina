@@ -36,6 +36,7 @@
       type: 'Web アプリ',
       summary: 'クレーンゲームの景品が、どの店舗にあるかを検索できる Web アプリ。バンダイナムコ・タイトー計401店舗のデータを毎日自動で取得しています。',
       image: { src: 'uploads/cleson-icon.png', alt: 'CLESON アプリのアイコン' },
+      screenshot: { src: 'uploads/cleson-screen.png', alt: 'CLESON の検索画面。商品名・店舗名で在庫を検索できる' },
       link: { href: 'https://cleson.netlify.app', label: 'cleson.netlify.app' }
     },
     {
@@ -312,10 +313,14 @@
 
     var next = PROJECTS[(PROJECTS.indexOf(project) + 1) % PROJECTS.length];
 
+    var screen = project.screenshot
+      ? '<img class="case__phone-shot" src="' + esc(project.screenshot.src) + '" alt="' + esc(project.screenshot.alt) + '">'
+      : '<div class="case__phone"><span class="label label--sm">app screen</span></div>';
+
     var stage = project.kind === 'app'
       ? '<div class="case__shot case__shot--app">' +
           '<img src="' + esc(project.image.src) + '" alt="' + esc(project.image.alt) + '">' +
-          '<div class="case__phone"><span class="label label--sm">app screen</span></div>' +
+          screen +
         '</div>'
       : '<div class="case__shot">' +
           '<img src="' + esc(project.image.src) + '" alt="' + esc(project.image.alt) + '">' +

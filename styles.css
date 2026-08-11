@@ -654,6 +654,19 @@ ul, ol, dl, dd, figure { margin: 0; padding: 0; list-style: none; }
   border-radius: 28px;
   background: repeating-linear-gradient(135deg, var(--surface) 0 10px, var(--surface-alt) 10px 20px);
 }
+/* 実際のアプリ画面のスクリーンショット。placeholder の .case__phone とは違い、
+   本物の縦横比を保ったまま高さに合わせるので、幅は画像ごとに変わる */
+.case__phone-shot {
+  height: 100%;
+  max-height: 460px;
+  width: auto;
+  max-width: 100%;
+  border-radius: 20px;
+  border: 1px solid var(--line);
+  object-fit: contain;
+  background: var(--light);
+  box-shadow: 0 10px 30px rgba(30, 36, 28, .16);
+}
 
 .case__visit { margin-top: 56px; }
 
@@ -842,6 +855,7 @@ ul, ol, dl, dd, figure { margin: 0; padding: 0; list-style: none; }
   .case__shot--app { flex-direction: column; gap: 32px; }
   .case__shot--app img { width: 120px; }
   .case__phone { width: 180px; }
+  .case__phone-shot { height: auto; max-height: 340px; }
   .case__stage { padding: 24px; }
   .case__frame { padding: 20px; }
   .feature__text { padding: 40px 28px; }

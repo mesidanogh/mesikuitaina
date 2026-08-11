@@ -2,7 +2,7 @@
 
 サーバー不要の静的サイトです。Cloudflare Pages に置けば、**無料**で公開できます。
 
-- URL は `https://keisuke.pages.dev`（すでに設定済み）
+- URL は `https://mesikuitaina.pages.dev`（すでに設定済み）
 - HTTPS は自動。証明書の更新も不要
 - ドメイン代・サーバー代ともにかかりません
 - `git push` するたびに自動で再デプロイ
@@ -13,25 +13,18 @@
 
 ## 全体の流れ
 
-| | やること | 所要 |
+| | やること | 状態 |
 |---|---|---|
-| 1 | GitHub に push する | 5分 |
-| 2 | Cloudflare Pages に接続する | 5分 |
-| 3 | 表示を確認して、検索エンジンに公開する | 1分 |
+| 1 | GitHub に push する | ✅ 完了（[mesidanogh/mesikuitaina](https://github.com/mesidanogh/mesikuitaina)） |
+| 2 | Cloudflare Pages に接続する | 次はここ |
+| 3 | 表示を確認して、検索エンジンに公開する | まだ |
 
 ---
 
-## 1. GitHub に push する
+## 1. GitHub に push する（完了）
 
-GitHub で空のリポジトリを作ってから（README などは追加しない）：
-
-```bash
-git remote add origin https://github.com/<ユーザー名>/<リポジトリ名>.git
-git branch -M main
-git push -u origin main
-```
-
-リポジトリは **Private** で問題ありません。Cloudflare Pages は Private でも接続できます。
+`https://github.com/mesidanogh/mesikuitaina` に push 済みです。
+以降 `git push` するたびに、Cloudflare Pages が自動で拾って再デプロイします。
 
 ---
 
@@ -39,8 +32,8 @@ git push -u origin main
 
 1. https://dash.cloudflare.com にログイン（無料アカウント・クレジットカード不要）
 2. **Workers & Pages** → **Create** → **Pages** → **Connect to Git**
-3. GitHub を連携し、さきほどのリポジトリを選ぶ
-4. **プロジェクト名を `keisuke` にする** ← ここが URL になります
+3. GitHub を連携し、**`mesikuitaina`** リポジトリを選ぶ
+4. **プロジェクト名を `mesikuitaina` にする** ← ここが URL になります
 5. ビルド設定：
 
    | 項目 | 値 |
@@ -51,14 +44,13 @@ git push -u origin main
 
 6. **Save and Deploy**
 
-1〜2分で `https://keisuke.pages.dev` が見られるようになります。
+1〜2分で `https://mesikuitaina.pages.dev` が見られるようになります。
 
-> **`keisuke` が使えなかった場合**（他の人が先に使っていると弾かれます）
+> **`mesikuitaina` が使えなかった場合**（他の人が先に使っていると弾かれます）
 > 別の名前で作成して、その名前でこれを実行してください。サイト内の URL がまとめて直ります。
 > ```bash
 > python3 publish.py <実際のプロジェクト名>.pages.dev
 > ```
-> 空いていそうな候補：`iidakeisuke` / `iida-keisuke` / `keisuke-studio` / `keisuke-works`
 
 ---
 
@@ -70,7 +62,7 @@ URL を知っている人だけが見られる状態なので、まず表示を�
 問題なければ、ブロックを外します。
 
 ```bash
-python3 publish.py keisuke.pages.dev --public
+python3 publish.py mesikuitaina.pages.dev --public
 ```
 
 - `index.html` から `noindex` が外れます
@@ -84,7 +76,7 @@ git add -A && git commit -m "Go live" && git push
 push した数分後から検索エンジンが拾い始めます。
 [Google Search Console](https://search.google.com/search-console) に登録して `sitemap.xml` を送信すると反映が早くなります。
 
-戻したいときは `python3 publish.py keisuke.pages.dev`（`--public` なし）で限定公開に戻せます。
+戻したいときは `python3 publish.py mesikuitaina.pages.dev`（`--public` なし）で限定公開に戻せます。
 
 ---
 
@@ -114,7 +106,7 @@ var FORM_ENDPOINT = 'https://formspree.io/f/xxxxxxxx';
 **サイトを作り直す必要はありません**。ドメインを取得して、次の2つをやるだけです。
 
 1. Pages のプロジェクト → **Custom domains** → ドメインを追加
-   （他社で取ったドメインなら、その DNS に `CNAME  <サブドメイン>  keisuke.pages.dev` を1本追加）
+   （他社で取ったドメインなら、その DNS に `CNAME  <サブドメイン>  mesikuitaina.pages.dev` を1本追加）
 2. サイト内の URL を差し替える
    ```bash
    python3 publish.py portfolio.example.com --public

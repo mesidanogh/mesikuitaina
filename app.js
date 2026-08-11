@@ -27,6 +27,18 @@
       link: { href: 'https://ikeuo-mifune.co.jp', label: 'ikeuo-mifune.co.jp' }
     },
     {
+      id: 'cleson',
+      kind: 'app',
+      name: 'CLESON',
+      year: '2026',
+      client: '個人開発',
+      role: '企画 / デザイン / 開発',
+      type: 'Web アプリ',
+      summary: 'クレーンゲームの景品が、どの店舗にあるかを検索できる Web アプリ。バンダイナムコ・タイトー計401店舗のデータを毎日自動で取得しています。',
+      image: { src: 'uploads/cleson-icon.png', alt: 'CLESON アプリのアイコン' },
+      link: { href: 'https://cleson.netlify.app', label: 'cleson.netlify.app' }
+    },
+    {
       id: 'segrate',
       kind: 'app',
       name: 'segrate',

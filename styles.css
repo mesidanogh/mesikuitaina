@@ -480,6 +480,30 @@ ul, ol, dl, dd, figure { margin: 0; padding: 0; list-style: none; }
 }
 .work--lg .work__body { margin-top: 14px; }
 
+/* 開発中バッジ。地の mono-xs より強く目立たせて「まだ公開前」と一目で伝える */
+.badge-wip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font: 600 11px/1.5 var(--mono);
+  letter-spacing: .06em;
+  color: #9A4B12;
+  background: rgba(196, 90, 17, .12);
+  border: 1px solid rgba(196, 90, 17, .35);
+  white-space: nowrap;
+}
+.badge-wip::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  flex: none;
+  border-radius: 50%;
+  background: currentColor;
+}
+.badge-wip--case { margin: 18px 0 0; font-size: 12px; padding: 4px 12px; }
+
 /* =========================================================
    About
    ========================================================= */

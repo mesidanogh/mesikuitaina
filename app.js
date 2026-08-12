@@ -42,6 +42,7 @@
     {
       id: 'segrate',
       kind: 'app',
+      wip: true,
       name: 'segrate',
       year: '2026',
       client: '個人開発',
@@ -338,9 +339,12 @@
         esc(project.link.label) + ' <span aria-hidden="true">↗</span></a>'
       : '';
 
+    var wipBadge = project.wip ? '<span class="badge-wip badge-wip--case">開発中 — まもなく公開予定</span>' : '';
+
     root.innerHTML =
       '<a class="case__back" href="#/works">← Back to works</a>' +
       '<h1 class="case__title">' + esc(project.name) + '</h1>' +
+      wipBadge +
       '<p class="case__summary">' + esc(project.summary) + '</p>' +
       '<dl class="meta">' + meta + '</dl>' +
       '<div class="case__stage"><div class="case__frame">' +

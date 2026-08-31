@@ -39,6 +39,28 @@
 </head>
 <body>
 
+<!-- ============================================================
+     初回ロード画面
+     TOP を直接開いたときだけ表示します。ページ遷移（#/works など）や、
+     TOP 以外の URL で開いたときは、下のスクリプトで即座に消します。
+     ============================================================ -->
+<div class="loader" data-loader>
+  <div class="loader__inner">
+    <img class="loader__mark" src="uploads/ik-mark.png" alt="" width="48" height="48">
+    <span class="loader__name">Iida Keisuke</span>
+    <span class="loader__bar"><span class="loader__fill" data-loader-fill></span></span>
+    <span class="loader__count"><span data-loader-num>0</span>%</span>
+  </div>
+</div>
+<script>
+  /* TOP 以外で開いたときは、描画される前にロード画面を消す */
+  (function () {
+    var h = location.hash;
+    var isTop = !h || h === '#' || h === '#/';
+    document.documentElement.classList.add(isTop ? 'is-loading' : 'no-loader');
+  })();
+</script>
+
 <a class="skip-link" href="#main">本文へスキップ</a>
 
 <nav class="nav" aria-label="メインナビゲーション">

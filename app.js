@@ -540,6 +540,61 @@
   }
 
   /* ---------------------------------------------------------
+     Loader — 0 から 100% まで数え、読み込み完了後に消える
+     TOP を直接開いたときだけ動きます（マークアップ側で判定済み）
+     --------------------------------------------------------- */
+  (function () {
+    var root = document.documentElement;
+    var el = $('[data-loader]');
+    if (!el || !root.classList.contains('is-loading')) return;
+
+    var numEl = $('[data-loader-num]', el);
+    var fillEl = $('[data-loader-fill]', el);
+    var DURATION = 1200;   // 0 → 100% にかける時間
+    var HOLD = 260;        // 100% を見せてから消えるまで
+    var started = 0;
+    var loaded = document.readyState === 'complete';
+    var finished = false;
+
+    window.addEventListener('load', function () { loaded = true; });
+
+    function dismiss() {
+      if (finished) return;
+      finished = true;
+      el.classList.add('is-done');
+      root.classList.remove('is-loading');
+      setTimeout(function () { el.remove(); }, 800);
+    }
+
+    function paint(pct) {
+      if (numEl) numEl.textContent = pct;
+      if (fillEl) fillEl.style.width = pct + '%';
+    }
+
+    if (prefersReduced) {
+      paint(100);
+      setTimeout(dismiss, HOLD);
+      return;
+    }
+
+    function tick(now) {
+      if (!started) started = now;
+      // 読み込みが終わるまでは 90% で足踏みさせ、終わってから 100 まで走らせる
+      var ratio = Math.min((now - started) / DURATION, 1);
+      var pct = Math.floor(ratio * 100);
+      if (!loaded) pct = Math.min(pct, 90);
+      paint(pct);
+
+      if (pct >= 100) setTimeout(dismiss, HOLD);
+      else requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+
+    // 読み込みが極端に遅い場合でも、待たせすぎない
+    setTimeout(dismiss, 6000);
+  })();
+
+  /* ---------------------------------------------------------
      Boot
      --------------------------------------------------------- */
   route(true);

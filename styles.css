@@ -29,6 +29,66 @@
 }
 
 /* =========================================================
+   Loader — 初回ロードのみ、TOP で表示
+   ========================================================= */
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: grid;
+  place-items: center;
+  background-color: var(--bg);
+  background-image: linear-gradient(180deg, var(--light) 0, rgba(217, 217, 211, 0) 620px);
+  background-repeat: no-repeat;
+  transition: opacity .7s var(--ease), visibility .7s var(--ease);
+  /* JS が動かなかったときに本文を塞ぎ続けないための保険 */
+  animation: loader-failsafe .5s 8s forwards;
+}
+.no-loader .loader { display: none; }
+.is-loading body { overflow: hidden; }
+.loader.is-done { opacity: 0; visibility: hidden; }
+
+.loader__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+}
+.loader__mark {
+  width: 48px;
+  height: 48px;
+  opacity: .9;
+}
+.loader__name {
+  font: 400 1.125rem/1 var(--display);
+  letter-spacing: .12em;
+}
+.loader__bar {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  width: min(220px, 46vw);
+  height: 1px;
+  background: var(--line);
+}
+.loader__fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 0;
+  background: var(--ink);
+}
+.loader__count {
+  font: 400 11px/1 var(--mono);
+  letter-spacing: .14em;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+@keyframes loader-failsafe {
+  to { opacity: 0; visibility: hidden; }
+}
+
+/* =========================================================
    Base
    ========================================================= */
 *, *::before, *::after { box-sizing: border-box; }

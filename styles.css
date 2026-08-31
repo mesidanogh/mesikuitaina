@@ -284,6 +284,7 @@ ul, ol, dl, dd, figure { margin: 0; padding: 0; list-style: none; }
   border-radius: var(--radius);
   background: var(--surface);
 }
+.card--wide { grid-column: 1 / -1; }
 .card__title {
   margin: 0;
   font: 400 clamp(2rem, 2.8vw, 2.5rem)/1.25 var(--display);

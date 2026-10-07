@@ -27,6 +27,18 @@
       link: { href: 'https://ikeuo-mifune.co.jp', label: 'ikeuo-mifune.co.jp' }
     },
     {
+      id: 'ichi',
+      kind: 'site',
+      name: '旨焼肉 一 ichi 公式サイト',
+      year: '2026',
+      client: '焼肉店 旨焼肉 一 ichi（愛知県東浦町）',
+      role: 'HP 制作',
+      type: '飲食店・公式サイト',
+      summary: '愛知県東浦町の焼肉店の公式サイト。冷凍しない生牛タンと名物「一焼」を軸に、メニュー・コース・店舗情報までそろえ、お知らせやブログは CMS から更新できるようにしました。',
+      image: { src: 'uploads/ichi-hero.jpg', alt: '旨焼肉 一 ichi 網で焼かれる生牛タンとホルモン' },
+      link: { href: 'https://yakinikuichi0901.com', label: 'yakinikuichi0901.com' }
+    },
+    {
       id: 'cleson',
       kind: 'app',
       name: 'CLESON',

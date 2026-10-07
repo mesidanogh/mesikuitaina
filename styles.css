@@ -295,14 +295,6 @@ ul, ol, dl, dd, figure { margin: 0; padding: 0; list-style: none; }
   gap: 16px;
   margin: 40px 0 0;
 }
-.hero__avatar {
-  flex: none;
-  width: 44px;
-  height: 44px;
-  border-radius: 8px;
-  object-fit: cover;
-  background: repeating-linear-gradient(135deg, var(--surface) 0 6px, #DFDED7 6px 12px);
-}
 .hero__canvas {
   display: block;
   width: 100%;

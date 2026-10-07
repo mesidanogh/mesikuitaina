@@ -34,7 +34,7 @@
       client: '焼肉店 旨焼肉 一 ichi（愛知県東浦町）',
       role: 'HP 制作',
       type: '飲食店・公式サイト',
-      summary: '愛知県東浦町の焼肉店の公式サイト。冷凍しない生牛タンと名物「一焼」を軸に、メニュー・コース・店舗情報までそろえ、お知らせやブログは CMS から更新できるようにしました。',
+      summary: '愛知県東浦町の焼肉店の公式サイト。生牛タンと名物「一焼」がおすすめメニューです！',
       image: { src: 'uploads/ichi-hero.jpg', alt: '旨焼肉 一 ichi 網で焼かれる生牛タンとホルモン' },
       link: { href: 'https://yakinikuichi0901.com', label: 'yakinikuichi0901.com' }
     },

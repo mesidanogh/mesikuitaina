@@ -54,14 +54,14 @@
     {
       id: 'segrate',
       kind: 'app',
-      wip: true,
       name: 'segrate',
       year: '2026',
       client: '個人開発',
       role: '企画 / デザイン / 開発',
-      type: 'モバイルアプリ（開発中）',
+      type: 'Web アプリ（試用版）',
       summary: '自分だけが知っている地元のお店を、地図で共有するアプリ。Google マップのように地図から探せて、おすすめの場所を日本中・世界中の人に届けられます。',
-      image: { src: 'uploads/2406078C-16B1-494F-B034-DE8AE7C1CAE9_1_105_c.jpeg', alt: 'segrate アプリのアイコン' }
+      image: { src: 'uploads/2406078C-16B1-494F-B034-DE8AE7C1CAE9_1_105_c.jpeg', alt: 'segrate アプリのアイコン' },
+      link: { href: 'https://segrate.59kp2jzvr8.workers.dev', label: 'segrate.59kp2jzvr8.workers.dev' }
     }
   ];
 

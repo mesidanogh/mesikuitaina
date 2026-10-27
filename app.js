@@ -95,11 +95,11 @@
   var revealObserver = null;
   function observeReveals() {
     if (prefersReduced) {
-      $$('[data-rv]').forEach(function (el) { el.classList.add('is-in'); });
+      $$('[data-rv], [data-stagger]').forEach(function (el) { el.classList.add('is-in'); });
       return;
     }
     if (!('IntersectionObserver' in window)) {
-      $$('[data-rv]').forEach(function (el) { el.classList.add('is-in'); });
+      $$('[data-rv], [data-stagger]').forEach(function (el) { el.classList.add('is-in'); });
       return;
     }
     if (!revealObserver) {
@@ -109,207 +109,9 @@
           entry.target.classList.add('is-in');
           revealObserver.unobserve(entry.target);
         });
-      }, { rootMargin: '0px 0px -12% 0px' });
+      }, { rootMargin: '0px 0px -8% 0px' });
     }
-    $$('[data-rv]:not(.is-in)').forEach(function (el) { revealObserver.observe(el); });
-  }
-
-  /* ---------------------------------------------------------
-     Particle logo field
-     --------------------------------------------------------- */
-  var logoImage = null;
-  var logoReady = new Promise(function (resolve) {
-    var inDom = $('.nav__mark img');
-    var img = new Image();
-    img.decoding = 'async';
-    img.onload = function () { resolve(img); };
-    img.onerror = function () { resolve(null); };
-    img.src = (inDom && (inDom.currentSrc || inDom.src)) || 'uploads/ik-mark.png';
-    logoImage = img;
-  }).then(function (img) { logoImage = img; return img; });
-
-  function makeSprite(color, size) {
-    var s = document.createElement('canvas');
-    s.width = s.height = size;
-    var g = s.getContext('2d');
-    var rg = g.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2);
-    rg.addColorStop(0, color.replace('ALPHA', '1'));
-    rg.addColorStop(0.35, color.replace('ALPHA', '0.5'));
-    rg.addColorStop(1, color.replace('ALPHA', '0'));
-    g.fillStyle = rg;
-    g.fillRect(0, 0, size, size);
-    return s;
-  }
-
-  // 粒子の濃さ。alpha を上げると IK マークがはっきり出る（0〜1）。
-  // dim は「光る粒」以外の粒子の減衰率で、下げるとコントラストが強くなる。
-  var INK = {
-    base: 'rgba(51,52,46,ALPHA)',   // --ink #33342E
-    hot:  'rgba(92,92,85,ALPHA)',   // --muted #5C5C55
-    alpha: 0.58,
-    dim: 0.68
-  };
-
-  var SPRITE = null, SPRITE_HOT = null;
-
-  function startField(canvas, logo) {
-    if (!logo || !logo.naturalWidth) return function () {};
-
-    var ctx = canvas.getContext('2d');
-    var dpr = Math.min(2, window.devicePixelRatio || 1);
-    var scale = parseFloat(canvas.dataset.scale || '0.72');
-    var w = 0, h = 0, pts = [], ps = [], raf = 0, retry = 0;
-    var t0 = performance.now();
-    var tainted = false;
-
-    if (!SPRITE) {
-      SPRITE = makeSprite(INK.base, 24);
-      SPRITE_HOT = makeSprite(INK.hot, 34);
-    }
-
-    function sample() {
-      w = canvas.clientWidth;
-      h = canvas.clientHeight;
-      if (!w || !h) return false;
-
-      canvas.width = w * dpr;
-      canvas.height = h * dpr;
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-
-      var off = document.createElement('canvas');
-      off.width = w;
-      off.height = h;
-      var o = off.getContext('2d', { willReadFrequently: true });
-      var s = Math.min(w, h) * scale * 1.5;
-      o.drawImage(logo, w / 2 - s / 2, h / 2 - s / 2, s, s);
-
-      var data;
-      try {
-        data = o.getImageData(0, 0, w, h).data;
-      } catch (err) {
-        // file:// で直接開いたときなど、ロゴ画像で canvas が汚染されて画素を読めない。
-        // 粒子は諦めて、同じ位置にロゴをそのまま描く（右側が空白になるのを防ぐ）。
-        tainted = true;
-        return true;
-      }
-
-      var step = Math.max(2, Math.round(Math.min(w, h) / 240));
-      pts = [];
-      for (var y = 0; y < h; y += step) {
-        for (var x = 0; x < w; x += step) {
-          if (data[(y * w + x) * 4 + 3] > 110) {
-            pts.push([x + (Math.random() - 0.5) * step, y + (Math.random() - 0.5) * step]);
-          }
-        }
-      }
-      for (var i = pts.length - 1; i > 0; i--) {
-        var j = (Math.random() * (i + 1)) | 0;
-        var tmp = pts[i]; pts[i] = pts[j]; pts[j] = tmp;
-      }
-      pts = pts.slice(0, 2200);
-      return true;
-    }
-
-    function build() {
-      ps = pts.map(function (pt, i) {
-        return {
-          tx: pt[0], ty: pt[1],
-          x: w / 2 + (Math.random() - 0.5) * w * 1.4,
-          y: h / 2 + (Math.random() - 0.5) * h * 1.4,
-          vx: 0, vy: 0,
-          ph: Math.random() * Math.PI * 2,
-          sp: 0.6 + Math.random() * 0.9,
-          sz: i % 17 === 0 ? 1.9 : 0.75 + Math.random() * 0.75,
-          hot: i % 17 === 0
-        };
-      });
-    }
-
-    function draw(now) {
-      var t = (now - t0) / 1000;
-      var cyc = t % 9;
-      var burst = cyc < 1.6 ? Math.sin((cyc / 1.6) * Math.PI) : 0;
-
-      ctx.clearRect(0, 0, w, h);
-      for (var i = 0; i < ps.length; i++) {
-        var p = ps[i];
-        var wob = 3 + burst * 44;
-        var gx = p.tx + Math.cos(t * 0.55 * p.sp + p.ph) * wob;
-        var gy = p.ty + Math.sin(t * 0.45 * p.sp + p.ph * 1.7) * wob;
-        var fx = (gx - p.x) * 0.045;
-        var fy = (gy - p.y) * 0.045;
-        p.vx = (p.vx + fx) * 0.86;
-        p.vy = (p.vy + fy) * 0.86;
-        if (prefersReduced) { p.x = gx; p.y = gy; } else { p.x += p.vx; p.y += p.vy; }
-
-        var r = p.sz * (p.hot ? 6 : 4.6) * (1 + burst * 0.25);
-        ctx.globalAlpha = INK.alpha * (p.hot ? 1 : INK.dim) * (1 - burst * 0.3);
-        ctx.drawImage(p.hot ? SPRITE_HOT : SPRITE, p.x - r, p.y - r, r * 2, r * 2);
-      }
-      ctx.globalAlpha = 1;
-      if (!prefersReduced) raf = requestAnimationFrame(draw);
-    }
-
-    // 粒子が読めない環境向けのフォールバック。粒子が象るのと同じ位置・同じ大きさで
-    // ロゴを直接描くので、見た目の破綻がない。
-    function paintLogo() {
-      var s = Math.min(w, h) * scale * 1.5;
-      ctx.clearRect(0, 0, w, h);
-      ctx.globalAlpha = 0.9;
-      ctx.drawImage(logo, w / 2 - s / 2, h / 2 - s / 2, s, s);
-      ctx.globalAlpha = 1;
-    }
-
-    function refresh() {
-      if (!sample()) return false;
-      if (tainted) paintLogo(); else build();
-      return true;
-    }
-
-    // sample() は canvas.width を再設定する＝描画内容が消えるので、
-    // 採り直したら必ず描き直しまでセットで行う。
-    // prefers-reduced-motion のときは draw() がループを回さないため、
-    // これを怠るとリサイズ後に canvas が空のままになる。
-    function schedule() {
-      if (tainted) return;
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(draw);
-    }
-
-    if (!refresh()) {
-      retry = setTimeout(function () { if (refresh()) schedule(); }, 400);
-      return function () { clearTimeout(retry); };
-    }
-    schedule();
-
-    var ro = null;
-    if ('ResizeObserver' in window) {
-      ro = new ResizeObserver(function () { if (refresh()) schedule(); });
-      ro.observe(canvas);
-    }
-
-    return function () {
-      cancelAnimationFrame(raf);
-      clearTimeout(retry);
-      if (ro) ro.disconnect();
-    };
-  }
-
-  var stopField = null;
-  function bootField() {
-    var canvas = $('canvas[data-ik]');
-    if (!canvas || stopField) return;
-    logoReady.then(function (logo) {
-      if (stopField) return;
-      var page = canvas.closest('.page');
-      if (page && page.hidden) return;
-      stopField = startField(canvas, logo);
-    });
-  }
-  function teardownField() {
-    if (!stopField) return;
-    stopField();
-    stopField = null;
+    $$('[data-rv]:not(.is-in), [data-stagger]:not(.is-in)').forEach(function (el) { revealObserver.observe(el); });
   }
 
   /* ---------------------------------------------------------
@@ -318,6 +120,10 @@
   function projectById(id) {
     for (var i = 0; i < PROJECTS.length; i++) if (PROJECTS[i].id === id) return PROJECTS[i];
     return null;
+  }
+
+  function icon(name) {
+    return '<svg class="i" aria-hidden="true"><use href="#i-' + name + '"/></svg>';
   }
 
   function renderCase(project) {
@@ -348,29 +154,95 @@
 
     var visit = project.link
       ? '<a class="btn btn--outline" href="' + esc(project.link.href) + '" target="_blank" rel="noopener">' +
-        esc(project.link.label) + ' <span aria-hidden="true">↗</span></a>'
+        esc(project.link.label) + ' ' + icon('arrow-up-right') + '</a>'
       : '';
 
     var wipBadge = project.wip ? '<span class="badge-wip badge-wip--case">開発中 — まもなく公開予定</span>' : '';
 
     root.innerHTML =
-      '<a class="case__back" href="#/works">← Back to works</a>' +
+      '<a class="case__back" href="#/works">' + icon('arrow-left') + ' Back to works</a>' +
       '<h1 class="case__title">' + esc(project.name) + '</h1>' +
       wipBadge +
       '<p class="case__summary">' + esc(project.summary) + '</p>' +
       '<dl class="meta">' + meta + '</dl>' +
       '<div class="case__stage"><div class="case__frame">' +
-        '<span class="shot__glow" aria-hidden="true"></span>' + stage +
+        stage +
       '</div></div>' +
       (visit ? '<div class="case__visit">' + visit + '</div>' : '') +
       '<div class="case__foot">' +
-        '<a class="label" href="#/works">← All works</a>' +
+        '<a class="textlink" href="#/works">' + icon('arrow-left') + ' All works</a>' +
         '<a class="case__next" href="#/work/' + esc(next.id) + '">' +
           '<span class="label">Next project</span>' +
-          '<strong>' + esc(next.name) + ' →</strong>' +
+          '<strong>' + esc(next.name) + '</strong>' + icon('arrow-right') +
         '</a>' +
       '</div>';
   }
+
+  /* ---------------------------------------------------------
+     Mobile menu — 全画面パネル。リンクは CSS で 60ms ずつずらして出る
+     --------------------------------------------------------- */
+  var rootEl = document.documentElement;
+  var menuBtn = $('[data-menu-toggle]');
+
+  function setMenu(open) {
+    rootEl.classList.toggle('menu-open', open);
+    if (!menuBtn) return;
+    menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    menuBtn.setAttribute('aria-label', open ? 'メニューを閉じる' : 'メニューを開く');
+  }
+  function closeMenu() { setMenu(false); }
+
+  if (menuBtn) {
+    menuBtn.addEventListener('click', function () {
+      setMenu(!rootEl.classList.contains('menu-open'));
+    });
+  }
+  var menuEl = $('[data-menu]');
+  if (menuEl) {
+    // 今いるページのリンクを押しても hashchange は起きないので、ここで閉じる
+    menuEl.addEventListener('click', function (e) {
+      if (e.target.closest && e.target.closest('a')) closeMenu();
+    });
+  }
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeMenu();
+  });
+  window.addEventListener('resize', function () {
+    if (window.innerWidth > 720) closeMenu();
+  });
+
+  /* ---------------------------------------------------------
+     Tagline reveal — 一語ずつ、スクロール位置に応じて色が戻る
+     スクロールイベントは requestAnimationFrame で間引く
+     --------------------------------------------------------- */
+  var taglineEl = $('[data-tagline]');
+  var taglineWords = taglineEl ? $$('.w', taglineEl) : [];
+  var taglineTick = false;
+
+  function updateTagline() {
+    taglineTick = false;
+    if (!taglineWords.length) return;
+    if (prefersReduced) {
+      taglineWords.forEach(function (w) { w.classList.add('is-on'); });
+      return;
+    }
+    var box = taglineEl.getBoundingClientRect();
+    if (!box.height) return;   // 非表示のページ
+    var vh = window.innerHeight;
+    // 見出しが画面の下 20% に入ったら 0、下端が画面の 55% に届いたら 1
+    var p = (vh * 0.8 - box.top) / (vh * 0.25 + box.height);
+    var lit = Math.max(0, Math.min(1, p)) * taglineWords.length;
+    taglineWords.forEach(function (w, i) {
+      w.classList.toggle('is-on', i < lit);
+    });
+  }
+  function queueTagline() {
+    if (taglineTick) return;
+    taglineTick = true;
+    requestAnimationFrame(updateTagline);
+  }
+  window.addEventListener('scroll', queueTagline, { passive: true });
+  window.addEventListener('resize', queueTagline);
 
   /* ---------------------------------------------------------
      Router
@@ -392,7 +264,7 @@
   }
 
   var TITLES = {
-    top: 'Iida Keisuke — AI 活用と HP・LP 制作',
+    top: 'Iida Keisuke — Web ディレクション / HP・LP 制作と広告運用',
     works: 'Works — Iida Keisuke',
     about: 'About — Iida Keisuke',
     contact: 'お問い合わせ — Iida Keisuke'
@@ -410,7 +282,8 @@
       el.hidden = el.dataset.page !== route.page;
     });
 
-    if (route.page === 'top') bootField(); else teardownField();
+    closeMenu();
+    updateTagline();
 
     var navKey = route.page === 'case' ? 'works' : route.page;
     $$('[data-nav]').forEach(function (a) {
@@ -613,6 +486,6 @@
   observeReveals();
 
   if (document.fonts && document.fonts.ready) {
-    document.fonts.ready.then(function () { bootField(); });
+    document.fonts.ready.then(updateTagline);
   }
 })();

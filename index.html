@@ -57,23 +57,15 @@
   (function () {
     var h = location.hash;
     var isTop = !h || h === '#' || h === '#/';
-    document.documentElement.classList.add('js', isTop ? 'is-loading' : 'no-loader');
+    document.documentElement.classList.add(isTop ? 'is-loading' : 'no-loader');
   })();
 </script>
-
-<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
-  <!-- Lucide -->
-  <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
-  <symbol id="i-arrow-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></symbol>
-  <symbol id="i-arrow-up-right" viewBox="0 0 24 24"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></symbol>
-  <symbol id="i-map-pin" viewBox="0 0 24 24"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></symbol>
-</svg>
 
 <a class="skip-link" href="#main">本文へスキップ</a>
 
 <nav class="nav" aria-label="メインナビゲーション">
   <a class="nav__mark" href="#/" aria-label="ホーム">
-    <img src="uploads/ik-mark.png" alt="Iida Keisuke ロゴ" width="28" height="28">
+    <img src="uploads/ik-mark.png" alt="Iida Keisuke ロゴ" width="34" height="34">
   </a>
   <div class="nav__links">
     <a href="#/" data-nav="top">Home</a>
@@ -81,73 +73,32 @@
     <a href="#/about" data-nav="about">About</a>
     <a href="#/contact" data-nav="contact">Contact</a>
   </div>
-  <button class="nav__toggle" type="button" aria-label="メニューを開く" aria-expanded="false" aria-controls="menu" data-menu-toggle>
-    <span></span><span></span>
-  </button>
 </nav>
-
-<div class="menu" id="menu" data-menu>
-  <a class="menu__link" href="#/" data-nav="top">Home <svg class="i i--20" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
-  <a class="menu__link" href="#/works" data-nav="works">Works <svg class="i i--20" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
-  <a class="menu__link" href="#/about" data-nav="about">About <svg class="i i--20" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
-  <a class="menu__link" href="#/contact" data-nav="contact">Contact <svg class="i i--20" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
-</div>
 
 <main id="main" class="pages">
 
   <!-- ============================= TOP ============================= -->
   <div class="page" data-page="top" hidden>
 
-    <header class="hero">
-      <div class="hero__inner shell">
-        <div class="hero__intro" data-stagger>
-          <span class="hero__place">飯田圭祐 / Iida Keisuke</span>
-          <h1 class="hero__name">AI <span class="nb">でつくれる時代。</span><br class="br-lg"><span class="nb">だからこそ、</span><span class="nb">差がつくのは</span><span class="nb">設計です。</span></h1>
-          <p class="hero__lead">ディレクションで培った「型」から、一緒に組み立てます。約180社の広告運用と Web ディレクションの経験をもとに、公開したあとの成果まで見据えて HP・LP をつくります。</p>
-          <div class="hero__actions">
-            <a class="btn btn--dark" href="#/contact">まずは相談する <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
-            <a class="textlink" href="#/works">実績を見る <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
-          </div>
-          <p class="mono-xs hero__note">返信は2営業日以内 / Web direction, HP, LP and ad operations in Aichi</p>
+    <header class="hero shell">
+      <div class="hero__intro">
+        <h1 class="hero__name">Iida Keisuke</h1>
+        <p class="hero__lead">AI でつくれる時代。だからこそ、差がつくのは設計です。<br>ディレクションで培った「型」から、一緒に組み立てます。</p>
+        <div class="hero__meta">
+          <span class="mono-sm">Web direction<br>HP / LP &amp; ad operations<br>Aichi, Japan</span>
         </div>
       </div>
-
-      <!-- 見出しの後ろで、タイルが順に現れて漂う（装飾なので読み上げ対象外） -->
-      <div class="stage" data-stage aria-hidden="true">
-        <div class="tile tile--light tile--grain s10"></div>
-        <div class="tile tile--alt tile--grain s11"></div>
-        <div class="tile s1">
-          <img class="tile__img" src="uploads/ichi-hero.jpg" alt="">
-          <span class="tile__cap">旨焼肉 一 ichi</span>
-        </div>
-        <div class="tile s2">
-          <img class="tile__img" src="uploads/671AD1C5-753F-4FC5-A6EE-3EC464F6CB3C_4_5005_c.jpeg" alt="">
-          <span class="tile__cap">活魚の美舟</span>
-        </div>
-        <div class="tile tile--dark tile--grain s3"><img src="uploads/ik-mark.png" alt=""></div>
-        <div class="tile tile--light tile--chip s6"><svg class="i i--20"><use href="#i-map-pin"/></svg>Aichi, Japan</div>
-        <div class="tile tile--stat tile--light tile--grain s4">
-          <span class="tile__num"><small class="pre">約</small>180<small>社</small></span>
-          <span class="tile__txt">広告運用の実績</span>
-        </div>
-        <div class="tile tile--stat tile--alt tile--grain s5">
-          <span class="tile__num">0→60<small>件</small></span>
-          <span class="tile__txt">1ヶ月での CV</span>
-        </div>
-        <div class="tile tile--app tile--light tile--grain s7">
-          <img src="uploads/cleson-icon.png" alt="">
-        </div>
-        <div class="tile tile--app tile--surf tile--grain s8">
-          <img src="uploads/2406078C-16B1-494F-B034-DE8AE7C1CAE9_1_105_c.jpeg" alt="">
-        </div>
-        <div class="tile tile--tags tile--alt tile--grain s9"><span>HP</span><span>LP</span><span>広告運用</span><span>ディレクション</span></div>
-      </div>
+      <canvas class="hero__canvas" data-ik="hero" role="img" aria-label="IK モノグラムを象る光の粒子アニメーション"></canvas>
     </header>
 
-    <!-- Tagline：一語ずつ、スクロールに合わせて色が戻る -->
-    <section class="shell tagline" aria-label="大切にしていること">
-      <p class="tagline__text" data-tagline><span class="w">つくることと、</span><span class="w">集客して</span><span class="w">数字を追うこと。</span><span class="w">その両方を</span><span class="w">知っているから、</span><span class="w">公開したあとの</span><span class="w">成果まで</span><span class="w">見据えて</span><span class="w">設計できます。</span></p>
-    </section>
+    <div class="shell quicklinks">
+      <span class="label">Where you can start</span>
+      <div class="quicklinks__set">
+        <a href="#/works">実績を見る →</a>
+        <a href="#/about">自己紹介 →</a>
+        <a href="#/contact">お問い合わせ →</a>
+      </div>
+    </div>
 
     <!-- Services -->
     <section class="shell section" aria-labelledby="svc-heading">
@@ -156,10 +107,9 @@
         <span class="rule__line"></span>
         <span class="label">できること</span>
       </div>
-      <div class="grid-2 gap-24 mt-48" data-stagger>
+      <div class="grid-2 gap-32 mt-48" data-rv>
         <article class="card">
-          <span class="card__num" aria-hidden="true">01</span>
-          <span class="label label--sm">Web direction</span>
+          <span class="label label--sm">(01) Web Direction</span>
           <h2 class="card__title">HP・LP のディレクションと制作</h2>
           <p class="card__body">Web ディレクターとして、ヒアリング・構成設計・進行・公開までを一貫して担当してきました。誰に何を届けるサイトなのかを整理し、問い合わせや予約といったゴールまでの導線から逆算して設計します。制作会社への丸投げでは埋まりにくい「事業側の意図」と「つくり手の都合」の間に立てるのが強みです。</p>
           <ul class="chips">
@@ -169,9 +119,8 @@
             <li class="chip">公開後の改善</li>
           </ul>
         </article>
-        <article class="card card--alt">
-          <span class="card__num" aria-hidden="true">02</span>
-          <span class="label label--sm">Ad operations</span>
+        <article class="card">
+          <span class="label label--sm">(02) Ad Operations</span>
           <h2 class="card__title">広告運用と数字の改善</h2>
           <p class="card__body">これまで約180社の広告運用を担当してきました。CV が 0件だったアカウントを、訴求と着地ページの導線から組み直し、1ヶ月で月60件まで伸ばしたこともあります。数字のどこで落ちているのかを一つずつ潰していく進め方なので、「サイトはあるのに問い合わせが来ない」という状態から相談いただけます。</p>
           <ul class="chips">
@@ -181,9 +130,8 @@
             <li class="chip">効果測定</li>
           </ul>
         </article>
-        <article class="card card--dark card--wide">
-          <span class="card__num" aria-hidden="true">03</span>
-          <span class="label label--sm">AI and direction</span>
+        <article class="card card--wide">
+          <span class="label label--sm">(03) AI × Direction</span>
           <h2 class="card__title">AI で作りたい方の、設計のサポート</h2>
           <p class="card__body">AI の操作自体はもう誰でもできます。それでも詰まるのは「何をコンセプトにするか」「どんな指示を出せばいいか」といった、設計の部分です。ディレクションで身につけた進め方の型を、AI を使う前提のまま一緒に整理します。AI をまだ触ったこともない、という方も大歓迎です。どのツールをどう使い分けるのか、最初の一歩から一緒に進めますので、知識ゼロの状態でご相談いただいて大丈夫です。現職では AI を業務に組み込み、毎月何時間もかかっていた作業を人の手からほぼゼロにした経験もあるので、業務効率化やアプリ開発のご相談も承ります。</p>
           <ul class="chips">
@@ -202,34 +150,44 @@
       <div class="rule" data-rv>
         <span class="label" id="works-heading">Works</span>
         <span class="rule__line"></span>
-        <a class="label" href="#/works">View all <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+        <a class="label" href="#/works">View all →</a>
       </div>
 
-      <div class="grid-2 gap-24 mt-48" data-stagger>
-        <a class="work" href="#/work/mifune">
-          <div class="work__thumb work__thumb--cover">
+      <a class="feature" href="#/work/mifune" data-rv>
+        <div class="feature__text">
+          <h2 class="feature__title">活魚の美舟<br>公式サイト</h2>
+          <div>
+            <div class="label label--onDark">Website / HP — 2025</div>
+            <p class="feature__body">知多半島の旅館の公式サイト。宿の空気感を保ちながら、予約導線をまっすぐに整理しました。</p>
+            <span class="btn btn--light">Read case study <span aria-hidden="true">→</span></span>
+          </div>
+        </div>
+        <div class="feature__media">
+          <div class="shot">
+            <span class="shot__glow" aria-hidden="true"></span>
             <img src="uploads/671AD1C5-753F-4FC5-A6EE-3EC464F6CB3C_4_5005_c.jpeg" alt="活魚の美舟 客室からの眺め" loading="lazy">
           </div>
+        </div>
+      </a>
+
+      <a class="feature" href="#/work/ichi" data-rv>
+        <div class="feature__text">
+          <h2 class="feature__title">旨焼肉 一 ichi<br>公式サイト</h2>
           <div>
-            <div class="work__head">
-              <h3 class="work__title">活魚の美舟 公式サイト</h3>
-              <span class="mono-xs">Website / HP 2025</span>
-            </div>
-            <p class="work__body">知多半島の旅館の公式サイト。宿の空気感を保ちながら、予約導線をまっすぐに整理しました。</p>
+            <div class="label label--onDark">Website / HP — 2026</div>
+            <p class="feature__body">愛知県東浦町の焼肉店の公式サイト。生牛タンと名物「一焼」がおすすめメニューです！</p>
+            <span class="btn btn--light">Read case study <span aria-hidden="true">→</span></span>
           </div>
-        </a>
-        <a class="work" href="#/work/ichi">
-          <div class="work__thumb work__thumb--cover">
+        </div>
+        <div class="feature__media">
+          <div class="shot">
+            <span class="shot__glow" aria-hidden="true"></span>
             <img src="uploads/ichi-hero.jpg" alt="旨焼肉 一 ichi 網で焼かれる生牛タンとホルモン" loading="lazy">
           </div>
-          <div>
-            <div class="work__head">
-              <h3 class="work__title">旨焼肉 一 ichi 公式サイト</h3>
-              <span class="mono-xs">Website / HP 2026</span>
-            </div>
-            <p class="work__body">愛知県東浦町の焼肉店の公式サイト。生牛タンと名物「一焼」がおすすめメニューです！</p>
-          </div>
-        </a>
+        </div>
+      </a>
+
+      <div class="grid-2 gap-32 mt-32" data-rv>
         <a class="work" href="#/work/cleson">
           <div class="work__thumb work__thumb--icon">
             <img src="uploads/cleson-icon.png" alt="CLESON アプリのアイコン" loading="lazy">
@@ -237,7 +195,7 @@
           <div>
             <div class="work__head">
               <h3 class="work__title">CLESON</h3>
-              <span class="mono-xs">App / アプリ 公開中</span>
+              <span class="mono-xs">App / アプリ — 公開中</span>
             </div>
             <p class="work__body">クレーンゲームの景品が、どの店舗にあるか検索できるアプリ。</p>
           </div>
@@ -249,11 +207,23 @@
           <div>
             <div class="work__head">
               <h3 class="work__title">segrate</h3>
-              <span class="mono-xs">App / アプリ 試用版を公開中</span>
+              <span class="mono-xs">App / アプリ — 試用版を公開中</span>
             </div>
             <p class="work__body">自分だけが知っている地元のお店を、地図で共有するアプリ。</p>
           </div>
         </a>
+        <!--<a class="work" href="#/contact">
+          <div class="work__thumb work__thumb--empty">
+            <span class="label label--sm">LP — 制作依頼受付中</span>
+          </div>
+          <div>
+            <div class="work__head">
+              <h3 class="work__title">LP 制作</h3>
+              <span class="mono-xs">Landing page — 準備中</span>
+            </div>
+            <p class="work__body">約180社の広告運用の経験をもとに、獲得までを見据えた LP をご提案します。実績は随時追加予定です。</p>
+          </div>
+        </a>-->
       </div>
     </section>
 
@@ -262,7 +232,7 @@
       <div class="rule" data-rv>
         <span class="label" id="about-heading">About</span>
         <span class="rule__line"></span>
-        <a class="label" href="#/about">More about me <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+        <a class="label" href="#/about">More about me →</a>
       </div>
       <div class="about" data-rv>
         <div class="portrait">
@@ -273,7 +243,7 @@
           <p class="prose">Web ディレクターとして、ヒアリングから構成設計・進行・公開までを担当してきました。あわせて約180社の広告運用に携わり、CV 0件だったアカウントを1ヶ月で月60件まで伸ばしたこともあります。</p>
           <p class="prose">つくることと、集客して数字を追うこと。その両方を経験しているので、「公開したあとどう回すか」から逆算したサイト設計ができます。</p>
           <p class="prose">AI で自分でつくりたい方のサポートもしています。操作はできても、コンセプトや構成、指示の出し方で止まってしまう。その設計の部分を、ディレクションの型からご一緒します。</p>
-          <a class="btn btn--outline mt-40" href="#/about">About me <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+          <a class="btn btn--outline mt-40" href="#/about">About me <span aria-hidden="true">→</span></a>
         </div>
       </div>
     </section>
@@ -282,12 +252,14 @@
     <section class="shell section" aria-labelledby="cta-heading">
       <div class="cta" data-rv>
         <div>
-          <h2 class="cta__title" id="cta-heading">少しでも興味を持って<br class="br-lg">いただけましたら。</h2>
-          <p class="cta__body">「サイトはあるのに問い合わせが来ない」「そもそも何から決めればいいか分からない」。そんな段階からのご相談で大丈夫です。まずは一度お聞かせください。</p>
+          <h2 class="cta__title cta__title--jp" id="cta-heading">少しでも興味を持って<br class="br-lg">いただけましたら。</h2>
+          <p class="cta__body">「サイトはあるのに問い合わせが来ない」「そもそも何から決めればいいか分からない」——そんな段階からのご相談で大丈夫です。まずは一度お聞かせください。</p>
         </div>
         <div class="cta__actions">
-          <a class="btn btn--light btn--block" href="#/contact">まずは相談する <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
-          <a class="btn btn--ghost btn--block" href="mailto:keahi0427@icloud.com?subject=%E3%81%8A%E5%95%8F%E3%81%84%E5%90%88%E3%82%8F%E3%81%9B%EF%BC%88%E3%83%9D%E3%83%BC%E3%83%88%E3%83%95%E3%82%A9%E3%83%AA%E3%82%AA%E3%82%B5%E3%82%A4%E3%83%88%E3%82%88%E3%82%8A%EF%BC%89">keahi0427@icloud.com <svg class="i" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></a>
+          <a class="btn btn--light btn--block" href="mailto:keahi0427@icloud.com?subject=%E3%81%8A%E5%95%8F%E3%81%84%E5%90%88%E3%82%8F%E3%81%9B%EF%BC%88%E3%83%9D%E3%83%BC%E3%83%88%E3%83%95%E3%82%A9%E3%83%AA%E3%82%AA%E3%82%B5%E3%82%A4%E3%83%88%E3%82%88%E3%82%8A%EF%BC%89">
+            keahi0427@icloud.com <span aria-hidden="true">↗</span>
+          </a>
+          <a class="btn btn--ghost btn--block" href="#/contact">お問い合わせフォーム <span aria-hidden="true">→</span></a>
         </div>
       </div>
     </section>
@@ -300,12 +272,12 @@
       <h1 class="display-1">All work</h1>
       <p class="page-lead">HP・LP・アプリの3つに分けて掲載しています。現在公開できるのは4件で、これから随時追加していきます。</p>
 
-      <div class="rule mt-64">
+      <div class="rule mt-72">
         <span class="label">01 — Website / HP</span>
         <span class="rule__line"></span>
         <span class="mono-xs">2件</span>
       </div>
-      <div class="grid-2 gap-24 mt-32">
+      <div class="grid-2 gap-40 mt-32">
         <a class="work work--lg" href="#/work/mifune">
           <div class="work__thumb work__thumb--cover">
             <img src="uploads/671AD1C5-753F-4FC5-A6EE-3EC464F6CB3C_4_5005_c.jpeg" alt="活魚の美舟 客室からの眺め" loading="lazy">
@@ -316,7 +288,7 @@
               <span class="mono-xs">2025</span>
             </div>
             <p class="work__body">旅館の公式サイト。ディレクションから制作、公開後の運用まで担当。</p>
-            <ul class="chips mt-16">
+            <ul class="chips mt-18">
               <li class="chip">ディレクション</li>
               <li class="chip">HP 制作</li>
               <li class="chip">運用</li>
@@ -333,20 +305,21 @@
               <span class="mono-xs">2026</span>
             </div>
             <p class="work__body">愛知県東浦町の焼肉店の公式サイト。生牛タンと名物「一焼」がおすすめメニューです！</p>
-            <ul class="chips mt-16">
+            <ul class="chips mt-18">
               <li class="chip">HP 制作</li>
+              <li class="chip">CMS 連携</li>
               <li class="chip">飲食店</li>
             </ul>
           </div>
         </a>
       </div>
 
-      <div class="rule mt-80">
+      <div class="rule mt-88">
         <span class="label">02 — LP</span>
         <span class="rule__line"></span>
         <span class="mono-xs">準備中</span>
       </div>
-      <div class="grid-2 gap-24 mt-32">
+      <div class="grid-2 gap-40 mt-32">
         <a class="work work--lg" href="#/contact">
           <div class="work__thumb work__thumb--empty work__thumb--43">
             <span class="label label--sm">LP — 制作依頼受付中</span>
@@ -354,19 +327,19 @@
           <div>
             <div class="work__head">
               <h2 class="work__title">LP 制作</h2>
-              <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg>
+              <span class="mono-xs" aria-hidden="true">→</span>
             </div>
             <p class="work__body">約180社の広告運用と、1ヶ月で CV 0件から月60件まで伸ばした経験をもとに、獲得までを見据えた LP をご提案します。実績はこれから掲載予定です。</p>
           </div>
         </a>
       </div>
 
-      <div class="rule mt-80">
+      <div class="rule mt-88">
         <span class="label">03 — App / アプリ</span>
         <span class="rule__line"></span>
         <span class="mono-xs">2件</span>
       </div>
-      <div class="grid-2 gap-24 mt-32">
+      <div class="grid-2 gap-40 mt-32">
         <a class="work work--lg" href="#/work/cleson">
           <div class="work__icon-box">
             <img src="uploads/cleson-icon.png" alt="CLESON アプリのアイコン" loading="lazy">
@@ -377,7 +350,7 @@
               <span class="mono-xs">公開中</span>
             </div>
             <p class="work__body">クレーンゲームの景品在庫を、商品名・店舗名から検索できる Web アプリ。バンダイナムコ・タイトーなど店舗のデータを毎日自動更新しています。</p>
-            <ul class="chips mt-16">
+            <ul class="chips mt-18">
               <li class="chip">Web アプリ</li>
               <li class="chip">個人開発</li>
               <li class="chip">在庫検索</li>
@@ -394,7 +367,7 @@
               <span class="mono-xs">試用版を公開中</span>
             </div>
             <p class="work__body">地図から「誰かのおすすめ」を見つけられるアプリ。自分だけが知っている地元のお店を、日本中・世界中の人と共有できます。</p>
-            <ul class="chips mt-16">
+            <ul class="chips mt-18">
               <li class="chip">アプリ開発</li>
               <li class="chip">個人開発</li>
               <li class="chip">地図・位置情報</li>
@@ -409,7 +382,7 @@
           <h2 class="callout__title">実績はこれから増やしていきます</h2>
           <p class="callout__body">HP・LP のディレクションと制作、広告運用のご相談を受け付けています。</p>
         </div>
-        <a class="btn btn--outline" href="#/contact">Contact <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+        <a class="btn btn--outline" href="#/contact">Contact <span aria-hidden="true">→</span></a>
       </div>
     </section>
   </div>
@@ -425,7 +398,7 @@
       <div class="label">About — Iida Keisuke</div>
       <h1 class="display-1 display-1--jp">数字から逆算して、<br class="br-lg">Web をつくる。</h1>
 
-      <div class="about about--page mt-64">
+      <div class="about about--page mt-72">
         <div>
           <div class="portrait">
             <img src="uploads/AD8A0684-EFC5-4C89-AA49-F36AAA071E09_1_102_o.jpeg" alt="飯田圭祐のポートレート" loading="lazy">
@@ -445,7 +418,7 @@
           <p class="prose">どのページが必要で、何をどの順に見せて、どこへ着地させるのか。ディレクションで身につけたその型があるからこそ、AI を使う前提のままでも、作るものの中身を一緒に決めていけます。</p>
           <p class="prose">なので、AI をまだ触ったことがない方こそ歓迎です。専門用語が分からなくても、何ができるのかイメージがついていなくても構いません。「やりたいことはあるけど、どう進めればいいか分からない」という状態からご相談ください。ツールの選び方も、指示の出し方も、最初の一歩から一緒に進めます。</p>
 
-          <div class="grid-2 gap-48 mt-64">
+          <div class="grid-2 gap-48 mt-72">
             <div>
               <h2 class="colhead">できること</h2>
               <ul class="stack-list">
@@ -469,9 +442,9 @@
             </div>
           </div>
 
-          <div class="actions mt-64">
-            <a class="btn btn--outline" href="#/works">実績を見る <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
-            <a class="textlink" href="#/contact">お問い合わせ <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+          <div class="actions mt-72">
+            <a class="btn btn--outline" href="#/works">実績を見る <span aria-hidden="true">→</span></a>
+            <a class="label" href="#/contact">お問い合わせ →</a>
           </div>
         </div>
       </div>
@@ -484,11 +457,11 @@
       <div class="label">Contact — お気軽にどうぞ</div>
       <h1 class="display-1">お問い合わせ</h1>
 
-      <div class="contact mt-64">
+      <div class="contact mt-72">
         <div>
           <p class="prose prose--first">HP・LP の制作や作り直し、広告からの集客が伸びないというご相談を歓迎します。AI 活用のご相談も承ります。まずは状況をお聞かせください。</p>
           <dl class="deflist">
-            <div><dt class="label label--sm">Email</dt><dd class="maildd"><a href="mailto:keahi0427@icloud.com?subject=%E3%81%8A%E5%95%8F%E3%81%84%E5%90%88%E3%82%8F%E3%81%9B%EF%BC%88%E3%83%9D%E3%83%BC%E3%83%88%E3%83%95%E3%82%A9%E3%83%AA%E3%82%AA%E3%82%B5%E3%82%A4%E3%83%88%E3%82%88%E3%82%8A%EF%BC%89">keahi0427@icloud.com <svg class="i" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></a><button type="button" class="copybtn" data-copy-mail>コピー</button></dd></div>
+            <div><dt class="label label--sm">Email</dt><dd class="maildd"><a href="mailto:keahi0427@icloud.com?subject=%E3%81%8A%E5%95%8F%E3%81%84%E5%90%88%E3%82%8F%E3%81%9B%EF%BC%88%E3%83%9D%E3%83%BC%E3%83%88%E3%83%95%E3%82%A9%E3%83%AA%E3%82%AA%E3%82%B5%E3%82%A4%E3%83%88%E3%82%88%E3%82%8A%EF%BC%89">keahi0427@icloud.com <span aria-hidden="true">↗</span></a><button type="button" class="copybtn" data-copy-mail>コピー</button></dd></div>
             <div><dt class="label label--sm">ご相談内容</dt><dd>HP・LP 制作 / 広告運用 / AI 活用</dd></div>
             <div><dt class="label label--sm">拠点</dt><dd>愛知県</dd></div>
             <div><dt class="label label--sm">返信</dt><dd>2営業日以内</dd></div>
@@ -510,7 +483,7 @@
               <textarea name="body" rows="6" placeholder="現在の状況とご相談したいことをお書きください。"></textarea>
             </label>
             <p class="form__error" data-form-error role="alert" hidden></p>
-            <button type="submit" class="btn btn--dark btn--submit">送信する <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></button>
+            <button type="submit" class="btn btn--dark">送信する <span aria-hidden="true">→</span></button>
           </form>
 
           <div class="form__done" data-form-done hidden>

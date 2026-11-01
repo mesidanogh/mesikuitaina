@@ -212,6 +212,17 @@
   });
 
   /* ---------------------------------------------------------
+     Hero stage — 背景のタイルを、ロード画面が消えてから順に登場させる
+     --------------------------------------------------------- */
+  var stageEl = $('[data-stage]');
+  function playStage() {
+    if (!stageEl || rootEl.classList.contains('is-loading')) return;
+    stageEl.classList.remove('is-play');
+    void stageEl.offsetWidth;   // 再生し直すためにアニメーションをリセット
+    stageEl.classList.add('is-play');
+  }
+
+  /* ---------------------------------------------------------
      Tagline reveal — 一語ずつ、スクロール位置に応じて色が戻る
      スクロールイベントは requestAnimationFrame で間引く
      --------------------------------------------------------- */
@@ -284,6 +295,7 @@
 
     closeMenu();
     updateTagline();
+    if (route.page === 'top') playStage();
 
     var navKey = route.page === 'case' ? 'works' : route.page;
     $$('[data-nav]').forEach(function (a) {
@@ -448,6 +460,7 @@
       finished = true;
       el.classList.add('is-done');
       root.classList.remove('is-loading');
+      playStage();
       setTimeout(function () { el.remove(); }, 800);
     }
 

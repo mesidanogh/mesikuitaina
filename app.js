@@ -313,12 +313,15 @@
   }
 
   /* ---------------------------------------------------------
-     Wave field — ファーストビューの背景。カーソルが通ると線が波打つ
-     格子の波動方程式を解いて、横線の高さをずらして描く。
+     Wave field — ファーストビューの背景。カーソルが通った所だけ線が浮かんで波打つ
+     格子の波動方程式を解いて、横線の高さをずらして描く（静止時は無地）。
      動きが収まったら requestAnimationFrame を止める（待機中は負荷ゼロ）
      --------------------------------------------------------- */
   var WAVE = {
-    line: 'rgba(51,52,46,0.16)',   // --ink #33342E
+    alpha: 0.22,                   // 線のいちばん濃い所（--ink #33342E）
+    levels: 6,                     // 濃さの段階数
+    floor: 0.12,                   // これ未満の揺れは描かない
+    full: 6,                       // この揺れ幅で最大の濃さ
     spring: 0.22,                  // 隣との引き合い（大きいほど波が速い）
     damp: 0.985,                   // 1 フレームごとの減衰（小さいほど早く収まる）
     push: 0.16,                    // カーソル速度 → 波の強さ
@@ -362,21 +365,30 @@
       for (i = 0; i < h.length; i++) h[i] += v[i];
     }
 
-    // 描画しつつ、いちばん大きい振れ幅を返す（収まったかの判定に使う）
+    // 波が立っている所だけ線を描く（静止時は何も出ない）。
+    // 揺れの大きさで濃さを段階分けして、段階ごとに 1 回のストロークにまとめる。
+    // いちばん大きい振れ幅を返す（収まったかの判定に使う）
     function draw() {
       ctx.clearRect(0, 0, W, H);
-      ctx.strokeStyle = WAVE.line;
       ctx.lineWidth = 1;
-      var peak = 0, r, c, y, a;
+      var L = WAVE.levels, paths = [], k, peak = 0, r, c, i, a, lv, y0, y1;
+      for (k = 0; k < L; k++) paths.push(new Path2D());
       for (r = 0; r < rows; r++) {
-        ctx.beginPath();
-        for (c = 0; c < cols; c++) {
-          a = h[r * cols + c];
-          y = r * dy + a;
-          if (a > peak) peak = a; else if (-a > peak) peak = -a;
-          if (c) ctx.lineTo(c * dx, y); else ctx.moveTo(0, y);
+        for (c = 0; c < cols - 1; c++) {
+          i = r * cols + c;
+          a = Math.abs(h[i]);
+          if (a > peak) peak = a;
+          a += Math.abs(v[i]) * 2;
+          if (a < WAVE.floor) continue;
+          lv = Math.min(L - 1, Math.floor(a / WAVE.full * L));
+          y0 = r * dy + h[i]; y1 = r * dy + h[i + 1];
+          paths[lv].moveTo(c * dx, y0);
+          paths[lv].lineTo((c + 1) * dx, y1);
         }
-        ctx.stroke();
+      }
+      for (k = 0; k < L; k++) {
+        ctx.strokeStyle = 'rgba(51,52,46,' + (WAVE.alpha * (k + 1) / L).toFixed(3) + ')';
+        ctx.stroke(paths[k]);
       }
       return peak;
     }
@@ -436,7 +448,7 @@
     function onLeave() { last = null; }
 
     layout();
-    if (prefersReduced) return function () {};   // 動きは出さず、静止した線だけ
+    if (prefersReduced) return function () {};   // 視差を減らす設定では何も出さない
 
     window.addEventListener('pointermove', onMove, { passive: true });
     window.addEventListener('pointerdown', onDown, { passive: true });

@@ -321,12 +321,12 @@
     alpha: 0.4,                    // 点のいちばん濃い所（--ink #33342E）
     levels: 6,                     // 大きさ・濃さの段階数
     dot: [0.7, 1, 1.3, 1.6, 1.9, 2.2], // 段階ごとの点の半径(px)
-    floor: 0.12,                   // これ未満の揺れは描かない
+    floor: 0.2,                    // これ未満の揺れは描かない
     full: 6,                       // この揺れ幅で最大の濃さ
-    spring: 0.22,                  // 隣との引き合い（大きいほど波が速い）
-    damp: 0.985,                   // 1 フレームごとの減衰（小さいほど早く収まる）
-    push: 0.16,                    // カーソル速度 → 波の強さ
-    reach: 3                       // 波を起こす範囲（セル数）
+    spring: 0.07,                  // 隣との引き合い（大きいほど波が速い）
+    damp: 0.975,                   // 1 フレームごとの減衰（小さいほど早く収まる）
+    push: 0.07,                    // カーソル速度 → 波の強さ
+    reach: 2                       // 波を起こす範囲（セル数）
   };
 
   function startWaves(canvas) {
@@ -344,7 +344,7 @@
       canvas.width = Math.round(W * dpr);
       canvas.height = Math.round(H * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      dx = dy = W < 700 ? 18 : 16;
+      dx = dy = W < 700 ? 20 : 18;
       cols = Math.ceil(W / dx) + 1;
       rows = Math.ceil(H / dy) + 1;
       h = new Float32Array(cols * rows);
@@ -415,7 +415,7 @@
       for (var r = r0; r <= r1; r++) {
         for (var c = c0; c <= c1; c++) {
           var d2 = (c - gc) * (c - gc) + (r - gr) * (r - gr);
-          v[r * cols + c] += power * Math.exp(-d2 / 3);
+          v[r * cols + c] += power * Math.exp(-d2 / 2);
         }
       }
     }

@@ -313,13 +313,14 @@
   }
 
   /* ---------------------------------------------------------
-     Wave field — ファーストビューの背景。カーソルが通った所だけ線が浮かんで波打つ
-     格子の波動方程式を解いて、横線の高さをずらして描く（静止時は無地）。
+     Wave field — ファーストビューの背景。カーソルが通った所だけ点が浮かんで波打つ
+     格子の波動方程式を解いて、点の高さと大きさに反映する（静止時は無地）。
      動きが収まったら requestAnimationFrame を止める（待機中は負荷ゼロ）
      --------------------------------------------------------- */
   var WAVE = {
-    alpha: 0.22,                   // 線のいちばん濃い所（--ink #33342E）
-    levels: 6,                     // 濃さの段階数
+    alpha: 0.4,                    // 点のいちばん濃い所（--ink #33342E）
+    levels: 6,                     // 大きさ・濃さの段階数
+    dot: [0.7, 1, 1.3, 1.6, 1.9, 2.2], // 段階ごとの点の半径(px)
     floor: 0.12,                   // これ未満の揺れは描かない
     full: 6,                       // この揺れ幅で最大の濃さ
     spring: 0.22,                  // 隣との引き合い（大きいほど波が速い）
@@ -343,8 +344,7 @@
       canvas.width = Math.round(W * dpr);
       canvas.height = Math.round(H * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      dx = W < 700 ? 16 : 12;
-      dy = W < 700 ? 22 : 20;
+      dx = dy = W < 700 ? 18 : 16;
       cols = Math.ceil(W / dx) + 1;
       rows = Math.ceil(H / dy) + 1;
       h = new Float32Array(cols * rows);
@@ -365,30 +365,29 @@
       for (i = 0; i < h.length; i++) h[i] += v[i];
     }
 
-    // 波が立っている所だけ線を描く（静止時は何も出ない）。
-    // 揺れの大きさで濃さを段階分けして、段階ごとに 1 回のストロークにまとめる。
+    // 波が立っている所だけ点を描く（静止時は何も出ない）。
+    // 揺れの大きさで点の大きさと濃さを段階分けして、段階ごとに 1 回の fill にまとめる。
     // いちばん大きい振れ幅を返す（収まったかの判定に使う）
     function draw() {
       ctx.clearRect(0, 0, W, H);
-      ctx.lineWidth = 1;
-      var L = WAVE.levels, paths = [], k, peak = 0, r, c, i, a, lv, y0, y1;
+      var L = WAVE.levels, paths = [], k, peak = 0, r, c, i, a, lv, x, y;
       for (k = 0; k < L; k++) paths.push(new Path2D());
       for (r = 0; r < rows; r++) {
-        for (c = 0; c < cols - 1; c++) {
+        for (c = 0; c < cols; c++) {
           i = r * cols + c;
           a = Math.abs(h[i]);
           if (a > peak) peak = a;
           a += Math.abs(v[i]) * 2;
           if (a < WAVE.floor) continue;
           lv = Math.min(L - 1, Math.floor(a / WAVE.full * L));
-          y0 = r * dy + h[i]; y1 = r * dy + h[i + 1];
-          paths[lv].moveTo(c * dx, y0);
-          paths[lv].lineTo((c + 1) * dx, y1);
+          x = c * dx; y = r * dy + h[i];
+          paths[lv].moveTo(x + WAVE.dot[lv], y);
+          paths[lv].arc(x, y, WAVE.dot[lv], 0, 6.2832);
         }
       }
       for (k = 0; k < L; k++) {
-        ctx.strokeStyle = 'rgba(51,52,46,' + (WAVE.alpha * (k + 1) / L).toFixed(3) + ')';
-        ctx.stroke(paths[k]);
+        ctx.fillStyle = 'rgba(51,52,46,' + (WAVE.alpha * (k + 2) / (L + 1)).toFixed(3) + ')';
+        ctx.fill(paths[k]);
       }
       return peak;
     }

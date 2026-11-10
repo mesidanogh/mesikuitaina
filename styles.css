@@ -1236,12 +1236,13 @@ body {
   gap:10%;
   align-items:center;
   border-top:1px solid var(--line);
-  padding-top:80px}
+  padding-top:80px;
+  padding-bottom:clamp(64px, 8vw, 112px)}
 .mini-portrait {
   max-width:350px;
   aspect-ratio:4/5;
   overflow:hidden;
-  rotate:-3deg}
+  rotate:0deg}
 .mini-portrait img {
   width:100%;
   height:100%;

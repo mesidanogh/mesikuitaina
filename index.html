@@ -34,10 +34,41 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=Bitter:wght@400;500&family=Inter:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500&family=Noto+Serif+JP:wght@400&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=Bitter:wght@400;500&family=Inter:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500&family=Noto+Serif+JP:wght@400;600&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+<!-- 初回だけイントロを出す。CSS より先に判定して、ちらつきを防ぐ -->
+<script>(function(d){try{if(sessionStorage.getItem('ik-intro')||matchMedia('(prefers-reduced-motion: reduce)').matches)d.classList.add('no-intro');else d.classList.add('is-intro')}catch(e){d.classList.add('no-intro')}})(document.documentElement)</script>
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+
+<!-- アイコンのスプライト。線画は uploads/icons/*.svg と同じ形、矢印などは Lucide -->
+<svg class="sprite" aria-hidden="true" focusable="false">
+  <symbol id="ico-browser" viewBox="0 0 128 128"><rect x="16" y="24" width="96" height="76" rx="5" pathLength="1"/><path pathLength="1" d="M16 42h96M27 33h1m9 0h1m9 0h1M32 60h28M32 72h42M32 84h22M86 65l13 10-13 10z"/></symbol>
+  <symbol id="ico-claw" viewBox="0 0 128 128"><path pathLength="1" d="M27 17h74v94H27zM27 32h74M64 32v22m-12 0h24l10 16-10 9m-24-25L42 70l10 9M27 88h74M41 104h13m29-4h1"/><circle cx="65" cy="78" r="10" pathLength="1"/></symbol>
+  <symbol id="ico-gear" viewBox="0 0 128 128"><path pathLength="1" d="M53 22h22l3 12 11 6 12-3 11 19-9 9v13l9 9-11 19-12-3-11 6-3 12H53l-3-12-11-6-12 3-11-19 9-9V65l-9-9 11-19 12 3 11-6z" transform="translate(0 -8) scale(.95)"/><circle cx="61" cy="60" r="20" pathLength="1"/></symbol>
+  <symbol id="ico-graph" viewBox="0 0 128 128"><path pathLength="1" d="M20 103h89M30 91V73h14v18m14 0V55h14v36m14 0V36h14v55M24 56l31-20 21 2 29-23m-21 0h21v21"/></symbol>
+  <symbol id="ico-grow" viewBox="0 0 128 128"><path pathLength="1" d="M65 110V57C35 62 22 40 23 21c28-2 44 12 42 36 1-29 18-43 43-41 2 27-13 44-43 41M23 21l42 36 43-41M38 110h54"/></symbol>
+  <symbol id="ico-inn" viewBox="0 0 128 128"><path pathLength="1" d="M17 100h94M25 99V48h78v51M17 48l47-28 47 28M55 99V76h18v23M36 59h9v9h-9zm47 0h9v9h-9zM36 80h9m38 0h9M16 113q12-8 24 0t24 0t24 0t24 0"/></symbol>
+  <symbol id="ico-map" viewBox="0 0 128 128"><path pathLength="1" d="M16 42l32-12 32 12 32-12v72l-32 12-32-12-32 12zM48 73v29m32-25v37"/><path pathLength="1" d="M83 38c0 16-19 34-19 34S45 54 45 38a19 19 0 0138 0z"/><circle cx="64" cy="38" r="6" pathLength="1"/></symbol>
+  <symbol id="ico-plan" viewBox="0 0 128 128"><path pathLength="1" d="M32 20h65v92H32zM48 15h33v13H48zM44 45l4 4 8-9m8 5h20M44 65l4 4 8-9m8 5h20M44 85l4 4 8-9m8 5h20"/></symbol>
+  <symbol id="ico-shop" viewBox="0 0 128 128"><path pathLength="1" d="M24 57v45h80V57M16 43l12-22h72l12 22M16 43v10q12 16 24 0 12 16 24 0 12 16 24 0 12 16 24 0V43zM40 43l6-22m18 22V21m24 22-6-22M42 102V77h24v25m15-29h13v14H81z"/></symbol>
+  <symbol id="ico-talk" viewBox="0 0 128 128"><path pathLength="1" d="M18 24h76v53H48L28 96V77H18zM39 43h36M39 56h25M102 44h12v55H98v16L78 99H56V87"/></symbol>
+  <symbol id="lu-arrow-up-right" viewBox="0 0 24 24"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></symbol>
+  <symbol id="lu-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
+  <symbol id="lu-arrow-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></symbol>
+  <symbol id="lu-arrow-down" viewBox="0 0 24 24"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></symbol>
+  <symbol id="lu-asterisk" viewBox="0 0 24 24"><path d="M12 6v12"/><path d="M17.196 9 6.804 15"/><path d="m6.804 9 10.392 6"/></symbol>
+</svg>
+
+<!-- 初回ロードのイントロ。インクの面が縮んで、FV の「インクの玉」になる -->
+<div class="intro" data-intro aria-hidden="true">
+  <span class="wordmark intro__mark">IK <i>/ Iida Keisuke</i></span>
+  <span class="intro__label">PORTFOLIO — LOADING</span>
+  <span class="intro__count" data-intro-count>0</span>
+</div>
+
+<!-- ページ切り替えのインク。クリックした場所から広がって、次のページで縮む -->
+<div class="wipe" data-wipe aria-hidden="true" hidden><span class="wipe__label"><span data-wipe-label></span></span></div>
 
 <a class="skip-link" href="#main">本文へスキップ</a>
 
@@ -49,41 +80,50 @@
     <a href="#/services" data-nav="services">できること</a>
     <a href="#/works" data-nav="works">仕事</a>
     <a href="#/about" data-nav="about">私について</a>
-    <a href="#/contact" data-nav="contact">相談する ↗</a>
+    <a href="#/contact" data-nav="contact">相談する <svg class="lu" aria-hidden="true"><use href="#lu-arrow-up-right"/></svg></a>
   </div>
+  <span class="nav__progress" aria-hidden="true"></span>
 </nav>
 
 <main id="main" class="pages">
 
   <div class="page" data-page="top" hidden>
     <header class="motion-hero shell" data-motion-hero>
-      <div class="hero-topline"><span>WEB DIRECTION & CREATIVE</span><span>AICHI, JAPAN — PORTFOLIO</span></div>
+      <div class="hero-topline"><span>WEB DIRECTION &amp; CREATIVE</span><span>AICHI, JAPAN — PORTFOLIO</span></div>
       <div class="hero-composition">
-        <h1 class="catchphrase" aria-label="その仕事任せりゃいいじゃん？"><span class="catch-line" aria-hidden="true">その仕事</span><span class="catch-line" aria-hidden="true">任せりゃ</span><span class="catch-line" aria-hidden="true">いいじゃん<span class="question-mark">？</span></span></h1>
-        <a class="floating-object object-browser" href="#/services" aria-label="サイト制作について"><img src="uploads/icons/browser.svg" alt="" width="128" height="128"><span>つくる</span></a>
-        <a class="floating-object object-graph" href="#/services" aria-label="広告運用について"><img src="uploads/icons/graph.svg" alt="" width="128" height="128"><span>届ける</span></a>
-        <a class="floating-object object-gear" href="#/services" aria-label="AI活用について"><img src="uploads/icons/gear.svg" alt="" width="128" height="128"><span>楽にする</span></a>
-        <svg class="hero-orbit" viewBox="0 0 1000 600" aria-hidden="true"><ellipse cx="500" cy="300" rx="460" ry="215" transform="rotate(-18 500 300)" pathLength="1"/></svg>
-        <span class="hero-spark" aria-hidden="true">✳</span>
+        <svg class="hero-orbit" viewBox="0 0 1000 600" aria-hidden="true">
+          <g transform="rotate(-18 500 300)">
+            <ellipse cx="500" cy="300" rx="460" ry="215" pathLength="1"/>
+            <circle class="hero-orbit__dot" r="6"><animateMotion dur="26s" repeatCount="indefinite" path="M960 300a460 215 0 1 1-920 0a460 215 0 1 1 920 0"/></circle>
+          </g>
+        </svg>
+        <h1 class="catchphrase" aria-label="その仕事任せりゃいいじゃん？"><span class="catch-line" aria-hidden="true" data-chars>その仕事</span><span class="catch-line" aria-hidden="true" data-chars>任せりゃ</span><span class="catch-line" aria-hidden="true" data-chars>いいじゃん？</span></h1>
+        <a class="floating-object object-browser" href="#/services" aria-label="サイト制作について" data-sticker><span class="sticker__pop"><span class="sticker__disc"><svg class="ico" viewBox="0 0 128 128" aria-hidden="true"><use href="#ico-browser"/></svg></span><span class="sticker__label">つくる</span></span></a>
+        <a class="floating-object object-graph" href="#/services" aria-label="広告運用について" data-sticker><span class="sticker__pop"><span class="sticker__disc"><svg class="ico" viewBox="0 0 128 128" aria-hidden="true"><use href="#ico-graph"/></svg></span><span class="sticker__label">届ける</span></span></a>
+        <a class="floating-object object-gear" href="#/services" aria-label="AI活用について" data-sticker><span class="sticker__pop"><span class="sticker__disc"><svg class="ico" viewBox="0 0 128 128" aria-hidden="true"><use href="#ico-gear"/></svg></span><span class="sticker__label">楽にする</span></span></a>
+        <div class="hero-badge" aria-hidden="true">
+          <svg class="hero-badge__ring" viewBox="0 0 120 120"><defs><path id="badge-circle" d="M60 60m-46 0a46 46 0 1 1 92 0a46 46 0 1 1-92 0"/></defs><text><textPath href="#badge-circle" textLength="282" lengthAdjust="spacing">IDEAS INTO ACTION — IIDA KEISUKE — </textPath></text></svg>
+          <svg class="lu lu--24 hero-badge__star"><use href="#lu-asterisk"/></svg>
+        </div>
       </div>
-      <div class="hero-bottom"><span class="hero-specialties">サイト制作 ／ 広告運用 ／ AI活用</span><a class="editorial-link" href="#/works">仕事を見る <span>↗</span></a></div>
-      <div class="scroll-cue" aria-hidden="true"><span>SCROLL TO EXPLORE</span><span>↓</span></div>
+      <div class="hero-bottom"><span class="hero-specialties">サイト制作 ／ 広告運用 ／ AI活用</span><a class="editorial-link" href="#/works" data-magnet>仕事を見る <span class="arw"><svg class="lu" aria-hidden="true"><use href="#lu-arrow-up-right"/></svg></span></a></div>
+      <div class="scroll-cue" aria-hidden="true"><span>SCROLL TO EXPLORE</span><span class="scroll-cue__arrow"><svg class="lu" aria-hidden="true"><use href="#lu-arrow-down"/></svg></span></div>
     </header>
-    <div class="ticker" aria-hidden="true"><div>IDEAS INTO ACTION. <i>その先まで、一緒に。</i> IDEAS INTO ACTION. <i>その先まで、一緒に。</i> IDEAS INTO ACTION. <i>その先まで、一緒に。</i></div></div>
-    <section class="shell section selected-work"><div class="section-heading" data-rv><span class="label">01 / SELECTED WORK</span><h2>こんな仕事を。</h2><a class="editorial-link" href="#/works">すべて見る ↗</a></div><div class="project-grid"><a class="project-tile" href="#/work/mifune" data-rv><div class="project-art"><img src="uploads/icons/inn.svg" alt="" width="128" height="128"><span class="project-number">01</span><span class="project-open">↗</span></div><div class="project-caption"><h3>活魚の美舟</h3><span>2025</span></div><p>Website</p></a><a class="project-tile" href="#/work/ichi" data-rv><div class="project-art"><img src="uploads/icons/shop.svg" alt="" width="128" height="128"><span class="project-number">02</span><span class="project-open">↗</span></div><div class="project-caption"><h3>旨焼肉 一 ichi</h3><span>2026</span></div><p>Website</p></a><a class="project-tile" href="#/work/cleson" data-rv><div class="project-art"><img src="uploads/icons/claw.svg" alt="" width="128" height="128"><span class="project-number">03</span><span class="project-open">↗</span></div><div class="project-caption"><h3>CLESON</h3><span>2026</span></div><p>個人開発 / Web app</p></a><a class="project-tile" href="#/work/segrate" data-rv><div class="project-art"><img src="uploads/icons/map.svg" alt="" width="128" height="128"><span class="project-number">04</span><span class="project-open">↗</span></div><div class="project-caption"><h3>segrate</h3><span>2026</span></div><p>個人開発 / Web app</p></a></div></section>
-    <section class="shell section mini-about" data-rv><div class="mini-portrait"><img src="uploads/AD8A0684-EFC5-4C89-AA49-F36AAA071E09_1_102_o.jpeg" alt="飯田圭祐" loading="lazy"></div><div><span class="label">02 / ABOUT ME</span><h2>つくることも、<br>届けることも。</h2><p>飯田 圭祐 <span class="bio-english">Iida Keisuke</span></p><a class="editorial-link" href="#/about">私について ↗</a></div></section>
-    <section class="contact-band"><div class="shell"><span class="label">LET’S TALK</span><a href="#/contact"><h2>まずは、<br>話してみませんか。</h2><span class="contact-arrow">↗</span></a></div></section>
+    <div class="ticker" aria-hidden="true" data-ticker><div>IDEAS INTO ACTION. <i>その先まで、一緒に。</i> IDEAS INTO ACTION. <i>その先まで、一緒に。</i> IDEAS INTO ACTION. <i>その先まで、一緒に。</i></div></div>
+    <section class="shell section selected-work"><div class="section-heading" data-rv="lines"><span class="label">01 / SELECTED WORK</span><h2 data-lines>こんな仕事を。</h2><a class="editorial-link" href="#/works">すべて見る <span class="arw"><svg class="lu" aria-hidden="true"><use href="#lu-arrow-up-right"/></svg></span></a></div><div class="project-grid"><a class="project-tile" href="#/work/mifune" data-rv data-cursor="見る"><div class="project-art" data-art><svg class="ico" viewBox="0 0 128 128" aria-hidden="true"><use href="#ico-inn"/></svg><span class="project-number">01</span><span class="project-open"><svg class="lu lu--24" aria-hidden="true"><use href="#lu-arrow-up-right"/></svg></span></div><div class="project-caption"><h3>活魚の美舟</h3><span>2025</span></div><p>Website</p></a><a class="project-tile" href="#/work/ichi" data-rv data-cursor="見る"><div class="project-art" data-art><svg class="ico" viewBox="0 0 128 128" aria-hidden="true"><use href="#ico-shop"/></svg><span class="project-number">02</span><span class="project-open"><svg class="lu lu--24" aria-hidden="true"><use href="#lu-arrow-up-right"/></svg></span></div><div class="project-caption"><h3>旨焼肉 一 ichi</h3><span>2026</span></div><p>Website</p></a><a class="project-tile" href="#/work/cleson" data-rv data-cursor="見る"><div class="project-art" data-art><svg class="ico" viewBox="0 0 128 128" aria-hidden="true"><use href="#ico-claw"/></svg><span class="project-number">03</span><span class="project-open"><svg class="lu lu--24" aria-hidden="true"><use href="#lu-arrow-up-right"/></svg></span></div><div class="project-caption"><h3>CLESON</h3><span>2026</span></div><p>個人開発 / Web app</p></a><a class="project-tile" href="#/work/segrate" data-rv data-cursor="見る"><div class="project-art" data-art><svg class="ico" viewBox="0 0 128 128" aria-hidden="true"><use href="#ico-map"/></svg><span class="project-number">04</span><span class="project-open"><svg class="lu lu--24" aria-hidden="true"><use href="#lu-arrow-up-right"/></svg></span></div><div class="project-caption"><h3>segrate</h3><span>2026</span></div><p>個人開発 / Web app</p></a></div></section>
+    <section class="shell section mini-about" data-rv="lines"><div class="mini-portrait" data-par><img src="uploads/AD8A0684-EFC5-4C89-AA49-F36AAA071E09_1_102_o.jpeg" alt="飯田圭祐" loading="lazy"></div><div><span class="label">02 / ABOUT ME</span><h2 data-lines>つくることも、<br>届けることも。</h2><p>飯田 圭祐 <span class="bio-english">Iida Keisuke</span></p><a class="editorial-link" href="#/about">私について <span class="arw"><svg class="lu" aria-hidden="true"><use href="#lu-arrow-up-right"/></svg></span></a></div></section>
+    <section class="contact-band" data-rv="lines"><div class="shell"><span class="label">LET’S TALK</span><a href="#/contact" data-cursor="話す"><h2 data-lines>まずは、<br>話してみませんか。</h2><span class="contact-arrow" data-magnet><svg class="lu lu--display" aria-hidden="true"><use href="#lu-arrow-up-right"/></svg></span></a></div></section>
   </div>
-  <div class="page" data-page="services" hidden><div class="shell page-body"><span class="label">SERVICES</span><h1 class="display-1 display-1--jp">できること。</h1><p class="page-lead">つくる。届ける。日々の仕事を、少し軽く。</p></div>    <!-- Services -->
+  <div class="page" data-page="services" hidden><div class="shell page-body" data-rv="lines"><span class="label">SERVICES</span><h1 class="display-1 display-1--jp" data-lines>できること。</h1><p class="page-lead">つくる。届ける。日々の仕事を、少し軽く。</p></div>    <!-- Services -->
     <section class="shell section" aria-labelledby="svc-heading">
       <div class="rule" data-rv>
         <span class="label" id="svc-heading">Services</span>
         <span class="rule__line"></span>
         <span class="label">できること</span>
       </div>
-      <div class="grid-2 gap-32 mt-48" data-rv>
-        <article class="card">
-          <img class="service-icon" src="uploads/icons/browser.svg" width="80" height="80" alt=""><span class="label label--sm">(01) Web Direction</span>
+      <div class="grid-2 gap-32 mt-48">
+        <article class="card" data-rv>
+          <svg class="ico service-icon" viewBox="0 0 128 128" aria-hidden="true"><use href="#ico-browser"/></svg><span class="label label--sm">(01) Web Direction</span>
           <h2 class="card__title">HP・LP のディレクションと制作</h2>
           <p class="card__body">Web ディレクターとして、ヒアリング・構成設計・進行・公開までを一貫して担当してきました。誰に何を届けるサイトなのかを整理し、問い合わせや予約といったゴールまでの導線から逆算して設計します。制作会社への丸投げでは埋まりにくい「事業側の意図」と「つくり手の都合」の間に立てるのが強みです。</p>
           <ul class="chips">
@@ -93,8 +133,8 @@
             <li class="chip">公開後の改善</li>
           </ul>
         </article>
-        <article class="card">
-          <img class="service-icon" src="uploads/icons/graph.svg" width="80" height="80" alt=""><span class="label label--sm">(02) Ad Operations</span>
+        <article class="card" data-rv>
+          <svg class="ico service-icon" viewBox="0 0 128 128" aria-hidden="true"><use href="#ico-graph"/></svg><span class="label label--sm">(02) Ad Operations</span>
           <h2 class="card__title">広告運用と数字の改善</h2>
           <p class="card__body">これまで約180社の広告運用を担当してきました。CV が 0件だったアカウントを、訴求と着地ページの導線から組み直し、1ヶ月で月60件まで伸ばしたこともあります。数字のどこで落ちているのかを一つずつ潰していく進め方なので、「サイトはあるのに問い合わせが来ない」という状態から相談いただけます。</p>
           <ul class="chips">
@@ -104,8 +144,8 @@
             <li class="chip">効果測定</li>
           </ul>
         </article>
-        <article class="card card--wide">
-          <img class="service-icon" src="uploads/icons/gear.svg" width="80" height="80" alt=""><span class="label label--sm">(03) AI × Direction</span>
+        <article class="card card--wide" data-rv>
+          <svg class="ico service-icon" viewBox="0 0 128 128" aria-hidden="true"><use href="#ico-gear"/></svg><span class="label label--sm">(03) AI × Direction</span>
           <h2 class="card__title">AI で作りたい方の、設計のサポート</h2>
           <p class="card__body">AI の操作自体はもう誰でもできます。それでも詰まるのは「何をコンセプトにするか」「どんな指示を出せばいいか」といった、設計の部分です。ディレクションで身につけた進め方の型を、AI を使う前提のまま一緒に整理します。AI をまだ触ったこともない、という方も大歓迎です。どのツールをどう使い分けるのか、最初の一歩から一緒に進めますので、知識ゼロの状態でご相談いただいて大丈夫です。現職では AI を業務に組み込み、毎月何時間もかかっていた作業を人の手からほぼゼロにした経験もあるので、業務効率化やアプリ開発のご相談も承ります。</p>
           <ul class="chips">
@@ -119,23 +159,23 @@
       </div>
     </section>
 
-<section class="shell section"><div class="section-heading"><span class="label">HOW WE WORK</span><h2>一緒に進める、4ステップ。</h2></div><ol class="process-list"><li><span>01</span><img src="uploads/icons/talk.svg" width="90" height="90" alt=""><h3>話す</h3><p>今の状況と、目指すことを。</p></li><li><span>02</span><img src="uploads/icons/plan.svg" width="90" height="90" alt=""><h3>整理する</h3><p>必要なことと、進める順番を。</p></li><li><span>03</span><img src="uploads/icons/browser.svg" width="90" height="90" alt=""><h3>つくる</h3><p>目的に合った、伝わるかたちに。</p></li><li><span>04</span><img src="uploads/icons/grow.svg" width="90" height="90" alt=""><h3>育てる</h3><p>公開後も、数字を見ながら。</p></li></ol><a class="editorial-link" href="#/contact">今の状況を相談する ↗</a></section></div>
+<section class="shell section"><div class="section-heading" data-rv="lines"><span class="label">HOW WE WORK</span><h2 data-lines>一緒に進める、4ステップ。</h2></div><ol class="process-list" data-rv><li><span>01</span><svg class="ico process-icon" viewBox="0 0 128 128" aria-hidden="true"><use href="#ico-talk"/></svg><h3>話す</h3><p>今の状況と、目指すことを。</p></li><li><span>02</span><svg class="ico process-icon" viewBox="0 0 128 128" aria-hidden="true"><use href="#ico-plan"/></svg><h3>整理する</h3><p>必要なことと、進める順番を。</p></li><li><span>03</span><svg class="ico process-icon" viewBox="0 0 128 128" aria-hidden="true"><use href="#ico-browser"/></svg><h3>つくる</h3><p>目的に合った、伝わるかたちに。</p></li><li><span>04</span><svg class="ico process-icon" viewBox="0 0 128 128" aria-hidden="true"><use href="#ico-grow"/></svg><h3>育てる</h3><p>公開後も、数字を見ながら。</p></li></ol><a class="editorial-link" href="#/contact" data-rv>今の状況を相談する <span class="arw"><svg class="lu" aria-hidden="true"><use href="#lu-arrow-up-right"/></svg></span></a></section></div>
   <!-- ============================= WORKS ============================= -->
   <div class="page" data-page="works" hidden>
     <section class="shell page-body">
-      <div class="label">Works — HP / LP / App</div>
-      <h1 class="display-1">All work</h1>
-      <p class="page-lead">HP・LP・アプリの3つに分けて掲載しています。現在公開できるのは4件で、これから随時追加していきます。</p>
+      <div data-rv="lines"><div class="label">Works — HP / LP / App</div>
+      <h1 class="display-1" data-lines>All work</h1></div>
+      <p class="page-lead" data-rv>HP・LP・アプリの3つに分けて掲載しています。現在公開できるのは4件で、これから随時追加していきます。</p>
 
-      <div class="rule mt-72">
+      <div class="rule mt-72" data-rv>
         <span class="label">01 — Website / HP</span>
         <span class="rule__line"></span>
         <span class="mono-xs">2件</span>
       </div>
       <div class="grid-2 gap-40 mt-32">
-        <a class="work work--lg" href="#/work/mifune">
+        <a class="work work--lg" data-rv data-cursor="見る" href="#/work/mifune">
           <div class="work__thumb work__thumb--cover">
-            <img src="uploads/icons/inn.svg" alt="旅館のアイコン" loading="lazy">
+            <svg class="ico" viewBox="0 0 128 128" role="img" aria-label="旅館のアイコン"><use href="#ico-inn"/></svg>
           </div>
           <div>
             <div class="work__head">
@@ -150,9 +190,9 @@
             </ul>
           </div>
         </a>
-        <a class="work work--lg" href="#/work/ichi">
+        <a class="work work--lg" data-rv data-cursor="見る" href="#/work/ichi">
           <div class="work__thumb work__thumb--cover">
-            <img src="uploads/icons/shop.svg" alt="飲食店のアイコン" loading="lazy">
+            <svg class="ico" viewBox="0 0 128 128" role="img" aria-label="飲食店のアイコン"><use href="#ico-shop"/></svg>
           </div>
           <div>
             <div class="work__head">
@@ -169,35 +209,35 @@
         </a>
       </div>
 
-      <div class="rule mt-88">
+      <div class="rule mt-88" data-rv>
         <span class="label">02 — LP</span>
         <span class="rule__line"></span>
         <span class="mono-xs">準備中</span>
       </div>
       <div class="grid-2 gap-40 mt-32">
-        <a class="work work--lg" href="#/contact">
+        <a class="work work--lg" data-rv href="#/contact">
           <div class="work__thumb work__thumb--empty work__thumb--43">
             <span class="label label--sm">LP — 制作依頼受付中</span>
           </div>
           <div>
             <div class="work__head">
               <h2 class="work__title">LP 制作</h2>
-              <span class="mono-xs" aria-hidden="true">→</span>
+              <svg class="lu" aria-hidden="true"><use href="#lu-arrow-right"/></svg>
             </div>
             <p class="work__body">約180社の広告運用と、1ヶ月で CV 0件から月60件まで伸ばした経験をもとに、獲得までを見据えた LP をご提案します。実績はこれから掲載予定です。</p>
           </div>
         </a>
       </div>
 
-      <div class="rule mt-88">
+      <div class="rule mt-88" data-rv>
         <span class="label">03 — App / アプリ</span>
         <span class="rule__line"></span>
         <span class="mono-xs">2件</span>
       </div>
       <div class="grid-2 gap-40 mt-32">
-        <a class="work work--lg" href="#/work/cleson">
+        <a class="work work--lg" data-rv data-cursor="見る" href="#/work/cleson">
           <div class="work__icon-box">
-            <img src="uploads/icons/claw.svg" alt="CLESON アプリのアイコン" loading="lazy">
+            <svg class="ico" viewBox="0 0 128 128" role="img" aria-label="CLESON アプリのアイコン"><use href="#ico-claw"/></svg>
           </div>
           <div>
             <div class="work__head">
@@ -212,9 +252,9 @@
             </ul>
           </div>
         </a>
-        <a class="work work--lg" href="#/work/segrate">
+        <a class="work work--lg" data-rv data-cursor="見る" href="#/work/segrate">
           <div class="work__icon-box">
-            <img src="uploads/icons/map.svg" alt="segrate アプリのアイコン" loading="lazy">
+            <svg class="ico" viewBox="0 0 128 128" role="img" aria-label="segrate アプリのアイコン"><use href="#ico-map"/></svg>
           </div>
           <div>
             <div class="work__head">
@@ -232,12 +272,12 @@
         </a>
       </div>
 
-      <div class="callout">
+      <div class="callout" data-rv>
         <div>
           <h2 class="callout__title">実績はこれから増やしていきます</h2>
           <p class="callout__body">HP・LP のディレクションと制作、広告運用のご相談を受け付けています。</p>
         </div>
-        <a class="btn btn--outline" href="#/contact">Contact <span aria-hidden="true">→</span></a>
+        <a class="btn btn--outline" href="#/contact">Contact <span class="arw arw--r"><svg class="lu" aria-hidden="true"><use href="#lu-arrow-right"/></svg></span></a>
       </div>
     </section>
   </div>
@@ -250,31 +290,31 @@
   <!-- ============================= ABOUT ============================= -->
   <div class="page" data-page="about" hidden>
     <section class="shell page-body">
-      <div class="label">About — Iida Keisuke</div>
-      <h1 class="display-1 display-1--jp">数字から逆算して、<br class="br-lg">Web をつくる。</h1>
+      <div data-rv="lines"><div class="label">About — Iida Keisuke</div>
+      <h1 class="display-1 display-1--jp" data-lines>数字から逆算して、<br class="br-lg">Web をつくる。</h1></div>
 
       <div class="about about--page mt-72">
         <div>
-          <div class="portrait">
+          <div class="portrait" data-rv="clip" data-par>
             <img src="uploads/AD8A0684-EFC5-4C89-AA49-F36AAA071E09_1_102_o.jpeg" alt="飯田圭祐のポートレート" loading="lazy">
           </div>
           <p class="bio-name"><ruby>飯田<rt>いいだ</rt></ruby>　<ruby>圭祐<rt>けいすけ</rt></ruby></p>
           <p class="mono-sm mt-12">Iida Keisuke<br>Born 2001.04.27<br>Web direction / Ad operations<br>Aichi, Japan</p>
         </div>
         <div>
-          <p class="prose prose--first">Web ディレクターとして、ヒアリング・企画・構成設計・ライティングの指示・進行管理・公開までを担当してきました。</p>
-          <p class="prose">ディレクションで一番大事にしているのは、「かっこいいサイト」ではなく「目的が果たせるサイト」にすることです。誰に向けて、何をしてもらうためのサイトなのか。そこが決まらないまま作り始めると、きれいでも問い合わせが増えないサイトになってしまいます。</p>
-          <p class="prose">だからまず、事業の状況とゴールをお聞きするところから始めます。そのうえで必要なページと導線を決め、デザイン・実装の意図までブレないように進行します。事業側の意図と、つくり手の都合。その間に立って翻訳するのがディレクターの仕事だと思っています。</p>
-          <p class="prose">あわせて、これまで約180社の広告運用を担当してきました。業種も規模もさまざまな案件を見てきたので、「この業種ならどこで離脱しやすいか」「どの訴求が刺さりやすいか」の引き出しがあります。</p>
-          <p class="prose">CV が 0件のまま止まっていたアカウントを引き継ぎ、訴求と着地ページの導線を組み直して、1ヶ月で月60件まで伸ばしたこともあります。数字を見て、落ちている箇所を一つずつ潰していく進め方が得意です。</p>
-          <p class="prose">つくる側と、集客して数字を追う側。その両方を経験しているので、納品して終わりではなく「公開したあとどう回すか」から逆算した設計ができます。制作だけ、運用だけ、で分断されないのが自分の強みです。</p>
-          <p class="prose">加えて現職では、AI を実際の業務に組み込み、毎月何時間もかかっていた作業を人の手からほぼゼロにしてきました。リサーチや原稿づくり、数値チェックといった工程を短縮できるので、制作も運用もスピードを落とさず進められます。</p>
-          <p class="prose">ただ、AI を使うほど強く感じているのは、道具が良くなっても「何をどう作るか」を決める部分は残る、ということです。AI の操作はできても、サイトを作るとなると何をコンセプトにすればいいのか、どんな指示を出せばいいのかで手が止まってしまう。これはツールの問題ではなく、設計の問題です。</p>
-          <p class="prose">どのページが必要で、何をどの順に見せて、どこへ着地させるのか。ディレクションで身につけたその型があるからこそ、AI を使う前提のままでも、作るものの中身を一緒に決めていけます。</p>
-          <p class="prose">なので、AI をまだ触ったことがない方こそ歓迎です。専門用語が分からなくても、何ができるのかイメージがついていなくても構いません。「やりたいことはあるけど、どう進めればいいか分からない」という状態からご相談ください。ツールの選び方も、指示の出し方も、最初の一歩から一緒に進めます。</p>
+          <p class="prose prose--first" data-rv>Web ディレクターとして、ヒアリング・企画・構成設計・ライティングの指示・進行管理・公開までを担当してきました。</p>
+          <p class="prose" data-rv>ディレクションで一番大事にしているのは、「かっこいいサイト」ではなく「目的が果たせるサイト」にすることです。誰に向けて、何をしてもらうためのサイトなのか。そこが決まらないまま作り始めると、きれいでも問い合わせが増えないサイトになってしまいます。</p>
+          <p class="prose" data-rv>だからまず、事業の状況とゴールをお聞きするところから始めます。そのうえで必要なページと導線を決め、デザイン・実装の意図までブレないように進行します。事業側の意図と、つくり手の都合。その間に立って翻訳するのがディレクターの仕事だと思っています。</p>
+          <p class="prose" data-rv>あわせて、これまで約180社の広告運用を担当してきました。業種も規模もさまざまな案件を見てきたので、「この業種ならどこで離脱しやすいか」「どの訴求が刺さりやすいか」の引き出しがあります。</p>
+          <p class="prose" data-rv>CV が 0件のまま止まっていたアカウントを引き継ぎ、訴求と着地ページの導線を組み直して、1ヶ月で月60件まで伸ばしたこともあります。数字を見て、落ちている箇所を一つずつ潰していく進め方が得意です。</p>
+          <p class="prose" data-rv>つくる側と、集客して数字を追う側。その両方を経験しているので、納品して終わりではなく「公開したあとどう回すか」から逆算した設計ができます。制作だけ、運用だけ、で分断されないのが自分の強みです。</p>
+          <p class="prose" data-rv>加えて現職では、AI を実際の業務に組み込み、毎月何時間もかかっていた作業を人の手からほぼゼロにしてきました。リサーチや原稿づくり、数値チェックといった工程を短縮できるので、制作も運用もスピードを落とさず進められます。</p>
+          <p class="prose" data-rv>ただ、AI を使うほど強く感じているのは、道具が良くなっても「何をどう作るか」を決める部分は残る、ということです。AI の操作はできても、サイトを作るとなると何をコンセプトにすればいいのか、どんな指示を出せばいいのかで手が止まってしまう。これはツールの問題ではなく、設計の問題です。</p>
+          <p class="prose" data-rv>どのページが必要で、何をどの順に見せて、どこへ着地させるのか。ディレクションで身につけたその型があるからこそ、AI を使う前提のままでも、作るものの中身を一緒に決めていけます。</p>
+          <p class="prose" data-rv>なので、AI をまだ触ったことがない方こそ歓迎です。専門用語が分からなくても、何ができるのかイメージがついていなくても構いません。「やりたいことはあるけど、どう進めればいいか分からない」という状態からご相談ください。ツールの選び方も、指示の出し方も、最初の一歩から一緒に進めます。</p>
 
           <div class="grid-2 gap-48 mt-72">
-            <div>
+            <div data-rv>
               <h2 class="colhead">できること</h2>
               <ul class="stack-list">
                 <li>HP / LP のディレクション（要件整理・構成設計・進行管理）</li>
@@ -285,7 +325,7 @@
                 <li>生成 AI 検索(AIO)を意識した情報発信の相談</li>
               </ul>
             </div>
-            <div>
+            <div data-rv>
               <h2 class="colhead">これまで</h2>
               <ol class="timeline">
                 <li><span class="mono-xs">現在</span><span>HP・LP のディレクション / 業務での AI 活用</span></li>
@@ -298,8 +338,8 @@
           </div>
 
           <div class="actions mt-72">
-            <a class="btn btn--outline" href="#/works">実績を見る <span aria-hidden="true">→</span></a>
-            <a class="label" href="#/contact">お問い合わせ →</a>
+            <a class="btn btn--outline" href="#/works">実績を見る <span class="arw arw--r"><svg class="lu" aria-hidden="true"><use href="#lu-arrow-right"/></svg></span></a>
+            <a class="label link-arrow" href="#/contact">お問い合わせ <svg class="lu" aria-hidden="true"><use href="#lu-arrow-right"/></svg></a>
           </div>
         </div>
       </div>
@@ -309,21 +349,21 @@
   <!-- ============================= CONTACT ============================= -->
   <div class="page" data-page="contact" hidden>
     <section class="shell page-body">
-      <div class="label">Contact — お気軽にどうぞ</div>
-      <h1 class="display-1">お問い合わせ</h1>
+      <div data-rv="lines"><div class="label">Contact — お気軽にどうぞ</div>
+      <h1 class="display-1" data-lines>お問い合わせ</h1></div>
 
       <div class="contact mt-72">
-        <div>
+        <div data-rv>
           <p class="prose prose--first">HP・LP の制作や作り直し、広告からの集客が伸びないというご相談を歓迎します。AI 活用のご相談も承ります。まずは状況をお聞かせください。</p>
           <dl class="deflist">
-            <div><dt class="label label--sm">Email</dt><dd class="maildd"><a href="mailto:keahi0427@icloud.com?subject=%E3%81%8A%E5%95%8F%E3%81%84%E5%90%88%E3%82%8F%E3%81%9B%EF%BC%88%E3%83%9D%E3%83%BC%E3%83%88%E3%83%95%E3%82%A9%E3%83%AA%E3%82%AA%E3%82%B5%E3%82%A4%E3%83%88%E3%82%88%E3%82%8A%EF%BC%89">keahi0427@icloud.com <span aria-hidden="true">↗</span></a><button type="button" class="copybtn" data-copy-mail>コピー</button></dd></div>
+            <div><dt class="label label--sm">Email</dt><dd class="maildd"><a href="mailto:keahi0427@icloud.com?subject=%E3%81%8A%E5%95%8F%E3%81%84%E5%90%88%E3%82%8F%E3%81%9B%EF%BC%88%E3%83%9D%E3%83%BC%E3%83%88%E3%83%95%E3%82%A9%E3%83%AA%E3%82%AA%E3%82%B5%E3%82%A4%E3%83%88%E3%82%88%E3%82%8A%EF%BC%89">keahi0427@icloud.com <svg class="lu" aria-hidden="true"><use href="#lu-arrow-up-right"/></svg></a><button type="button" class="copybtn" data-copy-mail>コピー</button></dd></div>
             <div><dt class="label label--sm">ご相談内容</dt><dd>HP・LP 制作 / 広告運用 / AI 活用</dd></div>
             <div><dt class="label label--sm">拠点</dt><dd>愛知県</dd></div>
             <div><dt class="label label--sm">返信</dt><dd>2営業日以内</dd></div>
           </dl>
         </div>
 
-        <div class="formcard">
+        <div class="formcard" data-rv>
           <form class="form" novalidate data-contact-form>
             <label class="field">
               <span class="label label--sm">お名前</span>
@@ -338,7 +378,7 @@
               <textarea name="body" rows="6" placeholder="現在の状況とご相談したいことをお書きください。"></textarea>
             </label>
             <p class="form__error" data-form-error role="alert" hidden></p>
-            <button type="submit" class="btn btn--dark">送信する <span aria-hidden="true">→</span></button>
+            <button type="submit" class="btn btn--dark">送信する <span class="arw arw--r"><svg class="lu" aria-hidden="true"><use href="#lu-arrow-right"/></svg></span></button>
           </form>
 
           <div class="form__done" data-form-done hidden>

@@ -194,7 +194,6 @@ ul, ol, dl, dd, figure { margin: 0; padding: 0; list-style: none; }
   text-transform: uppercase;
 }
 .nav__mark { display: inline-flex; align-items: center; height: 44px; }
-.nav__mark img { height: 34px; width: auto; }
 .nav__links { display: flex; align-items: center; gap: clamp(20px, 4vw, 48px); }
 .nav__links a { transition: opacity .3s var(--ease); }
 .nav__links a[aria-current="page"] { opacity: .45; }
@@ -974,8 +973,12 @@ button:hover .arw--r .lu { animation-name: arw-fly-r; }
   transform: scaleX(var(--scroll, 0));
   transform-origin: left;
 }
-.wordmark { font: 400 32px var(--display); white-space: nowrap; }
-.wordmark i { margin-left: 10px; font-size: 19px; }
+/* K のロゴ画像（ファビコンと同じ）。画像の余白ぶんだけ外側を詰めて、文字との間隔を合わせる */
+.wordmark { display: inline-flex; align-items: center; font: 400 32px var(--display); white-space: nowrap; }
+.wordmark__k { display: block; flex: none; width: 56px; height: 56px; max-width: none; margin-inline: -8px 0; }
+.wordmark i { margin-left: 2px; font-size: 19px; }
+/* 黒地のイントロでは、墨色のロゴを明るい色に反転して載せる */
+.intro .wordmark__k { filter: brightness(0) invert(.95); }
 .nav__links { gap: 30px; font-family: var(--serif); }
 .nav a:hover { opacity: 1; }
 .nav__links a { position: relative; white-space: nowrap; }
@@ -1566,8 +1569,8 @@ html.is-intro { overflow: hidden; }
   .nav { height: 80px; }
   .intro { grid-template-rows: 80px 1fr auto; }
   .nav__links { gap: 16px; font-size: 12px; }
-  .wordmark { font-size: 28px; }
   .wordmark i { display: none; }
+  .wordmark__k { width: 52px; height: 52px; }
   .hero-topline { gap: 10px; font-size: 8px; }
   .hero-composition { height: clamp(440px, 66svh, 600px); }
   .floating-object { --depth: 0px; }
@@ -1589,7 +1592,7 @@ html.is-intro { overflow: hidden; }
   .nav { height: 70px; padding-inline: 20px; gap: 12px; }
   .intro { grid-template-rows: 70px 1fr auto; }
   .nav__links { gap: 12px; font-size: 10px; letter-spacing: 0; }
-  .wordmark { font-size: 25px; }
+  .wordmark__k { width: 48px; height: 48px; }
   .motion-hero { padding-top: 25px; }
   .hero-topline span:last-child { display: none; }
   .hero-composition { height: clamp(430px, 62svh, 520px); }

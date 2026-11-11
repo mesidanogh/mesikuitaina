@@ -959,10 +959,7 @@ button:hover .arw--r .lu { animation-name: arw-fly-r; }
   -webkit-backdrop-filter: none;
   letter-spacing: 0;
   text-transform: none;
-  transition: transform .7s var(--ease-out);
 }
-/* 下へスクロール中は隠し、上へ戻すと出す */
-.nav.is-hidden { transform: translateY(-101%); }
 .nav__progress {
   position: absolute;
   left: 0;
@@ -1638,7 +1635,6 @@ html.is-intro { overflow: hidden; }
   .ball-label,
   .intro,
   .wipe { display: none !important; }
-  .nav.is-hidden { transform: none; }
 }
 
 @media print {

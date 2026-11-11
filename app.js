@@ -561,8 +561,6 @@
     tick.vel += dy * 0.5;
 
     if (navEl) {
-      if (y < 160 || dy < -2) navEl.classList.remove('is-hidden');
-      else if (dy > 2) navEl.classList.add('is-hidden');
       var max = docEl.scrollHeight - view.h;
       navEl.style.setProperty('--scroll', max > 0 ? clamp(y / max, 0, 1).toFixed(4) : 0);
     }
@@ -742,7 +740,6 @@
     scrollTop();
     requestAnimationFrame(scrollTop);
     lastY = 0;
-    if (navEl) navEl.classList.remove('is-hidden');
 
     replayReveals(shown);
     observeReveals();

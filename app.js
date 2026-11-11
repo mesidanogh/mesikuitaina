@@ -834,7 +834,7 @@
   window.addEventListener('hashchange', function () { route(false); });
 
   /* ---------------------------------------------------------
-     Intro — 初回だけ。数字が 100 まで進み、インクの面が縮んで玉になる
+     Intro — 初回だけ。K のロゴにインクが満ち、黒い面が縮んで玉になる
      --------------------------------------------------------- */
   function startBall() {
     if (!ball) return;
@@ -852,9 +852,7 @@
     }
     try { sessionStorage.setItem('ik-intro', '1'); } catch (e) { /* 保存できなくても続行 */ }
 
-    var countEl = $('[data-intro-count]', el);
-    var started = performance.now();
-    var counted = false;
+    var held = false;
     var fontsReady = false;
 
     var leave = function () {
@@ -877,18 +875,12 @@
         };
       }, 380);
     };
-    var maybeLeave = function () { if (counted && fontsReady) leave(); };
+    var maybeLeave = function () { if (held && fontsReady) leave(); };
 
-    var step = function (now) {
-      var p = Math.min(1, (now - started) / 1150);
-      countEl.textContent = Math.round((1 - Math.pow(1 - p, 3)) * 100);
-      if (p < 1) return requestAnimationFrame(step);
-      counted = true;
-      maybeLeave();
-    };
-    requestAnimationFrame(step);
+    // ロゴ・線・名前が出そろうまで見せてから開く
+    setTimeout(function () { held = true; maybeLeave(); }, 2500);
 
-    // 書体が来てから開ける（来なくても 1.6 秒で先へ進む）
+    // 書体が来てから開ける（来なくても先へ進む）
     var fontsDone = function () { if (!fontsReady) { fontsReady = true; maybeLeave(); } };
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(fontsDone);
     setTimeout(fontsDone, 1600);

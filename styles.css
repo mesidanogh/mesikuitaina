@@ -974,8 +974,6 @@ button:hover .arw--r .lu { animation-name: arw-fly-r; }
 .wordmark { display: inline-flex; align-items: center; font: 400 32px var(--display); white-space: nowrap; }
 .wordmark__k { display: block; flex: none; width: 56px; height: 56px; max-width: none; margin-inline: -8px 0; }
 .wordmark i { margin-left: 2px; font-size: 19px; }
-/* 黒地のイントロでは、墨色のロゴを明るい色に反転して載せる */
-.intro .wordmark__k { filter: brightness(0) invert(.95); }
 .nav__links { gap: 30px; font-family: var(--serif); }
 .nav a:hover { opacity: 1; }
 .nav__links a { position: relative; white-space: nowrap; }
@@ -1466,8 +1464,7 @@ button:hover .arw--r .lu { animation-name: arw-fly-r; }
   inset: 0;
   z-index: 120;
   display: grid;
-  grid-template: 92px 1fr auto / 1fr auto;
-  padding: 0 var(--pad) clamp(18px, 3.4vw, 44px);
+  place-items: center;
   background: var(--ink);
   color: var(--cream);
   /* JS が動かなかったときに本文を塞ぎ続けないための保険 */
@@ -1475,16 +1472,60 @@ button:hover .arw--r .lu { animation-name: arw-fly-r; }
 }
 .no-intro .intro { display: none; }
 html.is-intro { overflow: hidden; }
-.intro > * { transition: opacity .4s var(--ease-out), transform .6s var(--ease-out); }
-.intro.is-leaving > * { opacity: 0; transform: translateY(-28px); }
-.intro__mark { grid-column: 1 / -1; align-self: center; }
-.intro__label { grid-row: 3; align-self: end; padding-bottom: .6em; font: 10px var(--mono); letter-spacing: .14em; }
-.intro__count {
-  grid-row: 3;
-  grid-column: 2;
-  font: 400 clamp(120px, 26vw, 360px)/.78 var(--display);
-  font-variant-numeric: lining-nums tabular-nums;
-  letter-spacing: -.04em;
+.intro > * { transition: opacity .45s var(--ease-out), transform .7s var(--ease-out); }
+.intro.is-leaving > * { opacity: 0; transform: translateY(-36px); }
+
+.intro__center {
+  --iw: clamp(120px, 24vw, 220px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: var(--iw);
+  text-align: center;
+}
+/* K の中にインクが満ちていくように、下から上へ現れる */
+.intro__k {
+  display: block;
+  width: var(--iw);
+  height: var(--iw);
+  clip-path: inset(100% 0 0 0);
+  animation: intro-ink 1.25s var(--ease-io) .25s forwards;
+}
+.intro__k img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  filter: brightness(0) invert(.95);
+  animation: intro-rise 1.25s var(--ease-io) .25s both;
+}
+.intro__rule {
+  display: block;
+  width: 100%;
+  height: 1px;
+  margin-top: 6px;
+  background: var(--cream);
+  opacity: .5;
+  transform: scaleX(0);
+  animation: intro-line 1s var(--ease-io) 1.05s forwards;
+}
+.intro__name {
+  margin-top: 22px;
+  white-space: nowrap;
+  font: 400 15px var(--display);
+  letter-spacing: .6em;
+  text-indent: .6em;
+  opacity: 0;
+  animation: intro-name 1.1s var(--ease-out) 1.25s forwards;
+}
+.intro__sub {
+  margin-top: 12px;
+  white-space: nowrap;
+  font: 9px var(--mono);
+  letter-spacing: .22em;
+  text-indent: .22em;
+  opacity: 0;
+  animation: fade-in .9s var(--ease-out) 1.65s forwards;
 }
 
 /* ---------- ページ切り替え ---------- */
@@ -1560,11 +1601,17 @@ html.is-intro { overflow: hidden; }
   100% { transform: scaleX(1); transform-origin: left; }
 }
 @keyframes intro-failsafe { to { opacity: 0; visibility: hidden; } }
+@keyframes intro-ink { to { clip-path: inset(0); } }
+@keyframes intro-rise { from { transform: translateY(14%); } to { transform: none; } }
+@keyframes intro-line { to { transform: scaleX(1); } }
+@keyframes intro-name {
+  from { opacity: 0; letter-spacing: 1em; }
+  to { opacity: .92; letter-spacing: .6em; }
+}
 
 /* ---------- Responsive ---------- */
 @media (max-width: 800px) {
   .nav { height: 80px; }
-  .intro { grid-template-rows: 80px 1fr auto; }
   .nav__links { gap: 16px; font-size: 12px; }
   .wordmark i { display: none; }
   .wordmark__k { width: 52px; height: 52px; }
@@ -1587,7 +1634,6 @@ html.is-intro { overflow: hidden; }
 
 @media (max-width: 480px) {
   .nav { height: 70px; padding-inline: 20px; gap: 12px; }
-  .intro { grid-template-rows: 70px 1fr auto; }
   .nav__links { gap: 12px; font-size: 10px; letter-spacing: 0; }
   .wordmark__k { width: 48px; height: 48px; }
   .motion-hero { padding-top: 25px; }

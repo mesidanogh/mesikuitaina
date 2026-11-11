@@ -900,6 +900,12 @@ ul, ol, dl, dd, figure { margin: 0; padding: 0; list-style: none; }
 
 body { background-image: none; }
 
+/* 横スクロールは絶対に出さない。
+   回転や傾きで箱が画面の外へ出ても、ページの幅が広がらないように各階層で切る。
+   clip は hidden と違ってスクロール領域を作らないので、ナビの sticky は効いたまま */
+html, body { overflow-x: clip; }
+.pages, .site-footer { overflow-x: hidden; overflow-x: clip; }
+
 .sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
 
 /* ---------- Icons ----------
@@ -1051,7 +1057,11 @@ button:hover .arw--r .lu { animation-name: arw-fly-r; }
   height: 92%;
   overflow: visible;
   pointer-events: none;
-  transform: rotate(calc(var(--progress) * 14deg));
+}
+.hero-orbit g {
+  transform-box: view-box;
+  transform-origin: 50% 50%;
+  transform: rotate(calc(-18deg + var(--progress) * 14deg));
 }
 .hero-orbit ellipse {
   fill: none;
@@ -1619,7 +1629,6 @@ html.is-intro { overflow: hidden; }
   [data-rv] .ico { stroke-dashoffset: 0 !important; }
   .floating-object,
   .catchphrase,
-  .hero-orbit,
   .ch { transform: none !important; translate: none !important; }
   .hero-orbit__dot,
   .ball,

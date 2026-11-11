@@ -349,6 +349,8 @@
       }
       ts = heroBallSize();
       drifting = true;
+      // 固定配置の玉が画面の外へ出ると、端末によっては横に動かせてしまうので内側に収める
+      tx = clamp(tx, ts / 2, view.w - ts / 2);
     }
 
     var px = ball.x, py = ball.y;

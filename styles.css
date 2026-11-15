@@ -431,6 +431,9 @@ ul, ol, dl, dd, figure { margin: 0; padding: 0; list-style: none; }
   letter-spacing: -.01em;
 }
 .work--lg .work__title { font-size: 1.75rem; }
+/* 実サイトへ飛ぶカードの目印。ホバーで右上へ少し動く */
+.work__title .lu { margin-left: .2em; width: .8em; height: .8em; transition: transform .5s var(--ease-out); }
+.work--lg:hover .work__title .lu { transform: translate(3px, -3px); }
 .work__body {
   margin: 12px 0 0;
   font: 400 1.0625rem/1.8 var(--serif);

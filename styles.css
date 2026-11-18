@@ -499,6 +499,7 @@ ul, ol, dl, dd, figure { margin: 0; padding: 0; list-style: none; }
 .about-cert.is-in:hover .about-cert__badge { transform: rotate(-8deg) scale(1.05); transition-duration: .6s; transition-delay: 0s; }
 .about-cert__title { margin: 8px 0 0; font: 400 clamp(22px, 2vw, 28px)/1.3 var(--mincho); }
 .about-cert__meta { margin: 6px 0 0; font: 11px/1.6 var(--mono); letter-spacing: .08em; color: var(--muted); }
+.about-cert__meta + .about-cert__meta { margin-top: 0; }
 .about-cert__text { margin: 10px 0 0; font: 400 14px/1.8 var(--serif); color: var(--muted); }
 
 .portrait {

@@ -1302,6 +1302,27 @@ button:hover .arw--r .lu { animation-name: arw-fly-r; }
 .project-tile > p { font: 11px var(--mono); color: var(--muted); }
 .project-tile > p { margin-top: 12px; }
 
+/* 資格の段。バッジはステッカーのように回りながら貼られる */
+.cert {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: clamp(24px, 5vw, 64px);
+  align-items: center;
+  padding-top: clamp(64px, 8vw, 104px);
+}
+.cert__badge {
+  display: block;
+  width: clamp(104px, 12vw, 150px);
+  height: auto;
+  transform: scale(.55) rotate(-28deg);
+  transition: transform 1s var(--spring) .15s;
+}
+.cert.is-in .cert__badge { transform: none; }
+.cert.is-in:hover .cert__badge { transform: rotate(-10deg) scale(1.06); transition-duration: .6s; transition-delay: 0s; }
+.cert__title { margin: 14px 0 0; font: 400 clamp(26px, 3vw, 40px)/1.3 var(--mincho); }
+.cert__meta { margin: 8px 0 0; font: 11px var(--mono); letter-spacing: .1em; color: var(--muted); }
+.cert__text { margin: 14px 0 0; max-width: 46ch; font: 400 15px/1.9 var(--serif); color: var(--muted); }
+
 .mini-about {
   display: grid;
   grid-template-columns: 1fr 1.2fr;
@@ -1654,6 +1675,9 @@ html.is-intro { overflow: hidden; }
   .project-grid .project-tile:nth-child(even) { --rd: 0s; }
   .project-art { height: 260px; }
   .mini-about { grid-template-columns: 1fr; }
+  .cert { gap: 20px; align-items: start; }
+  .cert__badge { width: 92px; }
+  .cert__text { font-size: 14px; }
   /* 見出しが矢印の丸に押されて中途半端に折れないよう、矢印は見出しの下に回す */
   .contact-band a { flex-direction: column; align-items: flex-start; gap: 28px; }
   .contact-band h2 { font-size: clamp(30px, 9vw, 36px); }
@@ -1680,6 +1704,7 @@ html.is-intro { overflow: hidden; }
   [data-rv="clip"],
   .mini-portrait { clip-path: none !important; }
   [data-rv] .ico { stroke-dashoffset: 0 !important; }
+  .cert__badge { transform: none !important; }
   .floating-object,
   .catchphrase,
   .ch { transform: none !important; translate: none !important; }

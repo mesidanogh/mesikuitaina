@@ -1302,27 +1302,6 @@ button:hover .arw--r .lu { animation-name: arw-fly-r; }
 .project-tile > p { font: 11px var(--mono); color: var(--muted); }
 .project-tile > p { margin-top: 12px; }
 
-/* 資格の段。バッジはステッカーのように回りながら貼られる */
-.cert {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: clamp(24px, 5vw, 64px);
-  align-items: center;
-  padding-top: clamp(64px, 8vw, 104px);
-}
-.cert__badge {
-  display: block;
-  width: clamp(104px, 12vw, 150px);
-  height: auto;
-  transform: scale(.55) rotate(-28deg);
-  transition: transform 1s var(--spring) .15s;
-}
-.cert.is-in .cert__badge { transform: none; }
-.cert.is-in:hover .cert__badge { transform: rotate(-10deg) scale(1.06); transition-duration: .6s; transition-delay: 0s; }
-.cert__title { margin: 14px 0 0; font: 400 clamp(26px, 3vw, 40px)/1.3 var(--mincho); }
-.cert__meta { margin: 8px 0 0; font: 11px var(--mono); letter-spacing: .1em; color: var(--muted); }
-.cert__text { margin: 14px 0 0; max-width: 46ch; font: 400 15px/1.9 var(--serif); color: var(--muted); }
-
 .mini-about {
   display: grid;
   grid-template-columns: 1fr 1.2fr;
@@ -1332,7 +1311,27 @@ button:hover .arw--r .lu { animation-name: arw-fly-r; }
   padding-bottom: clamp(64px, 8vw, 112px);
   border-top: 1px solid var(--line);
 }
-.mini-portrait { max-width: 350px; aspect-ratio: 4 / 5; overflow: hidden; }
+.mini-figure { position: relative; max-width: 350px; }
+.mini-portrait { aspect-ratio: 4 / 5; overflow: hidden; }
+/* G検定のバッジ。写真が開き切ったあと、右下の角にステッカーのように貼られる */
+.mini-badge {
+  position: absolute;
+  right: -34px;
+  bottom: -30px;
+  z-index: 1;
+  width: clamp(92px, 10vw, 128px);
+  height: auto;
+  /* 写真の上に乗るので、円の内側はクリームで塗って写真を透かさない */
+  border-radius: 50%;
+  background: var(--bg);
+  box-shadow: 0 6px 18px rgba(32, 32, 29, .18);
+  opacity: 0;
+  transform: scale(.4) rotate(-40deg);
+  transition: transform 1s var(--spring) 1.15s, opacity .4s ease-out 1.15s;
+}
+.is-in .mini-badge { opacity: 1; transform: rotate(-8deg); }
+.is-in .mini-figure:hover .mini-badge { transform: rotate(6deg) scale(1.08); transition-duration: .6s; transition-delay: 0s; }
+.mini-about .mini-cert { margin: -12px 0 22px; font: 11px/1.6 var(--mono); letter-spacing: .08em; color: var(--muted); }
 .mini-portrait img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1); }
 .mini-about h2 { margin: 25px 0; font: 400 clamp(30px, 4vw, 52px)/1.6 var(--mincho); }
 .mini-about p { font-size: 17px; }
@@ -1675,14 +1674,12 @@ html.is-intro { overflow: hidden; }
   .project-grid .project-tile:nth-child(even) { --rd: 0s; }
   .project-art { height: 260px; }
   .mini-about { grid-template-columns: 1fr; }
-  .cert { gap: 20px; align-items: start; }
-  .cert__badge { width: 92px; }
-  .cert__text { font-size: 14px; }
   /* 見出しが矢印の丸に押されて中途半端に折れないよう、矢印は見出しの下に回す */
   .contact-band a { flex-direction: column; align-items: flex-start; gap: 28px; }
   .contact-band h2 { font-size: clamp(30px, 9vw, 36px); }
   .contact-arrow { width: 88px; }
-  .mini-portrait { width: 65%; margin-left: 5%; }
+  .mini-figure { width: 65%; margin: 0 0 22px 5%; }
+  .mini-badge { right: -26px; bottom: -22px; width: 84px; }
   .mini-about h2 { font-size: 34px; }
   .ticker > div { font-size: 28px; }
   .ticker i { margin-inline: 30px; font-size: 20px; }
@@ -1704,7 +1701,7 @@ html.is-intro { overflow: hidden; }
   [data-rv="clip"],
   .mini-portrait { clip-path: none !important; }
   [data-rv] .ico { stroke-dashoffset: 0 !important; }
-  .cert__badge { transform: none !important; }
+  .mini-badge { transform: none !important; }
   .floating-object,
   .catchphrase,
   .ch { transform: none !important; translate: none !important; }
